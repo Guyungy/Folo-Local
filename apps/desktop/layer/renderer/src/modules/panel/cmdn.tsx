@@ -93,7 +93,7 @@ const CmdNPanel = () => {
           type="submit"
           className="center absolute inset-y-0 right-3 pl-2 text-accent duration-200 hover:text-accent/90 disabled:grayscale"
         >
-          <i className="i-mgc-arrow-right-circle-cute-fi size-6" />
+          <i className="i-mingcute-arrow-right-circle-fill size-6" />
         </button>
       </m.form>
     </Form>

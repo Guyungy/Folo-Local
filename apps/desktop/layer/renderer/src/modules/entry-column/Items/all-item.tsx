@@ -287,7 +287,7 @@ function AudioIcon({ entryId, src }: { entryId: string; src: string }) {
             className={cn({
               "i-mingcute-pause-fill": playStatus && playStatus === "playing",
               "i-mingcute-loading-fill animate-spin": playStatus && playStatus === "loading",
-              "i-mgc-music-2-cute-fi": !playStatus || playStatus === "paused",
+              "i-mingcute-music-2-fill": !playStatus || playStatus === "paused",
             })}
           />
         </button>
@@ -301,7 +301,7 @@ function VideoIcon({ src }: { src: string }) {
     <Tooltip>
       <TooltipRoot>
         <TooltipTrigger asChild>
-          <i className="i-mgc-video-cute-fi mr-1 shrink-0 text-base text-text/90" />
+          <i className="i-mingcute-video-fill mr-1 shrink-0 text-base text-text/90" />
         </TooltipTrigger>
         <TooltipPortal>
           <TooltipContent className="flex-col gap-1" side={"bottom"}>

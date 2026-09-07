@@ -2,7 +2,7 @@ import { SettingGeneral } from "~/modules/settings/tabs/general"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-settings-7-cute-re"
+const iconName = "i-mingcute-settings-7-line"
 const priority = 1000 << 1
 
 export const handle = defineSettingPageData({

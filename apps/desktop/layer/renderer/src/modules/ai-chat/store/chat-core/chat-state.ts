@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-for-loop */
 import type { ChatState, ChatStatus } from "ai"
 import { throttle } from "es-toolkit/compat"
 import { produce } from "immer"

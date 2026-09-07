@@ -132,7 +132,7 @@ describe("AIIndicator", () => {
 
     const button = container.querySelector<HTMLButtonElement>("button[title='Open AI Chat']")
     expect(button).not.toBeNull()
-    expect(button?.querySelector("i")?.className).toContain("i-mgc-folo-bot-original")
+    expect(button?.querySelector("i")?.className).toContain("i-mingcute-robot-line")
     expect(button?.querySelector("i")?.className).toContain("size-16")
 
     await act(async () => {

@@ -127,7 +127,7 @@ export const FeedClaimModalContent: FC<{
           onClick={() => claim()}
           variant={isSuccess ? "outline" : "primary"}
         >
-          {isSuccess && <i className="i-mgc-check-circle-filled mr-2 bg-green-500" />}
+          {isSuccess && <i className="i-mingcute-check-circle-fill mr-2 bg-green-500" />}
           <span>{t("feed_claim_modal.claim_button")}</span>
         </Button>
       </div>

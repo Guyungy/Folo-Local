@@ -21,7 +21,7 @@ export interface WebAISettings extends AISettings {
 
 type ServerShortcutConfig = ExtractResponseData<GetStatusConfigsResponse>["AI_SHORTCUTS"][number]
 
-const FALLBACK_SHORTCUT_ICON = "i-mgc-hotkey-cute-re"
+const FALLBACK_SHORTCUT_ICON = "i-mingcute-hotkey-line"
 const VALID_SHORTCUT_TARGETS = new Set<AIShortcutTarget>(DEFAULT_SHORTCUT_TARGETS)
 
 const isValidShortcutTarget = (target: string): target is AIShortcutTarget =>

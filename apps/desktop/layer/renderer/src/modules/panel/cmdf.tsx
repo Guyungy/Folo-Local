@@ -167,7 +167,7 @@ const CmdFImpl: FC<{
             nativeSearchImpl(value, "backward")
           }}
         >
-          <i className="i-mgc-back-2-cute-re" />
+          <i className="i-mingcute-back-2-line" />
         </button>
         <button
           type="button"
@@ -176,7 +176,7 @@ const CmdFImpl: FC<{
             nativeSearchImpl(value, "forward")
           }}
         >
-          <i className="i-mgc-forward-2-cute-re" />
+          <i className="i-mingcute-forward-2-line" />
         </button>
         <button
           type="button"
@@ -187,7 +187,7 @@ const CmdFImpl: FC<{
             onClose()
           }}
         >
-          <i className="i-mgc-close-cute-re" />
+          <i className="i-mingcute-close-line" />
         </button>
       </div>
     </form>

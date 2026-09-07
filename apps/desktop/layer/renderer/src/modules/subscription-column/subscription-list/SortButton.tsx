@@ -12,16 +12,16 @@ import { IconOpacityTransition } from "~/components/ux/transition/icon"
 import { getFeedListSort, setFeedListSortBy, setFeedListSortOrder, useFeedListSort } from "../atom"
 
 const SORT_LIST = [
-  { icon: tw`i-mgc-numbers-90-sort-ascending-cute-re`, by: "count", order: "asc" },
-  { icon: tw`i-mgc-numbers-90-sort-descending-cute-re`, by: "count", order: "desc" },
+  { icon: tw`i-mingcute-numbers-90-sort-ascending-line`, by: "count", order: "asc" },
+  { icon: tw`i-mingcute-numbers-90-sort-descending-line`, by: "count", order: "desc" },
 
   {
-    icon: tw`i-mgc-az-sort-ascending-letters-cute-re`,
+    icon: tw`i-mingcute-az-sort-ascending-letters-line`,
     by: "alphabetical",
     order: "asc",
   },
   {
-    icon: tw`i-mgc-az-sort-descending-letters-cute-re`,
+    icon: tw`i-mingcute-az-sort-descending-letters-line`,
     by: "alphabetical",
     order: "desc",
   },
@@ -52,13 +52,13 @@ export const SortButton = () => {
         <IconOpacityTransition
           icon2={
             order === "asc"
-              ? tw`i-mgc-numbers-90-sort-ascending-cute-re`
-              : tw`i-mgc-numbers-90-sort-descending-cute-re`
+              ? tw`i-mingcute-numbers-90-sort-ascending-line`
+              : tw`i-mingcute-numbers-90-sort-descending-line`
           }
           icon1={
             order === "asc"
-              ? tw`i-mgc-az-sort-ascending-letters-cute-re`
-              : tw`i-mgc-az-sort-descending-letters-cute-re`
+              ? tw`i-mingcute-az-sort-ascending-letters-line`
+              : tw`i-mingcute-az-sort-descending-letters-line`
           }
           status={by === "count" ? "done" : "init"}
         />

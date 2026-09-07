@@ -14,7 +14,7 @@ export const AIErrorFallback: FallbackRender = (props) => {
       <div className="text-center">
         {/* AI-specific icon */}
         <div className="mb-6">
-          <i className="i-mgc-ai-cute-re text-5xl text-orange" />
+          <i className="i-mingcute-ai-line text-5xl text-orange" />
         </div>
 
         {/* Error title */}

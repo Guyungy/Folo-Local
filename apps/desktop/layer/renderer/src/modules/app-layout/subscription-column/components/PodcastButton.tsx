@@ -63,25 +63,25 @@ export const PodcastButton = ({ feed }: { feed: FeedModel }) => {
               <PlaybackRateButton />
             </div>
             <div className="flex flex-1 justify-center gap-4">
-              <ActionIcon className="i-mgc-back-2-cute-re" onClick={() => AudioPlayer.back(10)} />
+              <ActionIcon className="i-mingcute-back-2-line" onClick={() => AudioPlayer.back(10)} />
 
               <ActionIcon
                 className={cn("size-6", {
-                  "i-mgc-pause-cute-fi": playerValue.status === "playing",
-                  "i-mgc-loading-3-cute-re animate-spin": playerValue.status === "loading",
-                  "i-mgc-play-cute-fi": playerValue.status === "paused",
+                  "i-mingcute-pause-fill": playerValue.status === "playing",
+                  "i-mingcute-loading-3-line animate-spin": playerValue.status === "loading",
+                  "i-mingcute-play-fill": playerValue.status === "paused",
                 })}
                 onClick={handleClickPlay}
               />
 
               <ActionIcon
-                className="i-mgc-forward-2-cute-re"
+                className="i-mingcute-forward-2-line"
                 onClick={() => AudioPlayer.forward(10)}
               />
             </div>
             <div className="w-10">
               <ActionIcon
-                className="i-mgc-close-cute-re"
+                className="i-mingcute-close-line"
                 onClick={() => {
                   AudioPlayer.close()
                 }}

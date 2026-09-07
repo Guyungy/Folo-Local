@@ -33,8 +33,8 @@ export const NAVIGATION_HINTS_TEXT = {
  * Icon constants for navigation hints
  */
 export const NAVIGATION_HINTS_ICONS = {
-  ARROW_UP: "i-mgc-up-cute-re",
+  ARROW_UP: "i-mingcute-up-line",
   ARROW_LEFT_UP: "i-mingcute-arrow-left-up-line",
   ARROW_TO_DOWN: "i-mingcute-arrow-to-down-line",
-  CLOSE: "i-mgc-close-cute-re",
+  CLOSE: "i-mingcute-close-line",
 } as const

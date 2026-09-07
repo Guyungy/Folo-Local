@@ -199,7 +199,7 @@ const DropdownMenuItem = ({
       <>
         <span className="ml-4" />
         <span className="ml-auto inline-flex size-4 items-center justify-center">
-          <i className="i-mgc-check-filled size-3" />
+          <i className="i-mingcute-check-fill size-3" />
         </span>
       </>
     )}
@@ -229,7 +229,7 @@ const DropdownMenuCheckboxItem = ({
   >
     <span className="absolute left-2 flex items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator asChild>
-        <i className="i-mgc-check-filled size-3" />
+        <i className="i-mingcute-check-fill size-3" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}

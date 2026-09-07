@@ -25,7 +25,7 @@ export const MCPPresetSelectionModal = ({
           <div className="group rounded-lg border border-fill-secondary bg-material-medium p-4 transition-all hover:border-accent hover:bg-fill-quaternary hover:shadow-md">
             <div className="flex flex-col items-center space-y-3 text-center">
               <div className="flex size-12 items-center justify-center">
-                <i className="i-mgc-settings-7-cute-re size-8 text-text" />
+                <i className="i-mingcute-settings-7-line size-8 text-text" />
               </div>
 
               <h3 className="text-sm font-medium text-text">Custom</h3>
@@ -65,7 +65,7 @@ export const MCPPresetSelectionModal = ({
       {/* Future Services Hint */}
       <div className="rounded-lg bg-fill-secondary/50 p-4">
         <div className="flex items-start space-x-3">
-          <i className="i-mgc-information-cute-re mt-0.5 size-4 text-text-secondary" />
+          <i className="i-mingcute-information-line mt-0.5 size-4 text-text-secondary" />
           <div className="space-y-1">
             <p className="text-xs font-medium text-text">More services coming soon</p>
             <p className="text-xs text-text-secondary">

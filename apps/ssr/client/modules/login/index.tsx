@@ -231,7 +231,7 @@ export function Login() {
                 <p className="flex items-center justify-center gap-4 rounded-lg bg-fill-tertiary p-3">
                   <span className="blur-sm hover:blur-none">{callbackUrlWithScheme}</span>
                   <i
-                    className="i-mgc-copy-2-cute-re size-4 cursor-pointer"
+                    className="i-mingcute-copy-2-line size-4 cursor-pointer"
                     onClick={() => {
                       navigator.clipboard.writeText(callbackUrlWithScheme)
                     }}

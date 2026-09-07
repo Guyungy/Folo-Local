@@ -143,7 +143,7 @@ export const SettingCli = () => {
                       toast.success("Command copied")
                     }}
                   >
-                    <i className="i-mgc-copy-2-cute-re text-sm" />
+                    <i className="i-mingcute-copy-2-line text-sm" />
                     Copy
                   </button>
                 </div>
@@ -161,7 +161,7 @@ export const SettingCli = () => {
                       toast.success("Prompt copied")
                     }}
                   >
-                    <i className="i-mgc-copy-2-cute-re text-sm" />
+                    <i className="i-mingcute-copy-2-line text-sm" />
                     Copy
                   </button>
                 </div>

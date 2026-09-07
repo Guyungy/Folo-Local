@@ -24,7 +24,7 @@ export const MyWalletSection = ({ className }: { className?: string }) => {
     return (
       <div className="center absolute inset-0 flex">
         <LoadingWithIcon
-          icon={<i className="i-mgc-power text-folo" />}
+          icon={<i className="i-mingcute-power-line text-folo" />}
           size="large"
           className="-translate-y-full"
         />
@@ -54,7 +54,7 @@ export const MyWalletSection = ({ className }: { className?: string }) => {
             <TooltipTrigger className="mt-2 block">
               <div className="flex flex-row items-center gap-x-2 text-xs">
                 <span className="flex items-center gap-1 text-left">
-                  {t("wallet.balance.withdrawable")} <i className="i-mgc-question-cute-re" />
+                  {t("wallet.balance.withdrawable")} <i className="i-mingcute-question-line" />
                 </span>
                 <Balance className="center text-[12px] font-medium">
                   {myWallet.cashablePowerToken}

@@ -65,7 +65,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, className }) 
           <div className="flex flex-col gap-2">
             {/* Header with subtle icon */}
             <div className="flex items-center gap-2">
-              <i className="i-mgc-information-cute-re size-4 text-text-tertiary" />
+              <i className="i-mingcute-information-line size-4 text-text-tertiary" />
               <span className="text-xs font-medium text-text-secondary">{getErrorTitle()}</span>
             </div>
 

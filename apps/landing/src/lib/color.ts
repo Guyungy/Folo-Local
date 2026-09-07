@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-code-point */
 const getRandomColor = (
   lightness: [number, number],
   saturation: [number, number],

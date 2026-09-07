@@ -45,11 +45,11 @@ const formSchema = z.object({
 })
 
 const socialIconClassNames = {
-  twitter: "i-mgc-twitter-cute-fi",
-  github: "i-mgc-github-cute-fi",
-  instagram: "i-mingcute-ins-fill",
+  twitter: "i-mingcute-twitter-fill",
+  github: "i-mingcute-github-fill",
+  instagram: "i-simple-icons-instagram",
   facebook: "i-mingcute-facebook-fill",
-  youtube: "i-mgc-youtube-cute-fi",
+  youtube: "i-mingcute-youtube-fill",
   discord: "i-mingcute-discord-fill",
 }
 
@@ -195,7 +195,7 @@ export const ProfileSettingForm = ({
                           <AvatarFallback>{user?.name?.[0] || ""}</AvatarFallback>
                         </Avatar>
                         <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                          <i className="i-mgc-pic-cute-fi text-xl text-white" />
+                          <i className="i-mingcute-pic-fill text-xl text-white" />
                         </div>
                       </button>
                     </div>
@@ -263,7 +263,7 @@ export const ProfileSettingForm = ({
                           <AvatarFallback>{user?.name?.[0] || ""}</AvatarFallback>
                         </Avatar>
                         <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                          <i className="i-mgc-pic-cute-fi text-xl text-white" />
+                          <i className="i-mingcute-pic-fill text-xl text-white" />
                         </div>
                       </button>
                     </div>

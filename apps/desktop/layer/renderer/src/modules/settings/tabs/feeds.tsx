@@ -608,7 +608,7 @@ const FeedListItem = memo(
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex items-center justify-center gap-0.5 text-text-secondary">
-                  <i className="i-mgc-user-3-cute-re text-[10px]" />
+                  <i className="i-mingcute-user-3-line text-[10px]" />
                   <span className="text-[11px] tabular-nums">
                     {formatNumber(feed.subscriptionCount)}
                   </span>
@@ -628,7 +628,7 @@ const FeedListItem = memo(
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex items-center justify-center gap-0.5 text-text-secondary">
-                    <i className="i-mgc-safety-certificate-cute-re text-[10px]" />
+                    <i className="i-mingcute-safety-certificate-line text-[10px]" />
                     <span className="text-[11px] tabular-nums">
                       {Math.round(feed.updatesPerWeek)}
                       {"/w"}
@@ -643,7 +643,7 @@ const FeedListItem = memo(
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="text-[10px] text-text-secondary">
-                      <i className="i-mgc-calendar-time-add-cute-re" />
+                      <i className="i-mingcute-calendar-time-add-line" />
                       <RelativeDay date={new Date(feed.latestEntryPublishedAt)} />
                     </div>
                   </TooltipTrigger>

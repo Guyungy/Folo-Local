@@ -97,7 +97,7 @@ export const ListForm: Component<{
         </div>
       ) : feedQuery.error ? (
         <div className="center grow flex-col gap-3">
-          <i className="i-mgc-close-cute-re size-7 text-red-500" />
+          <i className="i-mingcute-close-line size-7 text-red-500" />
           <p>{t("feed_form.error_fetching_feed")}</p>
           <p className="cursor-text select-text break-all px-8 text-center">
             {getFetchErrorMessage(feedQuery.error)}
@@ -145,7 +145,7 @@ export const ListForm: Component<{
         </div>
       ) : (
         <div className="center h-full grow flex-col">
-          <i className="i-mgc-question-cute-re mb-6 size-12 text-zinc-500" />
+          <i className="i-mingcute-question-line mb-6 size-12 text-zinc-500" />
           <p>{t("feed_form.feed_not_found")}</p>
           <p>{id}</p>
         </div>

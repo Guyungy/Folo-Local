@@ -19,7 +19,7 @@ export const FixedModalCloseButton: Component<{
       size="md"
       variant="flat"
     >
-      <i className="i-mgc-close-cute-re text-lg" />
+      <i className="i-mingcute-close-line text-lg" />
     </GlassButton>
   )
 }

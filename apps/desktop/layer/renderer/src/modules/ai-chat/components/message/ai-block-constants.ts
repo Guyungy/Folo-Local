@@ -45,10 +45,10 @@ export const DEFAULT_BLOCK_STYLES = {
  * Block icons for different context block types
  */
 export const BLOCK_ICONS = {
-  mainEntry: "i-mgc-star-cute-fi",
-  mainFeed: "i-mgc-rss-cute-fi",
-  fileAttachment: "i-mgc-file-upload-cute-re",
-  unreadOnly: "i-mgc-round-cute-fi",
+  mainEntry: "i-mingcute-star-fill",
+  mainFeed: "i-mingcute-rss-fill",
+  fileAttachment: "i-mingcute-file-upload-line",
+  unreadOnly: "i-mingcute-round-fill",
 } as const
 
 /**

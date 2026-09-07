@@ -2,7 +2,7 @@ import { SettingAppearance } from "~/modules/settings/tabs/appearance"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-palette-cute-re"
+const iconName = "i-mingcute-palette-line"
 const priority = (1000 << 1) + 10
 
 export const handle = defineSettingPageData({

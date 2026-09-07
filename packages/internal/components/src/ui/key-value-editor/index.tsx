@@ -143,7 +143,7 @@ export const KeyValueEditor = ({
             disabled={disabled || pairs.length <= minRows}
             buttonClassName="size-8 shrink-0 p-0"
           >
-            <i className="i-mgc-close-cute-re" />
+            <i className="i-mingcute-close-line" />
           </Button>
         </div>
       ))}
@@ -156,7 +156,7 @@ export const KeyValueEditor = ({
         disabled={disabled}
         buttonClassName="w-full h-8"
       >
-        <i className="i-mgc-add-cute-re mr-2" />
+        <i className="i-mingcute-add-line mr-2" />
         {addButtonText}
       </Button>
     </div>

@@ -24,7 +24,7 @@ export const SwitchToMasonryButton = () => {
     <HoverCard openDelay={100}>
       <HoverCardTrigger>
         <ActionButton>
-          <i className={cn(!isMasonry ? "i-mgc-grid-cute-re" : "i-mgc-grid-2-cute-re")} />
+          <i className={cn(!isMasonry ? "i-mingcute-grid-line" : "i-mingcute-grid-2-line")} />
         </ActionButton>
       </HoverCardTrigger>
       <HoverCardPortal>
@@ -58,7 +58,7 @@ export const SwitchToMasonryButton = () => {
                   value="grid"
                   label={
                     <div className="flex items-center gap-1 text-sm">
-                      <i className="i-mgc-grid-cute-re" />
+                      <i className="i-mingcute-grid-line" />
                       <span>{t("entry_list_header.grid")}</span>
                     </div>
                   }
@@ -68,7 +68,7 @@ export const SwitchToMasonryButton = () => {
                   value="masonry"
                   label={
                     <div className="flex items-center gap-1 text-sm">
-                      <i className="i-mgc-grid-2-cute-re" />
+                      <i className="i-mingcute-grid-2-line" />
                       <span>{t("entry_list_header.masonry")}</span>
                     </div>
                   }

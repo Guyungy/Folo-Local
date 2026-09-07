@@ -32,7 +32,7 @@ export const StarredItem = memo(({ view }: { view: number }) => {
         }
       }}
     >
-      <i className="i-mgc-star-cute-fi size-4 -translate-y-px text-amber-500" />
+      <i className="i-mingcute-star-fill size-4 -translate-y-px text-amber-500" />
       {t("words.starred")}
     </div>
   )

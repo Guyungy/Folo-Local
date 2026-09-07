@@ -172,7 +172,7 @@ export function SimpleDiscoverModal({ dismiss }: { dismiss: () => void }) {
                     <Link className="text-accent underline" to="/discover" onClick={dismiss}>
                       Discover
                     </Link>
-                    <i className="i-mgc-arrow-right-up-cute-re" />
+                    <i className="i-mingcute-arrow-right-up-line" />
                   </div>
 
                   <p>to find more interesting contents.</p>
@@ -232,7 +232,7 @@ export function SimpleDiscoverModal({ dismiss }: { dismiss: () => void }) {
       {mutation.isSuccess && discoverSearchData && discoverSearchData.length === 0 && (
         <div className="mt-6 flex flex-1 items-center justify-center">
           <div className="text-center text-text-secondary">
-            <i className="i-mgc-search-3-cute-re mb-2 text-2xl" />
+            <i className="i-mingcute-search-3-line mb-2 text-2xl" />
             <p>{t("discover.no_results", "No feeds found for your search.")}</p>
           </div>
         </div>

@@ -104,7 +104,7 @@ function FeedSelectionOperationScreen() {
   if (items.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center px-8 text-center">
-        <i className="i-mgc-inbox-cute-re mb-4 text-6xl text-text-secondary" aria-hidden />
+        <i className="i-mingcute-inbox-line mb-4 text-6xl text-text-secondary" aria-hidden />
 
         <p className="text-base font-semibold text-text">
           {t.app("new_user_guide.selection.empty_title")}

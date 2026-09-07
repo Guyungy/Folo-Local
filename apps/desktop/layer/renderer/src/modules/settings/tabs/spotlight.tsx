@@ -224,7 +224,7 @@ const SpotlightColorButton = ({
     >
       {selected && (
         <span className="center absolute -bottom-1 -right-1 size-5 rounded-full bg-blue text-white shadow-sm">
-          <i className="i-mgc-check-cute-re text-xs" />
+          <i className="i-mingcute-check-line text-xs" />
         </span>
       )}
     </button>

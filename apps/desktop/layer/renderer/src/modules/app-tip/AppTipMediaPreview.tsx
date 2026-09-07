@@ -47,7 +47,7 @@ export function AppTipMediaPreview({ media }: AppTipMediaPreviewProps) {
   }
 
   if (!media?.src || hasError) {
-    const fallbackIcon = isVideo ? "i-mgc-video-cute-re" : "i-mgc-photo-album-cute-re"
+    const fallbackIcon = isVideo ? "i-mingcute-video-line" : "i-mingcute-photo-album-line"
     return (
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-fill px-6 py-10 text-center">
         <i className={`${fallbackIcon} mb-3 text-2xl text-text-tertiary`} />
@@ -83,7 +83,7 @@ export function AppTipMediaPreview({ media }: AppTipMediaPreviewProps) {
                 className="absolute right-3 top-3 flex size-10 items-center justify-center rounded-full bg-material-ultra-thick backdrop-blur-background transition-colors hover:bg-material-thick"
                 aria-label={t("new_user_dialog.replay_video")}
               >
-                <i className="i-mgc-refresh-2-cute-re text-lg text-text" />
+                <i className="i-mingcute-refresh-2-line text-lg text-text" />
               </m.button>
             )}
           </AnimatePresence>

@@ -21,7 +21,7 @@ export const AITaskList = memo<TaskListProps>(({ className }) => {
     return (
       <div className="py-8 text-center">
         <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-fill-secondary">
-          <i className="i-mgc-calendar-time-add-cute-re size-6 text-text" />
+          <i className="i-mingcute-calendar-time-add-line size-6 text-text" />
         </div>
         <h4 className="mb-1 text-sm font-medium text-text">{t("tasks.empty.title")}</h4>
         <p className="text-xs text-text-secondary">{t("tasks.empty.desc")}</p>

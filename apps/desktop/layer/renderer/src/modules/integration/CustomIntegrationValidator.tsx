@@ -20,7 +20,7 @@ export const CustomIntegrationValidator = ({
   if (validation.valid) {
     return (
       <div className={cn("flex items-center gap-2 text-sm", className)}>
-        <i className="i-mgc-check-circle-cute-re text-green" />
+        <i className="i-mingcute-check-circle-line text-green" />
         <span className="text-green">
           {t("integration.custom_integrations.validation.valid", "Template is valid")}
         </span>
@@ -31,7 +31,7 @@ export const CustomIntegrationValidator = ({
   return (
     <div className={cn("space-y-2", className)}>
       <div className="flex items-center gap-2 text-sm">
-        <i className="i-mgc-close-circle-cute-re text-red" />
+        <i className="i-mingcute-close-circle-line text-red" />
         <span className="text-red">
           {t("integration.custom_integrations.validation.invalid", "Template has errors")}
         </span>

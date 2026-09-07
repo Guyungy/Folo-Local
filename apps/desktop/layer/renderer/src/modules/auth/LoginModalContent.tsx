@@ -120,7 +120,7 @@ export const LoginModalContent = (props: LoginModalContentProps) => {
             className="flex cursor-button items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium duration-200 hover:bg-fill-secondary"
             onClick={() => setIsEmail(false)}
           >
-            <i className="i-mgc-left-cute-fi size-4" />
+            <i className="i-mingcute-left-fill size-4" />
             <span>{t("login.back")}</span>
           </MotionButtonBase>
         </m.div>
@@ -163,7 +163,7 @@ export const LoginModalContent = (props: LoginModalContentProps) => {
           className="absolute -right-2 -top-2 flex size-8 items-center justify-center rounded-lg border-0 bg-transparent transition-colors hover:bg-fill/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2"
           onClick={modal.dismiss}
         >
-          <i aria-hidden className="i-mgc-close-cute-re pointer-events-none size-4" />
+          <i aria-hidden className="i-mingcute-close-line pointer-events-none size-4" />
         </button>
       )}
       {isEmail ? (
@@ -210,7 +210,7 @@ export const LoginModalContent = (props: LoginModalContentProps) => {
                   ) : (
                     <i
                       aria-hidden
-                      className="i-mgc-mail-cute-re pointer-events-none absolute left-7 size-5 text-text-secondary"
+                      className="i-mingcute-mail-line pointer-events-none absolute left-7 size-5 text-text-secondary"
                     />
                   )}
                   <span className="pointer-events-none relative z-10">
@@ -240,7 +240,7 @@ export const LoginModalContent = (props: LoginModalContentProps) => {
                 onClick={() => handleOpenToken()}
                 className="inline-flex items-center gap-1 rounded-md px-2 py-1 transition-colors hover:bg-fill-secondary hover:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2"
               >
-                <i aria-hidden className="i-mgc-key-2-cute-re size-3.5" />
+                <i aria-hidden className="i-mingcute-key-2-line size-3.5" />
                 <span>{t("login.enter_token")}</span>
               </button>
             </div>

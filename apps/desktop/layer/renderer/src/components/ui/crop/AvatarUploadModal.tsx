@@ -384,7 +384,7 @@ export const AvatarUploadModal = ({
             className="size-full"
           >
             <div className="flex flex-col items-center gap-2 p-8">
-              <i className="i-mgc-file-upload-cute-re text-4xl text-text-secondary" />
+              <i className="i-mingcute-file-upload-line text-4xl text-text-secondary" />
               <div className="text-center">
                 <p className="text-sm font-medium">{t("profile.avatar.dropZoneText")}</p>
                 <p className="text-xs text-text-secondary">{t("profile.avatar.dropZoneSubtext")}</p>
@@ -465,11 +465,11 @@ export const AvatarUploadModal = ({
         {selectedImage ? (
           <div className="flex gap-2">
             <Button variant="outline" onClick={handleFullImageCrop} size="sm">
-              <i className="i-mgc-fullscreen-cute-re mr-1 text-sm" />
+              <i className="i-mingcute-fullscreen-line mr-1 text-sm" />
               Full Image
             </Button>
             <Button variant="outline" onClick={handleCenterCrop} size="sm">
-              <i className="i-mgc-round-cute-re mr-1 text-sm" />
+              <i className="i-mingcute-round-line mr-1 text-sm" />
               Center Crop
             </Button>
           </div>

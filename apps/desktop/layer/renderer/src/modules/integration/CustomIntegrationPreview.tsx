@@ -58,7 +58,7 @@ export const CustomIntegrationPreview = ({
           <i className="i-mingcute-eye-line" />
           {t("integration.custom_integrations.preview.title", "Preview Request")}
         </span>
-        <i className={cn("i-mgc-right-cute-re transition-transform", isOpen && "rotate-90")} />
+        <i className={cn("i-mingcute-right-line transition-transform", isOpen && "rotate-90")} />
       </Button>
 
       {isOpen && (
@@ -66,7 +66,7 @@ export const CustomIntegrationPreview = ({
           {isLoading ? (
             <div className="flex items-center justify-center rounded-lg bg-material-medium p-4">
               <div className="flex items-center gap-2">
-                <i className="i-mgc-loading-3-cute-re animate-spin" />
+                <i className="i-mingcute-loading-3-line animate-spin" />
                 <span className="text-sm text-text-tertiary">Generating preview...</span>
               </div>
             </div>

@@ -157,9 +157,9 @@ export const EntryListHeader: FC<{
         onClick={handleAiTimelineButtonClick}
       >
         {effectiveAiTimelineEnabled ? (
-          <i className="i-mgc-refresh-4-ai-cute-re text-purple-600 dark:text-purple-400" />
+          <i className="i-mingcute-refresh-4-ai-line text-purple-600 dark:text-purple-400" />
         ) : (
-          <i className="i-mgc-refresh-4-ai-cute-re text-purple-600 dark:text-purple-400" />
+          <i className="i-mingcute-refresh-4-ai-line text-purple-600 dark:text-purple-400" />
         )}
       </ActionButton>
     )
@@ -169,7 +169,7 @@ export const EntryListHeader: FC<{
     if (!showTimelineSummaryButton) return null
     return (
       <ActionButton tooltip={t("entry_list_header.timeline_summary")} onClick={summarizeTimeline}>
-        <i className="i-mgc-paint-brush-ai-cute-re text-purple-600 dark:text-purple-400" />
+        <i className="i-mingcute-paint-brush-ai-line text-purple-600 dark:text-purple-400" />
       </ActionButton>
     )
   }
@@ -255,8 +255,8 @@ export const EntryListHeader: FC<{
                 <i
                   className={
                     effectiveSortOrder === "desc"
-                      ? "i-mgc-sort-descending-cute-re"
-                      : "i-mgc-sort-ascending-cute-re"
+                      ? "i-mingcute-sort-descending-line"
+                      : "i-mingcute-sort-ascending-line"
                   }
                 />
               </ActionButton>
@@ -276,9 +276,9 @@ export const EntryListHeader: FC<{
                   }}
                 >
                   {unreadOnly ? (
-                    <i className="i-mgc-round-cute-fi" />
+                    <i className="i-mingcute-round-fill" />
                   ) : (
-                    <i className="i-mgc-round-cute-re" />
+                    <i className="i-mingcute-round-line" />
                   )}
                 </ActionButton>
                 <MarkAllReadButton shortcut />
@@ -333,7 +333,7 @@ const PreviewHeaderInfoWrapper: Component = ({ children }) => {
           })
         }}
       >
-        <i className="i-mgc-add-cute-fi size-4" />
+        <i className="i-mingcute-add-fill size-4" />
         {tCommon("words.follow")}
       </button>
     </div>

@@ -1,121 +1,95 @@
-<div align="center">
-  <a href="https://github.com/RSSNext/Folo">
-    <img src="https://github.com/RSSNext/Folo/raw/refs/heads/dev/apps/desktop/layer/renderer/public/icon.svg" alt="Logo" width="80" height="80">
-  </a>
+# Folo Local — 本地桌面版
 
-  <h3>Folo</h3>
-  <p>
-    <img src="https://github.com/user-attachments/assets/cbe924f2-d8b0-48b0-814e-7c06ccb1911c" height="60" />
-    &nbsp;&nbsp;&nbsp;
-    <img src="https://github.com/user-attachments/assets/6997a236-3df3-49d5-98a4-514f6d1a02c4" height="60" />
-    <br />
-    <br />
-    <a href="https://github.com/RSSNext/Folo/stargazers"><img src="https://img.shields.io/github/stars/RSSNext/Follow?color=ffcb47&labelColor=black&style=flat-square&logo=github&label=Stars" /></a>
-    <a href="https://github.com/RSSNext/Folo/graphs/contributors"><img src="https://img.shields.io/github/contributors/RSSNext/Folo?style=flat-square&logo=github&label=Contributors&labelColor=black" /></a>
-    <a href="https://github.com/RSSNext/Folo/releases"><img src="https://img.shields.io/github/downloads/RSSNext/Folo/total?color=369eff&labelColor=black&logo=github&style=flat-square&label=Downloads" /></a>
-    <a href="https://x.com/intent/follow?screen_name=folo_is"><img src="https://img.shields.io/badge/Follow-blue?color=1d9bf0&logo=x&labelColor=black&style=flat-square" /></a>
-    <a href="https://discord.gg/AwWcAQ7euc" target="_blank"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2FAwWcAQ7euc%3Fwith_counts%3Dtrue&query=approximate_member_count&color=5865F2&label=Discord&labelColor=black&logo=discord&logoColor=white&style=flat-square"/></a>
-    <br />
-    <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fota.folo.is%2Fversions&query=%24.store.mobile.ios.version&prefix=v&style=flat-square&logo=apple&label=App%20Store&color=FF5C00&labelColor=black&cacheSeconds=600" /></a>
-    <a href="https://play.google.com/store/apps/details?id=is.follow" target="_blank"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fota.folo.is%2Fversions&query=%24.store.mobile.android.version&prefix=v&style=flat-square&logo=google-play&label=Google%20Play&labelColor=black&color=FF5C00&cacheSeconds=600"/></a>
-    <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fota.folo.is%2Fversions&query=%24.store.desktop.mas.version&prefix=v&style=flat-square&logo=apple&label=Mac%20App%20Store&labelColor=black&color=FF5C00&cacheSeconds=600" /></a>
-    <a href="https://apps.microsoft.com/detail/9nvfzpv0v0ht?mode=direct"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fota.folo.is%2Fversions&query=%24.store.desktop.mss.version&prefix=v&style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMyAzaDguNTN2OC41M0gzek0xMi40NjkgM2g4LjUzdjguNTNoLTguNTN6TTMgMTIuNDdoOC41M1YyMUgzek0xMi40NjkgMTIuNDdoOC41M1YyMWgtOC41M3oiLz48L3N2Zz4%3D&logoColor=white&label=Microsoft%20Store&labelColor=black&color=FF5C00&cacheSeconds=600" /></a>
-    <a href="https://github.com/RSSNext/Folo/releases"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fota.folo.is%2Fversions&query=%24.github.desktop.version&prefix=v&style=flat-square&logo=github&label=Desktop&labelColor=black&color=FF5C00&cacheSeconds=600" /></a>
-    <br />
-    <br />
-    <!-- <a href="https://github.com/RSSNext/Folo" target="_blank"><img src="https://github.com/user-attachments/assets/59b957fb-59ed-4ef0-994e-f6a402a6fe2b" alt="GitHub Trending" height="55"/></a>
-    <br />
-    <br /> -->
-    <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604" target="_blank"><img src="https://github.com/user-attachments/assets/35747716-28bf-413a-822b-aa49d49f1aa0" alt="Folo Mobile" width="52%"/></a>
-    <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604" target="_blank"><img src="https://github.com/user-attachments/assets/198a0165-b8c9-45c1-9116-b473a13a8d0c" alt="Folo Desktop" width="46%"/></a>
-    <br />
-    <br />
+> [!IMPORTANT]
+> 这是基于 [RSSNext/Folo](https://github.com/RSSNext/Folo) 修改的非官方本地桌面版，
+> 不是 RSSNext 或 Folo 官方发行版，也未获得其背书。
 
-  </p>
-</div>
+Folo Local 将订阅、文章、阅读状态和 AI 配置保存在用户自己的电脑上，主要面向希望
+使用单机 RSS 阅读器、无需账号和云端后端的用户。
 
-As they say, your thoughts are what you read—and we’ve been consuming noisy feeds for too long! Folo organizes content into one timeline, keeping you updated on what matters, noise-free. Share lists, explore collections, and enjoy distraction-free browsing.
+## 与官方版本的主要区别
 
-## 👋🏻 Getting Started & Join Our Community
+- 取消注册、登录、退出和会话 Cookie。
+- 使用 Electron 内嵌本地 API，不再依赖独立远程业务后端。
+- 使用本地 SQLite 保存订阅、文章、已读、收藏、摘要和设置。
+- 支持导入旧版 Follow/Folo SQLite 数据库，并按 URL 和 ID 去重。
+- 支持普通 RSS/Atom 地址以及 `rsshub://` 协议。
+- 可在设置中配置 RSSHub 实例，提供超时和错误说明。
+- 支持部分常见但非标准 RSS 页面与备用 Feed。
+- 支持可配置的 OpenAI-compatible API，用于摘要、翻译和 AI 对话等能力。
+- 自动过滤不适合长文阅读的短内容，并改善正文与摘要回退。
+- 文章列表摘要以纯文本显示，不暴露 HTML 标签。
 
-Whether for users or professional developers, Folo will be your open information playground. Please be aware that Folo is currently under active development, and feedback is welcome for any [issue](https://github.com/RSSNext/Folo/issues) encountered.
+## 数据与隐私
 
-Feel free to try it using the following methods:
+- 默认数据库：`~/Library/Application Support/Folo/local-api.db`（macOS）。
+- API Key 和 AI 设置保存在本机数据库中，请自行保护操作系统账户和数据库备份。
+- RSS 抓取会访问订阅源或用户配置的 RSSHub 实例。
+- AI 功能启用后，所选文章内容会发送至用户配置的 OpenAI-compatible 服务。
+- 本地版不提供云端同步，也不承诺与官方 Folo 服务兼容。
 
-| Operating System | Source                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Any              | <a href="https://app.folo.is" target="_blank"><img src="https://github.com/user-attachments/assets/51ef7800-b683-4493-83e8-eb4752366997" alt="Browser" height="55"/></a>                                                                                                                                                                                                                                                            |
-| iOS              | <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604" target="_blank"><img src="https://github.com/user-attachments/assets/a94d8698-2a11-4f43-9b0a-b756b17b61f7" alt="App Store" height="55"/></a>                                                                                                                                                                                                            |
-| Android          | <a href="https://play.google.com/store/apps/details?id=is.follow" target="_blank"><img src="https://github.com/user-attachments/assets/0d178e0b-3ace-4f75-bbde-ab3c0a416ce8" alt="Google Play" height="55"/></a> <a href="https://github.com/RSSNext/Folo/releases/latest" target="_blank"><img src="https://github.com/user-attachments/assets/cf61e197-d756-4606-a8ad-fb591f79fdfc" alt="App Store" height="55"/></a>             |
-| macOS            | <a href="https://apps.apple.com/us/app/folo-follow-everything/id6739802604" target="_blank"><img src="https://github.com/user-attachments/assets/d8f8c877-4b1d-4a95-b400-30afe45d970e" alt="Mac App Store" height="55"/></a> <a href="https://github.com/RSSNext/Folo/releases/latest" target="_blank"><img src="https://github.com/user-attachments/assets/cf61e197-d756-4606-a8ad-fb591f79fdfc" alt="App Store" height="55"/></a> |
-| Windows          | <a href="https://apps.microsoft.com/detail/9nvfzpv0v0ht?mode=direct" target="_blank"><img src="https://github.com/user-attachments/assets/f689d2dc-010d-432b-909e-99ab344ddbda" alt="Microsoft Store" height="55"/></a> <a href="https://github.com/RSSNext/Folo/releases/latest" target="_blank"><img src="https://github.com/user-attachments/assets/cf61e197-d756-4606-a8ad-fb591f79fdfc" alt="App Store" height="55"/></a>      |
-| Linux            | <a href="https://github.com/RSSNext/Folo/releases/latest" target="_blank"><img src="https://github.com/user-attachments/assets/cf61e197-d756-4606-a8ad-fb591f79fdfc" alt="App Store" height="55"/></a>                                                                                                                                                                                                                              |
+## macOS 下载
 
-You can also install using the following methods maintained by our community:
+Apple Silicon 用户可从本仓库的
+[Releases](https://github.com/Guyungy/Folo/releases) 下载最新版 ZIP。
 
-- If you are using Arch Linux, you can install the package [folo-appimage](https://aur.archlinux.org/packages/folo-appimage) that is maintained by [timochan](https://github.com/ttimochan) and [grtsinry43](https://github.com/grtsinry43).
-- If you are using Linux with [Flatpak](https://flatpak.org), you can install [Folo](https://flatpark.org/apps/is.folo.Folo/) from [FlatPark](https://flatpark.org) that is maintained by [Komh](https://github.com/jing2uo).
-- If you are using Nix, you can install the package [follow](https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/fo/follow/package.nix) that is maintained by [iosmanthus](https://github.com/iosmanthus).
-- If you are using macOS with [Homebrew](https://brew.sh), you can install the cask [folo](https://formulae.brew.sh/cask/folo) that is maintained by [realSunyz](https://github.com/realSunyz).
-- If you are using Windows with [Scoop](https://scoop.sh), you can install the manifest [folo](https://github.com/cscnk52/cetacea/blob/master/bucket/folo.json) that is maintained by [cscnk52](https://github.com/cscnk52).
+当前构建使用 ad-hoc 签名，未经过 Apple 公证。首次启动如果被 Gatekeeper 拦截，请在
+“系统设置 → 隐私与安全性”中确认打开。请仅从本仓库 Release 下载，并核对发布页提供的
+SHA-256。
 
-| [![Discord](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2FAwWcAQ7euc%3Fwith_counts%3Dtrue&query=approximate_member_count&color=5865F2&label=Discord&labelColor=black&logo=discord&logoColor=white&style=flat-square)](https://discord.gg/AwWcAQ7euc) | Join our Discord server to connect with developers, request features, and receive support. |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
-| [![](https://img.shields.io/badge/any_text-Follow-blue?color=2CA5E0&label=_&logo=x&labelColor=black&style=flat-square)](https://x.com/intent/follow?screen_name=folo_is)                                                                                                                         | Follow us on X/Twitter for product updates and to join in on reward activities.            |
+## 本地开发
 
-> \[!IMPORTANT]
->
-> **Star Us**, You will receive all release notifications from GitHub without any delay \~
+项目使用 pnpm workspace 和 Turbo：
 
-![Image](https://github.com/user-attachments/assets/a08f9437-b24c-4388-8f01-2826e09eeaf2)
+```bash
+pnpm install
 
-<a href="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats?repo_id=783512367" target="_blank" style="display: block" align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=783512367&image_size=auto&color_scheme=dark" width="655" height="auto">
-    <img alt="Performance Stats of RSSNext/Folo - Last 28 days" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=783512367&image_size=auto&color_scheme=light" width="655" height="auto">
-  </picture>
-</a>
+# 浏览器渲染器
+pnpm --dir apps/desktop run dev:web
 
-## ✨ Features
+# 完整 Electron 桌面版
+pnpm --dir apps/desktop run dev:electron
 
-### Customized Information Hub
+# 构建 Electron 应用
+pnpm --dir apps/desktop run build:electron-vite
+pnpm --dir apps/desktop exec electron-forge package
+```
 
-Subscribe to a vast range of feeds and curated lists. Curate your favorites and keep track of what matters most to you.
+数据库导入：
 
-![](https://github.com/user-attachments/assets/11dc7d21-f5d8-4e41-9269-24fc352aa02b)
+```bash
+DATABASE_PATH="/path/to/local-api.db" \
+  pnpm --dir apps/server import:follow-db -- "/path/to/follow.db"
+```
 
-### AI At Your Fingertips
+导入前请退出应用并备份目标数据库。
 
-A smarter and more efficient browsing with AI-powered features like translation, summary, and more.
+## 修改记录
 
-![](https://github.com/user-attachments/assets/37cf4f2f-4c5e-4775-86e8-2fa1a1b2ecf5)
+本地版修改始于 2026 年 9 月，主要实现集中在：
 
-### Dynamic Content Support
+- `apps/server`：本地 API、SQLite、RSS/RSSHub、AI 与数据库导入。
+- `apps/desktop/layer/main`：在 Electron 主进程内嵌本地 API。
+- `apps/desktop/layer/renderer`：本地设置、错误提示及本地版交互。
 
-Because we know content is more than just text. From articles to videos, images to audio — Folo gets it all covered.
+完整变更可查看 [提交记录](https://github.com/Guyungy/Folo/commits/dev) 和各版本
+[Release Notes](https://github.com/Guyungy/Folo/releases)。
 
-![](https://github.com/user-attachments/assets/d1379fd6-8767-476e-b0dc-d61753715e26)
+## 上游项目与署名
 
-### More Than Just An App
+本项目派生自 [RSSNext/Folo](https://github.com/RSSNext/Folo)，感谢原项目作者与所有贡献者。
+“Folo”名称及原项目美术资源归其各自权利人所有。本地版应被视为社区修改版本。
 
-This isn’t just another app. Folo is a community — introducing a new era of openness and community-driven experience.
+为遵守上游额外条款，本地桌面构建不再使用上游 `icons/mgc` 中标记为不可再分发的资源。
+界面图标改用 Apache-2.0 许可的
+[`@iconify-json/mingcute`](https://www.npmjs.com/package/@iconify-json/mingcute)
+及其他依赖各自许可的图标。
 
-![](https://github.com/user-attachments/assets/62004a04-eaea-4f5d-bfbf-4e68b6b90286)
+## 许可证与源码
 
-## 🤝 Contributing
+Folo 主体及本地版修改依据 GNU Affero General Public License version 3 发布，完整条款见
+[`LICENSE`](./LICENSE)，附加说明见 [`NOTICE.md`](./NOTICE.md)。对应源代码就是本仓库中与
+下载包 Release 标签相同的提交，可从 Release 页面下载源码归档。
 
-You are welcome to join the open source community to build together, please check our [Contributing Guide](./CONTRIBUTING.md) for more details.
-
-## 🔏 Code signing policy
-
-Folo for Windows uses free code signing provided by [SignPath.io](https://about.signpath.io/), a certificate by [SignPath Foundation](https://signpath.org/).
-
-Folo for macOS and iOS is signed and notarized by [Apple Developer Program](https://developer.apple.com/programs/).
-
-All released files are verified with [GitHub artifact attestations](https://github.com/RSSNext/Folo/attestations) to ensure their provenance and integrity.
-
-## 📝 License
-
-Folo is licensed under the GNU Affero General Public License version 3 with the addition of the following special exception:
-
-All content in the `icons/mgc` directory is copyrighted by https://mgc.mingcute.com/ and cannot be redistributed.
+本软件按“原样”提供，不附带任何明示或默示担保，包括但不限于适销性或特定用途适用性的
+担保。使用者自行承担运行、数据迁移、第三方 RSS/RSSHub 与 AI 服务产生的风险。

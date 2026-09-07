@@ -172,7 +172,7 @@ export const useFeedActions = ({
           listByView.length > 0 && new MenuItemSeparator(),
           new MenuItemText({
             label: t("sidebar.feed_actions.create_list"),
-            icon: <i className="i-mgc-add-cute-re" />,
+            icon: <i className="i-mingcute-add-line" />,
             click() {
               present({
                 title: t("sidebar.feed_actions.create_list"),
@@ -209,7 +209,7 @@ export const useFeedActions = ({
           listByView.length > 0 && MenuItemSeparator.default,
           new MenuItemText({
             label: t("sidebar.feed_column.context_menu.create_category"),
-            icon: <i className="i-mgc-add-cute-re" />,
+            icon: <i className="i-mingcute-add-line" />,
             click() {
               presentCategoryCreationModal(view!, isMultipleSelection ? feedIds : [feedId])
             },

@@ -44,7 +44,7 @@ const devPrint = (): PluginOption => ({
 })
 
 const isWebBuild = process.env.WEB_BUILD === "1"
-// eslint-disable-next-line no-console
+
 console.log(green("Build type:"), isWebBuild ? "Web" : "Unknown")
 
 const proxyConfig = {

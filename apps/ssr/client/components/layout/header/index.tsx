@@ -104,7 +104,7 @@ export const Header = () => {
                 isCompact ? "h-8" : "h-10",
               )}
             >
-              <i className="i-mgc-github-cute-fi text-base" />
+              <i className="i-mingcute-github-fill text-base" />
               GitHub
             </m.a>
 

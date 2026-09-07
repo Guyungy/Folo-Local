@@ -114,7 +114,7 @@ export function getFileCategoryFromMimeType(mimeType: string): FileCategory {
 export function getFileIconName(category: FileCategory): string {
   switch (category) {
     case "image": {
-      return tw`i-mgc-pic-cute-re`
+      return tw`i-mingcute-pic-line`
     }
     case "document": {
       return tw`i-mingcute-file-line`
@@ -123,7 +123,7 @@ export function getFileIconName(category: FileCategory): string {
       return tw`i-mingcute-text-line`
     }
     default: {
-      return tw`i-mgc-attachment-cute-re`
+      return tw`i-mingcute-attachment-line`
     }
   }
 }

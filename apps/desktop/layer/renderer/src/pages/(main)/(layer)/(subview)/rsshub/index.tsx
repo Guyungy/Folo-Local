@@ -63,7 +63,7 @@ export function Component() {
         {/* Add Instance Section */}
         <div className="mb-8 flex justify-center">
           <Button onClick={handleAddInstance}>
-            <i className="i-mgc-add-cute-re mr-2 size-4" />
+            <i className="i-mingcute-add-line mr-2 size-4" />
             <span>{t("rsshub.add_new_instance")}</span>
           </Button>
         </div>

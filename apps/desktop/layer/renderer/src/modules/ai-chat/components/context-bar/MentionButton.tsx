@@ -117,7 +117,7 @@ export const MentionButton: Component = memo(() => {
         className="flex size-7 items-center justify-center rounded-md border border-border bg-material-medium text-text-secondary transition-colors hover:bg-material-thin hover:text-text-secondary"
         title="Add Context"
       >
-        <i className="i-mgc-at-cute-re size-3.5" />
+        <i className="i-mingcute-at-line size-3.5" />
       </button>
 
       {dropdownProps ? (

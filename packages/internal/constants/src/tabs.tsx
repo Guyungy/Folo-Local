@@ -27,7 +27,7 @@ export interface ViewDefinition {
 
 const viewAll: ViewDefinition = {
   name: "feed_view_type.all",
-  icon: <i className="i-mgc-bubble-cute-fi" />,
+  icon: <i className="i-mingcute-bubble-fill" />,
   className: "text-folo",
   peerClassName: "peer-checked:text-folo dark:peer-checked:text-folo",
   mentionClassName: "bg-folo/10 text-folo border-folo/20 hover:bg-folo/20 hover:border-folo/30",
@@ -44,7 +44,7 @@ const viewAll: ViewDefinition = {
 const views: ViewDefinition[] = [
   {
     name: "feed_view_type.articles",
-    icon: <i className="i-mgc-paper-cute-fi" />,
+    icon: <i className="i-mingcute-paper-fill" />,
     className: "text-lime-600 dark:text-lime-500",
     peerClassName: "peer-checked:text-lime-600 dark:peer-checked:text-lime-500",
     mentionClassName:
@@ -57,7 +57,7 @@ const views: ViewDefinition[] = [
   },
   {
     name: "feed_view_type.social_media",
-    icon: <i className="i-mgc-thought-cute-fi" />,
+    icon: <i className="i-mingcute-thought-fill" />,
     className: "text-sky-600 dark:text-sky-500",
     peerClassName: "peer-checked:text-sky-600 peer-checked:dark:text-sky-500",
     mentionClassName:
@@ -72,7 +72,7 @@ const views: ViewDefinition[] = [
   },
   {
     name: "feed_view_type.pictures",
-    icon: <i className="i-mgc-pic-cute-fi" />,
+    icon: <i className="i-mingcute-pic-fill" />,
     className: "text-green-600 dark:text-green-500",
     peerClassName: "peer-checked:text-green-600 peer-checked:dark:text-green-500",
     mentionClassName:
@@ -88,7 +88,7 @@ const views: ViewDefinition[] = [
   },
   {
     name: "feed_view_type.videos",
-    icon: <i className="i-mgc-video-cute-fi" />,
+    icon: <i className="i-mingcute-video-fill" />,
     className: "text-red-600 dark:text-red-500",
     peerClassName: "peer-checked:text-red-600 peer-checked:dark:text-red-500",
     mentionClassName:
@@ -104,7 +104,7 @@ const views: ViewDefinition[] = [
   },
   {
     name: "feed_view_type.audios",
-    icon: <i className="i-mgc-mic-cute-fi" />,
+    icon: <i className="i-mingcute-mic-fill" />,
     className: "text-purple-600 dark:text-purple-500",
     peerClassName: "peer-checked:text-purple-600 peer-checked:dark:text-purple-500",
     mentionClassName:
@@ -118,7 +118,7 @@ const views: ViewDefinition[] = [
   },
   {
     name: "feed_view_type.notifications",
-    icon: <i className="i-mgc-announcement-cute-fi" />,
+    icon: <i className="i-mingcute-announcement-fill" />,
     className: "text-yellow-600 dark:text-yellow-500",
     peerClassName: "peer-checked:text-yellow-600 peer-checked:dark:text-yellow-500",
     mentionClassName:

@@ -240,9 +240,9 @@ const InlineFoloReference: React.FC<
       onClick={handleClick}
     >
       {isEntry ? (
-        <i className="i-mgc-docment-cute-re size-[1em]" />
+        <i className="i-mingcute-document-line size-[1em]" />
       ) : (
-        <i className="i-mgc-rss-2-cute-fi size-[1em]" />
+        <i className="i-mingcute-rss-2-fill size-[1em]" />
       )}
     </button>
   )
@@ -279,7 +279,7 @@ const RelatedEntryLink = (props: LinkProps) => {
       }}
     >
       {children}
-      <i className="i-mgc-arrow-right-up-cute-re size-[0.9em] translate-y-[2px] opacity-70" />
+      <i className="i-mingcute-arrow-right-up-line size-[0.9em] translate-y-[2px] opacity-70" />
     </button>
   )
 }

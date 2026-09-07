@@ -68,7 +68,7 @@ export const EnvironmentDebugModalContent = () => {
             <div key={key} className="flex w-full items-center gap-2">
               <span className="flex flex-1">{key}</span>
               <Button variant="outline" type="button" onClick={() => action()}>
-                <i className="i-mgc-play-cute-fi size-3" />
+                <i className="i-mingcute-play-fill size-3" />
                 <span className="ml-1">Run</span>
               </Button>
             </div>
@@ -99,7 +99,7 @@ export const EnvironmentIndicator = () => {
           }}
         >
           <div className="center fixed bottom-0 right-0 z-[99999] flex rounded-tl bg-folo px-1 py-0.5 text-xs text-white">
-            {role}:{DEV && <i className="i-mgc-bug-cute-re size-3" />}
+            {role}:{DEV && <i className="i-mingcute-bug-line size-3" />}
             {MODE}
           </div>
         </button>

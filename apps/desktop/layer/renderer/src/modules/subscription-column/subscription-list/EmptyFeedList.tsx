@@ -34,7 +34,7 @@ export const EmptyFeedList = memo(({ onClick }: { onClick?: (e: React.MouseEvent
           className="flex flex-1 cursor-menu flex-col items-center justify-center gap-2"
           onClick={handleClick}
         >
-          <i className="i-mgc-arrow-right-up-cute-re text-3xl" />
+          <i className="i-mingcute-arrow-right-up-line text-3xl" />
           <span className="text-balance text-center text-sm">
             {t("sidebar.already_on_discover_page")}
           </span>
@@ -44,7 +44,7 @@ export const EmptyFeedList = memo(({ onClick }: { onClick?: (e: React.MouseEvent
           className="flex flex-1 cursor-menu flex-col items-center justify-center gap-2"
           onClick={handleClick}
         >
-          <i className="i-mgc-add-cute-re text-3xl" />
+          <i className="i-mingcute-add-line text-3xl" />
           <span className="text-base">{t("sidebar.add_more_feeds")}</span>
         </div>
       )}

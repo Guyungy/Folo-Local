@@ -108,7 +108,7 @@ export const MarkAllReadButton = ({
         markAllByRoute(getRouteParams())
       }}
     >
-      <i className="i-mgc-check-circle-cute-re" />
+      <i className="i-mingcute-check-circle-line" />
     </ActionButton>
   )
 }
@@ -162,7 +162,7 @@ export const FlatMarkAllReadButton: FC<
           .catch(() => setStatus("initial"))
       }}
     >
-      <i key={2} className={cn("i-mgc-check-circle-cute-re", iconClassName)} />
+      <i key={2} className={cn("i-mingcute-check-circle-line", iconClassName)} />
       <span className="duration-200">
         {status === "done" ? (
           t("mark_all_read_button.done")

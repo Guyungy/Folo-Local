@@ -75,7 +75,7 @@ export const AnimatedCommandButton: FC<AnimatedCommandButtonProps & HTMLMotionPr
     >
       <AnimatePresence mode="wait">
         {pressed ? (
-          <m.i key="copied" className="i-mgc-check-filled size-4" {...iconVariants} />
+          <m.i key="copied" className="i-mingcute-check-fill size-4" {...iconVariants} />
         ) : (
           cloneElement(icon, {
             className: cn(icon.props.className, "size-4"),

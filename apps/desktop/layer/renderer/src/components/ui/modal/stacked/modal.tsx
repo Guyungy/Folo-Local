@@ -395,7 +395,7 @@ export const ModalInternal = memo(function Modal({
                           tabIndex={1}
                           onClick={close}
                         >
-                          <i className="i-mgc-close-cute-re" />
+                          <i className="i-mingcute-close-line" />
                         </Dialog.DialogClose>
                       )}
                     </div>

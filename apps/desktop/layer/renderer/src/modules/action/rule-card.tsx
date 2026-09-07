@@ -192,7 +192,7 @@ const RuleCardToolbar = ({ index }: { index: number }) => {
           buttonClassName="size-8 p-0"
           onClick={handleDelete}
         >
-          <i className="i-mgc-delete-2-cute-re" />
+          <i className="i-mingcute-delete-2-line" />
         </Button>
       </div>
     </div>

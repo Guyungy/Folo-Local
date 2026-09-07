@@ -22,7 +22,7 @@ export function DiscoverInboxList() {
           rel="noreferrer"
           className="inline-flex w-auto items-center gap-1 rounded-full border border-accent px-2 py-px text-sm text-accent"
         >
-          <i className="i-mgc-book-6-cute-re" />
+          <i className="i-mingcute-book-6-line" />
           <span>{t("discover.inbox.webhooks_docs")}</span>
         </a>
       </div>
@@ -38,7 +38,7 @@ export function DiscoverInboxList() {
             })
           }
         >
-          <i className="i-mgc-add-cute-re" />
+          <i className="i-mingcute-add-line" />
           {t("discover.inbox_create")}
         </Button>
       </div>

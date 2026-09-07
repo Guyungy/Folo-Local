@@ -18,7 +18,7 @@ function EntryHeaderMetaImpl() {
             className="flex min-w-0 flex-1 shrink items-end gap-2 truncate text-title3 leading-tight text-text"
           >
             <span className="shrink truncate font-bold">{entryTitleMeta.entryTitle}</span>
-            <i className="i-mgc-line-cute-re size-[10px] shrink-0 translate-y-[-3px] rotate-[-25deg] text-text-secondary" />
+            <i className="i-mingcute-line-line size-[10px] shrink-0 translate-y-[-3px] rotate-[-25deg] text-text-secondary" />
             <span className="shrink -translate-y-px truncate text-headline text-text-secondary">
               {entryTitleMeta.feedTitle}
             </span>

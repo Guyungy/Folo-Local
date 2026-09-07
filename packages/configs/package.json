@@ -15,8 +15,6 @@
     "@iconify-json/logos": "1.2.11",
     "@iconify-json/mingcute": "1.2.7",
     "@iconify-json/simple-icons": "1.2.89",
-    "@iconify/tools": "5.0.12",
-    "@iconify/utils": "3.1.4",
     "@tailwindcss/container-queries": "0.1.1",
     "@tailwindcss/typography": "0.5.20",
     "es-toolkit": "1.49.0",
@@ -29,7 +27,6 @@
   "devDependencies": {
     "postcss": "8.5.16",
     "postcss-js": "5.1.0",
-    "tailwindcss": "4.3.2",
-    "workspace-root": "3.3.1"
+    "tailwindcss": "4.3.2"
   }
 }

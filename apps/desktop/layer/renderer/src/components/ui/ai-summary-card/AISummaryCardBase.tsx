@@ -65,7 +65,7 @@ const DefaultEmptyState = ({
         {/* Icon with glow */}
         <div className="relative flex-shrink-0">
           <div className="center relative size-9 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500">
-            <i className="i-mgc-power-mono text-xl text-white" />
+            <i className="i-mingcute-power-line text-xl text-white" />
           </div>
         </div>
 
@@ -81,7 +81,7 @@ const DefaultEmptyState = ({
           {/* CTA */}
           <div className="flex items-center gap-1 text-xs font-medium text-purple-600 dark:text-purple-400">
             <span>{t("ai.summary_upgrade_view_plans")}</span>
-            <i className="i-mgc-right-cute-re text-sm" />
+            <i className="i-mingcute-right-line text-sm" />
           </div>
         </div>
       </button>
@@ -150,7 +150,7 @@ export const AISummaryCardBase: React.FC<AISummaryCardBaseProps> = ({
             <div className="center relative">
               <i
                 className={cn(
-                  "i-mgc-ai-cute-re text-lg",
+                  "i-mingcute-ai-line text-lg",
                   isLoading
                     ? "text-purple-500/70 dark:text-purple-400/70"
                     : "text-purple-600 dark:text-purple-400",
@@ -194,7 +194,7 @@ export const AISummaryCardBase: React.FC<AISummaryCardBaseProps> = ({
                 "sm:opacity-0 sm:duration-300 sm:group-hover:translate-y-0 sm:group-hover:opacity-100",
               )}
             >
-              <i className="i-mgc-ai-cute-re text-base" />
+              <i className="i-mingcute-ai-line text-base" />
               <span>Ask AI</span>
             </MotionButtonBase>
           )}

@@ -106,7 +106,7 @@ export const ChatHistoryDropdown = ({
 
   const defaultTrigger = (
     <ActionButton tooltip="Chat History" className="relative">
-      <i className="i-mgc-history-cute-re size-5 text-text-secondary" />
+      <i className="i-mingcute-history-line size-5 text-text-secondary" />
       {(hasUnreadRegularSessions || hasUnreadTaskSessions) && (
         <span
           className="absolute right-1 top-1 block size-2 rounded-full bg-accent shadow-[0_0_0_2px_var(--color-bg-default)] dark:shadow-[0_0_0_2px_var(--color-bg-default)]"
@@ -147,7 +147,7 @@ export const ChatHistoryDropdown = ({
           {activeTab === "chats" ? (
             loading && sessions.length === 0 ? (
               <div className="flex items-center justify-center py-8">
-                <i className="i-mgc-loading-3-cute-re size-5 animate-spin text-text-secondary" />
+                <i className="i-mingcute-loading-3-line size-5 animate-spin text-text-secondary" />
               </div>
             ) : regularSessions.length > 0 ? (
               <>
@@ -197,7 +197,7 @@ export const ChatHistoryDropdown = ({
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleScheduleActionClick}>
-                    <i className="i-mgc-add-cute-re mr-2 size-4" />
+                    <i className="i-mingcute-add-line mr-2 size-4" />
                     New Task
                   </DropdownMenuItem>
                 </>

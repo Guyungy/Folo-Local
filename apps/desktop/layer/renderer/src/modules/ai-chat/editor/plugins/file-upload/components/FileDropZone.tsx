@@ -53,7 +53,7 @@ export const FileDropZone = memo(({ isVisible, isDragOver, className }: FileDrop
                 ease: "easeInOut",
               }}
             >
-              <i className="i-mgc-file-upload-cute-re size-8" />
+              <i className="i-mingcute-file-upload-line size-8" />
             </m.div>
 
             <p className={cn("font-medium text-text", isDragOver && "text-accent")}>

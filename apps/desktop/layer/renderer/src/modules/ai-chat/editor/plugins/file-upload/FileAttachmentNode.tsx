@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -122,18 +121,20 @@ function FileAttachmentPill({ attachment }: { attachment: FileAttachment }) {
         border: "1px solid var(--border)",
       }}
     >
-      <i className="i-mgc-attachment-cute-re" />
+      <i className="i-mingcute-attachment-line" />
       <span className="max-w-32 truncate" title={attachment.name}>
         {attachment.name}
       </span>
       {attachment.uploadStatus === "uploading" && (
-        <i className="i-mgc-loading-3-cute-re animate-spin text-accent" />
+        <i className="i-mingcute-loading-3-line animate-spin text-accent" />
       )}
       {attachment.uploadStatus === "processing" && (
-        <i className="i-mgc-loading-3-cute-re animate-spin text-accent" />
+        <i className="i-mingcute-loading-3-line animate-spin text-accent" />
       )}
-      {attachment.uploadStatus === "error" && <i className="i-mgc-close-cute-re text-red" />}
-      {attachment.uploadStatus === "completed" && <i className="i-mgc-check-cute-re text-green" />}
+      {attachment.uploadStatus === "error" && <i className="i-mingcute-close-line text-red" />}
+      {attachment.uploadStatus === "completed" && (
+        <i className="i-mingcute-check-line text-green" />
+      )}
     </span>
   )
 }
@@ -141,7 +142,7 @@ function FileAttachmentPill({ attachment }: { attachment: FileAttachment }) {
 function MissingFilePill() {
   return (
     <span className="inline-flex items-center gap-1 rounded border border-border bg-fill px-2 py-1 text-xs text-gray">
-      <i className="i-mgc-attachment-cute-re" />
+      <i className="i-mingcute-attachment-line" />
       <span className="max-w-32 truncate">File not found</span>
     </span>
   )

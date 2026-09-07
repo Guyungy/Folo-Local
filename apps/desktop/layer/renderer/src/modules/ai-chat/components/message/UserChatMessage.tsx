@@ -181,7 +181,7 @@ export const UserChatMessage: React.FC<UserChatMessageProps> = React.memo(({ mes
                   className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-text-secondary transition-colors hover:bg-fill-secondary"
                   title="Edit message"
                 >
-                  <i className="i-mgc-edit-cute-re size-3" />
+                  <i className="i-mingcute-edit-line size-3" />
                   <span>Edit</span>
                 </button>
                 <button
@@ -190,7 +190,7 @@ export const UserChatMessage: React.FC<UserChatMessageProps> = React.memo(({ mes
                   className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-text-secondary transition-colors hover:bg-fill-secondary"
                   title="Retry"
                 >
-                  <i className="i-mgc-refresh-2-cute-re size-3" />
+                  <i className="i-mingcute-refresh-2-line size-3" />
                   <span>Retry</span>
                 </button>
               </m.div>

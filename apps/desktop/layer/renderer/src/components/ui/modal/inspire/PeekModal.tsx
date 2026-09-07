@@ -70,7 +70,7 @@ export const PeekModal = (props: PropsWithChildren<PeekModalProps>) => {
               size="md"
               variant="flat"
             >
-              <i className="i-mgc-fullscreen-2-cute-re text-lg" />
+              <i className="i-mingcute-fullscreen-2-line text-lg" />
             </GlassButton>
           )}
           <FixedModalCloseButton onClick={dismiss} />

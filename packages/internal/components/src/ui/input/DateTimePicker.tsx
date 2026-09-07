@@ -176,7 +176,7 @@ export const DateTimePicker = memo<DateTimePickerProps>(
                 className,
               )}
             >
-              <i className="i-mgc-calendar-time-add-cute-re mr-2 size-4" />
+              <i className="i-mingcute-calendar-time-add-line mr-2 size-4" />
               {isRangeMode
                 ? formatRangeButtonLabel()
                 : value

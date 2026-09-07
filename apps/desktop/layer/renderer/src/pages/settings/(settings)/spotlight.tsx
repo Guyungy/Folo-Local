@@ -2,7 +2,7 @@ import { SettingSpotlight } from "~/modules/settings/tabs/spotlight"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-flashlight-cute-re"
+const iconName = "i-mingcute-flashlight-line"
 const priority = (1000 << 1) + 20
 
 export const handle = defineSettingPageData({

@@ -4,7 +4,7 @@ import { defineSettingPageData } from "~/modules/settings/utils"
 
 const priority = Number.MAX_SAFE_INTEGER
 export const handle = defineSettingPageData({
-  icon: "i-mgc-information-cute-re",
+  icon: "i-mingcute-information-line",
   name: "titles.about",
   priority,
 })

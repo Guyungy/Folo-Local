@@ -125,7 +125,7 @@ export const AIChatMessage: React.FC<AIChatMessageProps> = React.memo(
                 className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-text-secondary transition-colors hover:bg-fill-tertiary"
                 title="Copy message"
               >
-                <i className="i-mgc-copy-2-cute-re size-3" />
+                <i className="i-mingcute-copy-2-line size-3" />
                 <span>Copy</span>
               </button>
 
@@ -134,7 +134,7 @@ export const AIChatMessage: React.FC<AIChatMessageProps> = React.memo(
                   type="button"
                   className="absolute right-0 flex items-center gap-1 rounded-md px-2 py-1 text-xs text-text-secondary transition-colors hover:bg-fill-tertiary"
                 >
-                  <i className="i-mgc-information-cute-re size-3" />
+                  <i className="i-mingcute-information-line size-3" />
                 </button>
               </TokenUsagePill>
             </div>
@@ -156,7 +156,7 @@ export const AIChatWaitingIndicator: React.FC = () => {
       className="mb-4"
     >
       <div className="flex items-center gap-2 rounded-full text-xs text-text-secondary">
-        <i className="i-mgc-loading-3-cute-re size-3 animate-spin" />
+        <i className="i-mingcute-loading-3-line size-3 animate-spin" />
         <span className="font-medium">Thinking…</span>
       </div>
     </m.div>

@@ -31,7 +31,7 @@ export const AITimelineLoadingOverlay: FC<Props> = ({ visible, label }) => (
 
         <div className="ai-timeline-loading__badge flex items-center gap-2 px-4 py-1.5 text-xs font-semibold text-text">
           <span className="inline-flex size-2 rounded-full bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.7)]" />
-          <span className="i-mgc-robot-2-cute-re text-base text-orange-400 dark:text-orange-300" />
+          <span className="i-mingcute-robot-line text-base text-orange-400 dark:text-orange-300" />
           <span>{label}</span>
         </div>
       </m.div>

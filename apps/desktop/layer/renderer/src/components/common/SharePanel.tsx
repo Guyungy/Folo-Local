@@ -35,7 +35,7 @@ const socialOptions: SocialShareOption[] = [
   {
     id: "twitter",
     label: "X",
-    icon: tw`i-mgc-social-x-cute-re`,
+    icon: tw`i-mingcute-social-x-line`,
     url: "https://x.com/intent/tweet?text={text}&url={url}",
     color: "text-white",
     bgColor: "bg-black",
@@ -43,7 +43,7 @@ const socialOptions: SocialShareOption[] = [
   {
     id: "facebook",
     label: "Facebook",
-    icon: tw`i-mgc-facebook-cute-re`,
+    icon: tw`i-mingcute-facebook-line`,
     url: "https://www.facebook.com/sharer/sharer.php?u={url}",
     color: "text-white",
     bgColor: "bg-[#1877F2]",
@@ -51,7 +51,7 @@ const socialOptions: SocialShareOption[] = [
   {
     id: "telegram",
     label: "Telegram",
-    icon: tw`i-mgc-telegram-cute-re`,
+    icon: tw`i-mingcute-telegram-line`,
     url: "https://t.me/share/url?url={url}&text={text}",
     color: "text-white",
     bgColor: "bg-[#0088CC]",
@@ -59,7 +59,7 @@ const socialOptions: SocialShareOption[] = [
   {
     id: "weibo",
     label: "微博",
-    icon: tw`i-mgc-weibo-cute-re`,
+    icon: tw`i-mingcute-weibo-line`,
     url: "https://service.weibo.com/share/share.php?url={url}&title={text}",
     color: "text-white",
     bgColor: "bg-[#E6162D]",
@@ -193,7 +193,7 @@ export const SharePanel = ({ entryId }: SharePanelProps) => {
           {
             id: "native-share",
             label: t("share.system_share"),
-            icon: "i-mgc-share-forward-cute-re",
+            icon: "i-mingcute-share-forward-line",
             action: handleNativeShare,
             color: "text-blue-500",
           },
@@ -202,7 +202,7 @@ export const SharePanel = ({ entryId }: SharePanelProps) => {
     {
       id: "copy-link",
       label: t("share.copy_link"),
-      icon: "i-mgc-link-cute-re",
+      icon: "i-mingcute-link-line",
       action: handleCopyLink,
     },
   ]

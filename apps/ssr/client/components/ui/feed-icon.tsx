@@ -240,7 +240,7 @@ export function FeedIcon({
     }
     case target?.type === "inbox": {
       ImageElement = (
-        <i className={cn("i-mgc-inbox-cute-fi shrink-0", marginClassName)} style={sizeStyle} />
+        <i className={cn("i-mingcute-inbox-fill shrink-0", marginClassName)} style={sizeStyle} />
       )
       break
     }
@@ -250,7 +250,7 @@ export function FeedIcon({
     }
     default: {
       ImageElement = (
-        <i className={cn("i-mgc-link-cute-re shrink-0", marginClassName)} style={sizeStyle} />
+        <i className={cn("i-mingcute-link-line shrink-0", marginClassName)} style={sizeStyle} />
       )
       break
     }

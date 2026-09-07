@@ -84,21 +84,21 @@ interface CustomIntegrationModalProps {
 // Constants
 const HTTP_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const
 const INTEGRATION_TYPES = [
-  { value: "http", icon: "i-mgc-world-2-cute-re" },
-  { value: "url-scheme", icon: "i-mgc-link-cute-re" },
+  { value: "http", icon: "i-mingcute-world-2-line" },
+  { value: "url-scheme", icon: "i-mingcute-link-line" },
 ] as const
 
 const ICON_OPTIONS = [
-  { value: "i-mgc-bookmark-cute-re", key: "bookmark" },
-  { value: "i-mgc-pic-cute-re", key: "picture" },
-  { value: "i-mgc-share-forward-cute-re", key: "share" },
-  { value: "i-mgc-external-link-cute-re", key: "external_link" },
-  { value: "i-mgc-save-cute-re", key: "save" },
-  { value: "i-mgc-documents-cute-re", key: "document" },
-  { value: "i-mgc-link-cute-re", key: "link" },
-  { value: "i-mgc-star-cute-re", key: "star" },
-  { value: "i-mgc-download-2-cute-re", key: "download" },
-  { value: "i-mgc-send-plane-cute-re", key: "send" },
+  { value: "i-mingcute-bookmark-line", key: "bookmark" },
+  { value: "i-mingcute-pic-line", key: "picture" },
+  { value: "i-mingcute-share-forward-line", key: "share" },
+  { value: "i-mingcute-external-link-line", key: "external_link" },
+  { value: "i-mingcute-save-line", key: "save" },
+  { value: "i-mingcute-documents-line", key: "document" },
+  { value: "i-mingcute-link-line", key: "link" },
+  { value: "i-mingcute-star-line", key: "star" },
+  { value: "i-mingcute-download-2-line", key: "download" },
+  { value: "i-mingcute-send-plane-line", key: "send" },
 ] as const
 
 // Helper functions
@@ -384,7 +384,7 @@ export const CustomIntegrationModalContent = ({
   // Helper functions
   const getTypeIcon = (type: string) => {
     const typeConfig = INTEGRATION_TYPES.find((t) => t.value === type)
-    return typeConfig?.icon || "i-mgc-world-2-cute-re"
+    return typeConfig?.icon || "i-mingcute-world-2-line"
   }
 
   useEffect(() => {

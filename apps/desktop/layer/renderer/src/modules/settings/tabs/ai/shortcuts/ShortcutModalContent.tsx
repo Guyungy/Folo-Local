@@ -28,7 +28,7 @@ export const ShortcutModalContent = ({ shortcut, onSave, onCancel }: ShortcutMod
   const [name, setName] = useState(shortcut?.name || "")
   const [prompt, setPrompt] = useState(shortcut?.prompt || "")
   const [enabled, setEnabled] = useState(shortcut?.enabled ?? true)
-  const [icon, setIcon] = useState<string>(shortcut?.icon || "i-mgc-hotkey-cute-re")
+  const [icon, setIcon] = useState<string>(shortcut?.icon || "i-mingcute-hotkey-line")
   const initialTargets = useMemo<AIShortcutTarget[]>(() => {
     if (shortcut?.displayTargets && shortcut.displayTargets.length > 0) {
       return [...shortcut.displayTargets]
@@ -38,33 +38,33 @@ export const ShortcutModalContent = ({ shortcut, onSave, onCancel }: ShortcutMod
   const [displayTargets, setDisplayTargets] = useState<AIShortcutTarget[]>(initialTargets)
   const PRESET_ICONS = useMemo(
     () => [
-      "i-mgc-hotkey-cute-re",
-      "i-mgc-magic-2-cute-re",
-      "i-mgc-thought-cute-fi",
-      "i-mgc-rocket-cute-re",
-      "i-mgc-quill-pen-cute-re",
-      "i-mgc-search-3-cute-re",
-      "i-mgc-brain-cute-re",
-      "i-mgc-list-check-3-cute-re",
-      "i-mgc-translate-2-cute-re",
-      "i-mgc-send-plane-cute-re",
-      "i-mgc-hammer-cute-re",
-      "i-mgc-settings-1-cute-re",
-      "i-mgc-test-tube-cute-re",
-      "i-mgc-star-cute-re",
-      "i-mgc-bookmark-cute-re",
-      "i-mgc-book-6-cute-re",
-      "i-mgc-plugin-2-cute-re",
-      "i-mgc-grid-2-cute-re",
-      "i-mgc-palette-cute-re",
-      "i-mgc-fire-cute-re",
-      "i-mgc-gift-cute-re",
-      "i-mgc-trophy-cute-re",
-      "i-mgc-tool-cute-re",
-      "i-mgc-link-cute-re",
-      "i-mgc-attachment-cute-re",
-      "i-mgc-external-link-cute-re",
-      "i-mgc-copy-2-cute-re",
+      "i-mingcute-hotkey-line",
+      "i-mingcute-magic-2-line",
+      "i-mingcute-thought-fill",
+      "i-mingcute-rocket-line",
+      "i-mingcute-quill-pen-line",
+      "i-mingcute-search-3-line",
+      "i-mingcute-brain-line",
+      "i-mingcute-list-check-3-line",
+      "i-mingcute-translate-2-line",
+      "i-mingcute-send-plane-line",
+      "i-mingcute-hammer-line",
+      "i-mingcute-settings-1-line",
+      "i-mingcute-test-tube-line",
+      "i-mingcute-star-line",
+      "i-mingcute-bookmark-line",
+      "i-mingcute-book-6-line",
+      "i-mingcute-plugin-2-line",
+      "i-mingcute-grid-2-line",
+      "i-mingcute-palette-line",
+      "i-mingcute-fire-line",
+      "i-mingcute-gift-line",
+      "i-mingcute-trophy-line",
+      "i-mingcute-tool-line",
+      "i-mingcute-link-line",
+      "i-mingcute-attachment-line",
+      "i-mingcute-external-link-line",
+      "i-mingcute-copy-2-line",
     ],
     [],
   )
@@ -139,7 +139,7 @@ export const ShortcutModalContent = ({ shortcut, onSave, onCancel }: ShortcutMod
               buttonClassName="size-8 flex items-center justify-center"
               title={t("shortcuts.icon")}
             >
-              <i className={icon || "i-mgc-hotkey-cute-re"} />
+              <i className={icon || "i-mingcute-hotkey-line"} />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="end" className="shadow-context-menu w-[280px] p-2">

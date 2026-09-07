@@ -42,19 +42,19 @@ export const MCPServiceItem = ({
 
   const actions: ActionButton[] = [
     {
-      icon: "i-mgc-edit-cute-re",
+      icon: "i-mingcute-edit-line",
       onClick: () => onEdit(service),
       title: "Edit connection",
     },
     {
-      icon: "i-mgc-refresh-2-cute-re",
+      icon: "i-mingcute-refresh-2-line",
       onClick: () => onRefresh(service.id),
       title: "Refresh tools",
       disabled: isRefreshing,
       loading: isRefreshing,
     },
     {
-      icon: "i-mgc-delete-2-cute-re",
+      icon: "i-mingcute-delete-2-line",
       onClick: () => onDelete(service.id),
       title: "Delete service",
       disabled: isDeleting,

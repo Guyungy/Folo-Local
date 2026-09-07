@@ -13,7 +13,7 @@ interface NotifyChannelsConfigProps {
 // Currently backend only supports 'email'. Using a single switch; easy to extend later.
 const EMAIL_CHANNEL = {
   key: "email",
-  icon: "i-mgc-mail-cute-re",
+  icon: "i-mingcute-mail-line",
   labelKey: "tasks.notify.email",
   helperKey: "tasks.notify.email_helper",
 } as const

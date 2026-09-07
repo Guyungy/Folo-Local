@@ -183,7 +183,7 @@ const ViewAllSwitchButton: FC<{
       ) : (
         <i
           className={cn(
-            "i-mgc-round-cute-fi text-[0.25rem]",
+            "i-mingcute-round-fill text-[0.25rem]",
             unreadByView ? (isActive ? "opacity-100" : "opacity-60") : "opacity-0",
           )}
         />
@@ -248,7 +248,7 @@ const ViewSwitchButton: FC<{
       ) : (
         <i
           className={cn(
-            "i-mgc-round-cute-fi text-[0.25rem]",
+            "i-mingcute-round-fill text-[0.25rem]",
             unreadByView ? (isActive ? "opacity-100" : "opacity-60") : "opacity-0",
           )}
         />

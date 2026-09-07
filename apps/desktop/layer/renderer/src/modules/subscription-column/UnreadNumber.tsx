@@ -8,7 +8,7 @@ export const UnreadNumber = ({ unread, className }: { unread?: number; className
   if (!unread) return null
   return (
     <div className={cn("center text-[0.65rem] tabular-nums text-text-tertiary", className)}>
-      {!showUnreadCount ? <i className="i-mgc-round-cute-fi text-[0.3rem]" /> : unread}
+      {!showUnreadCount ? <i className="i-mingcute-round-fill text-[0.3rem]" /> : unread}
     </div>
   )
 }

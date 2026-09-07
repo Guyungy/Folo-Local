@@ -63,7 +63,7 @@ const FeedMaintainers = ({ maintainers }: { maintainers?: string[] }) => {
                   className="inline-flex cursor-pointer items-center text-text-secondary duration-200 hover:text-accent"
                 >
                   @{maintainer}
-                  <i className="i-mgc-external-link-cute-re ml-0.5" />
+                  <i className="i-mingcute-external-link-line ml-0.5" />
                 </a>
               ))}
             </span>

@@ -112,7 +112,7 @@ export const AIMessageParts: React.FC<AIMessagePartsProps> = React.memo(
                 <div className="my-2 flex aspect-[4/3] w-[calc(var(--ai-chat-message-container-width,65ch))] max-w-full items-center justify-center rounded bg-material-medium">
                   <div className="flex flex-col items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <i className="i-mgc-loading-3-cute-re size-4 animate-spin text-text-secondary" />
+                      <i className="i-mingcute-loading-3-line size-4 animate-spin text-text-secondary" />
                       <span className="text-sm font-medium text-text-secondary">
                         Generating Flow Chart...
                       </span>

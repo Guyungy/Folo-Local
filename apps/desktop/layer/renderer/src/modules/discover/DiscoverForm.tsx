@@ -53,7 +53,7 @@ const FEED_DISCOVERY_INFO = {
         rel="noreferrer"
         className="inline-flex w-auto items-center gap-1 rounded-full border border-accent px-2 py-px text-sm font-normal text-accent"
       >
-        <i className="i-mgc-book-6-cute-re" />
+        <i className="i-mingcute-book-6-line" />
         <span>Folo Flavored Feed Spec</span>
       </a>
     ),
@@ -75,7 +75,7 @@ const FEED_DISCOVERY_INFO = {
         rel="noreferrer"
         className="inline-flex w-auto items-center gap-1 rounded-full border border-accent px-2 py-px text-sm font-normal text-accent"
       >
-        <i className="i-mgc-book-6-cute-re" />
+        <i className="i-mingcute-book-6-line" />
         <span>RSSHub Docs</span>
       </a>
     ),
@@ -387,7 +387,7 @@ export function DiscoverForm({ type = "search" }: { type?: string }) {
                   mutation.reset()
                 }}
               >
-                <i className="i-mgc-close-cute-re" />
+                <i className="i-mingcute-close-line" />
               </MotionButtonBase>
             )}
           </div>

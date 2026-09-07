@@ -124,7 +124,7 @@ export const AIChatContextBar: Component = memo(({ className }) => {
         className="flex size-7 shrink-0 items-center justify-center rounded-md border border-border bg-material-medium text-text-secondary transition-colors hover:bg-material-thin hover:text-text-secondary"
         title="Upload Files"
       >
-        <i className="i-mgc-attachment-cute-re size-3.5" />
+        <i className="i-mingcute-attachment-line size-3.5" />
       </button>
 
       {/* Hidden File Input */}
@@ -160,7 +160,7 @@ export const AIChatContextBar: Component = memo(({ className }) => {
                 type="button"
                 className="flex h-7 shrink-0 items-center gap-1.5 rounded-lg border border-border bg-material-medium px-2.5 text-xs text-text-secondary transition-colors hover:bg-fill-secondary hover:text-text"
               >
-                <i className="i-mgc-more-1-cute-re size-3.5" />
+                <i className="i-mingcute-more-1-line size-3.5" />
                 <span>+{hiddenBlocks.length}</span>
               </button>
             </PopoverTrigger>

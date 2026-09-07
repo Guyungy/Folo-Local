@@ -14,7 +14,7 @@ export const ModalClose = () => {
       className="absolute right-6 top-6 flex size-8 items-center justify-center rounded-md duration-200 hover:bg-material-ultra-thick"
       onClick={dismiss}
     >
-      <i className="i-mgc-close-cute-re block" />
+      <i className="i-mingcute-close-line block" />
     </MotionButtonBase>
   )
 }

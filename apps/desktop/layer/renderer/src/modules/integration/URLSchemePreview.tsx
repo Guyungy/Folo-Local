@@ -49,7 +49,7 @@ export const URLSchemePreview = ({ urlSchemeTemplate, className }: URLSchemePrev
           <i className="i-mingcute-eye-line" />
           {t("integration.custom_integrations.preview.title", "Preview URL Scheme")}
         </span>
-        <i className={cn("i-mgc-right-cute-re transition-transform", isOpen && "rotate-90")} />
+        <i className={cn("i-mingcute-right-line transition-transform", isOpen && "rotate-90")} />
       </Button>
 
       {isOpen && (
@@ -57,7 +57,7 @@ export const URLSchemePreview = ({ urlSchemeTemplate, className }: URLSchemePrev
           {isLoading ? (
             <div className="flex items-center justify-center rounded-lg bg-material-medium p-4">
               <div className="flex items-center gap-2">
-                <i className="i-mgc-loading-3-cute-re animate-spin" />
+                <i className="i-mingcute-loading-3-line animate-spin" />
                 <span className="text-sm text-text-tertiary">Generating preview...</span>
               </div>
             </div>
@@ -117,7 +117,7 @@ export const URLSchemePreview = ({ urlSchemeTemplate, className }: URLSchemePrev
               {/* Usage Note */}
               <div className="rounded border border-blue/20 bg-blue/10 p-3">
                 <div className="flex items-start gap-2">
-                  <i className="i-mgc-information-cute-re mt-0.5 flex-shrink-0 text-blue" />
+                  <i className="i-mingcute-information-line mt-0.5 flex-shrink-0 text-blue" />
                   <div className="text-sm text-blue">
                     <div className="mb-1 font-medium">URL Scheme Behavior</div>
                     <div className="text-blue/80">

@@ -141,7 +141,7 @@ export function SubscriptionColumn({
             className="center absolute left-0 top-2.5 z-0 hidden -translate-x-2 text-zinc-500 macos:flex macos:left-macos-traffic-light-2"
             onClick={() => setTimelineColumnShow(true)}
           >
-            <i className="i-mgc-layout-leftbar-open-cute-re" />
+            <i className="i-mingcute-layout-leftbar-open-line" />
           </ActionButton>
         </RootPortal>
       )}

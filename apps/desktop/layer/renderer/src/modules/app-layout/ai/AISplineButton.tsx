@@ -51,7 +51,7 @@ export const AIIndicator: FC = () => {
             )}
             title="Open AI Chat"
           >
-            <i className="i-mgc-folo-bot-original size-16 text-folo" aria-hidden />
+            <i className="i-mingcute-robot-line size-16 text-folo" aria-hidden />
           </m.button>
         )}
       </AnimatePresence>

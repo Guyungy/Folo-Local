@@ -146,7 +146,7 @@ export const EditableMessage = ({
             className="flex size-8 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-fill/50 hover:text-text disabled:opacity-50"
             title="Cancel (Esc)"
           >
-            <i className="i-mgc-close-cute-re size-4" />
+            <i className="i-mingcute-close-line size-4" />
           </button>
           <button
             type="button"
@@ -155,7 +155,7 @@ export const EditableMessage = ({
             className="flex size-8 items-center justify-center rounded-lg text-accent transition-colors hover:bg-accent/10 hover:text-accent disabled:opacity-50"
             title="Save (Enter)"
           >
-            <i className="i-mgc-send-plane-cute-fi size-4" />
+            <i className="i-mingcute-send-plane-fill size-4" />
           </button>
         </div>
       </div>

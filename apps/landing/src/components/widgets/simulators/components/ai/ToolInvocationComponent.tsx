@@ -47,7 +47,7 @@ export const ToolInvocationComponent: React.FC<ToolInvocationComponentProps> =
                   </span>
                 </div>
                 <div className="ml-2 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover/tool:opacity-100">
-                  <i className="i-mgc-right-cute-re size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/collapse:rotate-90" />
+                  <i className="i-mingcute-right-line size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/collapse:rotate-90" />
                 </div>
               </div>
             }

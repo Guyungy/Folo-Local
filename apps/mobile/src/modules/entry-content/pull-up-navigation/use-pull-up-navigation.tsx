@@ -7,7 +7,6 @@ import type { ReanimatedScrollEvent } from "react-native-reanimated/lib/typescri
 import { PullUpIndicatorIos } from "./PullUpIndicatorIos"
 import type { UsePullUpToNextProps, UsePullUpToNextReturn } from "./types"
 
-// eslint-disable-next-line react-refresh/only-export-components
 const EmptyGestureWrapper: UsePullUpToNextReturn["GestureWrapper"] = ({
   children,
 }: {

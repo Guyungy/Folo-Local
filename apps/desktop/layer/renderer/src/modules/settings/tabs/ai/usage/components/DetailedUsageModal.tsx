@@ -35,7 +35,7 @@ export const DetailedUsageModal = () => {
   if (loadingConfig) {
     return (
       <div className="flex h-96 items-center justify-center">
-        <div className="i-mgc-loading-3-cute-re size-6 animate-spin" />
+        <div className="i-mingcute-loading-3-line size-6 animate-spin" />
       </div>
     )
   }

@@ -32,7 +32,7 @@ export const VideosLayout: React.FC<EntryLayoutProps> = ({
           />
         ) : (
           <div className="center aspect-video w-full flex-col gap-1 rounded-md bg-material-medium text-sm text-text-secondary">
-            <i className="i-mgc-video-cute-fi mb-2 size-12" />
+            <i className="i-mingcute-video-fill mb-2 size-12" />
             Video content not available
           </div>
         )}

@@ -46,7 +46,7 @@ export const FeedSummary: FC<FeedSummaryProps> = ({
           <div className="flex items-center gap-3 text-text-secondary">
             {!!analytics?.subscriptionCount && (
               <div className="flex items-center gap-1.5">
-                <i className="i-mgc-user-3-cute-re" />
+                <i className="i-mingcute-user-3-line" />
 
                 <span>
                   {formatNumber(analytics.subscriptionCount)}{" "}
@@ -56,14 +56,14 @@ export const FeedSummary: FC<FeedSummaryProps> = ({
             )}
             {analytics && "updatesPerWeek" in analytics && analytics?.updatesPerWeek ? (
               <div className="flex items-center gap-1.5">
-                <i className="i-mgc-safety-certificate-cute-re" />
+                <i className="i-mingcute-safety-certificate-line" />
                 <span>{t("feed.entry_week", { count: analytics.updatesPerWeek ?? 0 })}</span>
               </div>
             ) : analytics &&
               "latestEntryPublishedAt" in analytics &&
               analytics?.latestEntryPublishedAt ? (
               <div className="flex items-center gap-1.5">
-                <i className="i-mgc-safe-alert-cute-re" />
+                <i className="i-mingcute-safe-alert-line" />
                 <span>{t("feed.updated_at")}</span>
                 <RelativeTime
                   date={analytics.latestEntryPublishedAt}
@@ -73,7 +73,7 @@ export const FeedSummary: FC<FeedSummaryProps> = ({
             ) : null}
             {"updatedAt" in feed && feed.updatedAt ? (
               <div className="flex items-center gap-1.5">
-                <i className="i-mgc-safety-certificate-cute-re" />
+                <i className="i-mingcute-safety-certificate-line" />
                 <span>{t("feed.updated_at")}</span>
                 <RelativeTime date={feed.updatedAt} displayAbsoluteTimeAfterDay={Infinity} />
               </div>

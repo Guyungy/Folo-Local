@@ -53,7 +53,7 @@ export function DiscoveryContent() {
             value="trending"
             label={
               <span className="flex items-center gap-1.5">
-                <i className="i-mgc-trending-up-cute-re size-4" />
+                <i className="i-mingcute-trending-up-line size-4" />
                 <span>{t("words.trending")}</span>
               </span>
             }
@@ -62,7 +62,7 @@ export function DiscoveryContent() {
             value="categories"
             label={
               <span className="flex items-center gap-1.5">
-                <i className="i-mgc-grid-2-cute-re size-4" />
+                <i className="i-mingcute-grid-2-line size-4" />
                 <span>{t("words.categories")}</span>
               </span>
             }

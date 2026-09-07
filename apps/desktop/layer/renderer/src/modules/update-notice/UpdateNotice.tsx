@@ -145,7 +145,7 @@ export const UpdateNotice = () => {
             <div className="relative flex size-9 items-center justify-center">
               {/* Icon */}
               <div className="relative flex items-center justify-center">
-                <i className="i-mgc-download-2-cute-re size-6 text-orange" />
+                <i className="i-mingcute-download-2-line size-6 text-orange" />
               </div>
             </div>
           </m.div>

@@ -85,7 +85,7 @@ const ShortcutSuggestionItem = React.memo(
             <i className={cn("text-[16px]", matched.icon)} />
           ) : (
             <span className="inline-flex size-4 items-center justify-center rounded-full bg-blue/10 text-xs font-semibold leading-none">
-              <i className="i-mgc-hotkey-cute-re" />
+              <i className="i-mingcute-hotkey-line" />
             </span>
           )}
         </span>

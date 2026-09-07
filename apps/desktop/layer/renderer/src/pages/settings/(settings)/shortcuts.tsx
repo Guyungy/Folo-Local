@@ -4,7 +4,7 @@ import { ShortcutSetting } from "~/modules/settings/tabs/shortcut"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-hotkey-cute-re"
+const iconName = "i-mingcute-hotkey-line"
 const priority = (1000 << 1) + 40
 
 export const handle = defineSettingPageData({

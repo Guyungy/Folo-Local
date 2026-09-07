@@ -97,7 +97,6 @@ function FormImpl({ route, routePrefix, name }: RsshubFormParams) {
     mode: "all",
   })
 
-  // eslint-disable-next-line unicorn/prefer-structured-clone
   const nextErrors = JSON.parse(JSON.stringify(form.formState.errors))
   const data = form.watch() as Record<string, string | undefined>
   const fullPath = useMemo(() => {

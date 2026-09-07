@@ -40,22 +40,22 @@ const frequencyOptions = [
   {
     value: "once",
     label: "schedule.frequency.once",
-    icon: "i-mgc-time-cute-re",
+    icon: "i-mingcute-time-line",
   },
   {
     value: "daily",
     label: "schedule.frequency.daily",
-    icon: "i-mgc-round-cute-re",
+    icon: "i-mingcute-round-line",
   },
   {
     value: "weekly",
     label: "schedule.frequency.weekly",
-    icon: "i-mgc-layout-4-cute-re",
+    icon: "i-mingcute-layout-4-line",
   },
   {
     value: "monthly",
     label: "schedule.frequency.monthly",
-    icon: "i-mgc-grid-cute-re",
+    icon: "i-mingcute-grid-line",
   },
 ] as const
 
@@ -174,7 +174,7 @@ const TimelinePreview = memo<{ schedule: ScheduleType }>(({ schedule }) => {
   if (!nextExecution) {
     return (
       <div className="flex items-center gap-2 text-xs text-text-tertiary">
-        <div className="i-mgc-information-cute-re size-3" />
+        <div className="i-mingcute-information-line size-3" />
         <span>{t("schedule.no_upcoming")}</span>
       </div>
     )
@@ -182,7 +182,7 @@ const TimelinePreview = memo<{ schedule: ScheduleType }>(({ schedule }) => {
 
   return (
     <div className="flex items-center gap-2 text-xs text-text-secondary">
-      <div className="i-mgc-time-cute-re size-3 text-accent" />
+      <div className="i-mingcute-time-line size-3 text-accent" />
       <span>
         {t("schedule.next_execution", {
           time: nextExecution.format("MMM D, h:mm A"),

@@ -33,7 +33,7 @@ export const RateLimitNotice = ({ className, message }: RateLimitNoticeProps) =>
       onClick={() => settingModalPresent("plan")}
     >
       <div className="flex items-center gap-2 rounded-lg border border-border bg-material-ultra-thick px-3 py-2 backdrop-blur-background">
-        <i className="i-mgc-power size-4 flex-shrink-0 text-text" />
+        <i className="i-mingcute-power-line size-4 flex-shrink-0 text-text" />
         <span className="min-w-0 flex-1 truncate text-xs text-text-secondary">{message}</span>
 
         <button

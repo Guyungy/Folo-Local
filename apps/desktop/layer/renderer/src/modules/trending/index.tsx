@@ -109,7 +109,7 @@ export function Trending({
               narrow && center && "justify-center",
             )}
           >
-            <i className="i-mgc-trending-up-cute-re text-xl" />
+            <i className="i-mingcute-trending-up-line text-xl" />
             <span>{t("words.trending")}</span>
           </div>
           <div className={cn("flex gap-4", center && "justify-end md:center")}>

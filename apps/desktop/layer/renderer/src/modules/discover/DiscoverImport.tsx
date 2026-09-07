@@ -147,7 +147,7 @@ export function DiscoverImport() {
             collapseId="other"
             title={
               <div className="flex h-14 items-center justify-normal gap-2 border-border font-medium">
-                <i className="i-mgc-rss-cute-fi ml-[-0.14rem] size-6 text-orange-500" />
+                <i className="i-mingcute-rss-fill ml-[-0.14rem] size-6 text-orange-500" />
                 {t("discover.import.opml_step1_other")}
                 <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
               </div>
@@ -177,12 +177,12 @@ export function DiscoverImport() {
                   >
                     {form.formState.dirtyFields.file ? (
                       <Fragment>
-                        <i className="i-mgc-file-upload-cute-re size-5" />
+                        <i className="i-mingcute-file-upload-line size-5" />
                         <span className="ml-2 text-sm font-semibold opacity-80">{value.name}</span>
                       </Fragment>
                     ) : (
                       <Fragment>
-                        <i className="i-mgc-file-upload-cute-re size-10 text-text-tertiary" />
+                        <i className="i-mingcute-file-upload-line size-10 text-text-tertiary" />
                         <span className="ml-2 text-title2 text-text-tertiary">
                           {t("discover.import.click_to_upload")}
                         </span>

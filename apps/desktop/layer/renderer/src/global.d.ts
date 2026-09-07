@@ -1,11 +1,11 @@
 import type { useTranslation } from "react-i18next"
-// eslint-disable-next-line react-hooks/rules-of-hooks, unused-imports/no-unused-vars
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { t } = useTranslation()
-// eslint-disable-next-line react-hooks/rules-of-hooks, unused-imports/no-unused-vars
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { t: settingsT } = useTranslation("settings")
-// eslint-disable-next-line react-hooks/rules-of-hooks, unused-imports/no-unused-vars
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { t: shortcutsT } = useTranslation("shortcuts")
-// eslint-disable-next-line react-hooks/rules-of-hooks, unused-imports/no-unused-vars
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { t: aiT } = useTranslation("ai")
 declare global {
   // BIZ ID

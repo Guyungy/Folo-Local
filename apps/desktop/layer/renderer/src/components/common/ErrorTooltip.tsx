@@ -28,13 +28,13 @@ export function ErrorTooltip({
       <TooltipPortal>
         <TooltipContent>
           <div className="flex items-center gap-1">
-            <i className="i-mgc-time-cute-re" />
+            <i className="i-mingcute-time-line" />
             {t("feed_item.error_since")}{" "}
             {dayjs.duration(dayjs(errorAt).diff(dayjs(), "minute"), "minute").humanize(true)}
           </div>
           {!!errorMessage && (
             <div className="flex items-center gap-1">
-              <i className="i-mgc-bug-cute-re" />
+              <i className="i-mingcute-bug-line" />
               {errorMessage}
             </div>
           )}

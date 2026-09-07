@@ -177,7 +177,7 @@ const WithdrawModalContent = ({ dismiss }: { dismiss: () => void }) => {
                     {t("wallet.withdraw.toRss3Label")}
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <i className="i-mgc-question-cute-re text-sm" />
+                        <i className="i-mingcute-question-line text-sm" />
                       </TooltipTrigger>
                       <TooltipPortal>
                         <TooltipContent>

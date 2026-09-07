@@ -22,7 +22,7 @@ export function Component() {
           rel="noreferrer"
           className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent"
         >
-          <i className="i-mgc-book-6-cute-re size-4" />
+          <i className="i-mingcute-book-6-line size-4" />
           <span>{t("words.documentation")}</span>
         </a>
       </div>

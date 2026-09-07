@@ -3,12 +3,12 @@
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.17.0",
-  "description": "Follow everything in one place",
-  "author": "Folo Team",
+  "description": "Unofficial local-only desktop edition of Folo",
+  "author": "Guyungy and contributors; derived from RSSNext/Folo",
   "license": "AGPL-3.0-only",
-  "homepage": "https://github.com/RSSNext",
+  "homepage": "https://github.com/Guyungy/Folo",
   "repository": {
-    "url": "https://github.com/RSSNext/follow",
+    "url": "https://github.com/Guyungy/Folo",
     "type": "git"
   },
   "scripts": {
@@ -19,8 +19,6 @@
     "dev:web": "turbo run @follow/web#dev @follow/ssr#dev",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "icons:sync": "tsx scripts/svg-to-rn.ts && prettier --write apps/mobile/src/icons/**/*.tsx && eslint --fix apps/mobile/src/icons/**/*.tsx",
-    "icons:update": "tsx scripts/update-icon.ts",
     "lint": "pnpm run lint:tsl && eslint",
     "lint:fix": "eslint --fix",
     "lint:tsl": "tsslint --project apps/*/tsconfig.json",

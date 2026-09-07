@@ -292,7 +292,7 @@ const RecommendationListItem = memo(
 
           {maintainers.length > 0 && (
             <div className="mt-2 flex items-center text-xs text-text-secondary">
-              <i className="i-mgc-hammer-cute-re mr-1 shrink-0 translate-y-0.5 self-start" />
+              <i className="i-mingcute-hammer-line mr-1 shrink-0 translate-y-0.5 self-start" />
               <span>
                 {maintainers.map((m, i) => (
                   <span key={m}>
@@ -359,7 +359,7 @@ const RouteItem = memo(
             </div>
             {!!analytics?.subscriptionCount && (
               <div className="flex items-center gap-0.5 text-xs">
-                <i className="i-mgc-fire-cute-re" />
+                <i className="i-mingcute-fire-line" />
                 {formatNumber(analytics?.subscriptionCount || 0)}
               </div>
             )}

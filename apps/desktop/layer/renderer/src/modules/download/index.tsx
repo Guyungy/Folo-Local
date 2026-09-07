@@ -53,7 +53,7 @@ export function DownloadPage() {
 
         {/* Download Button */}
         <Button onClick={isMobile ? handleMobileDownload : openDownloadPage}>
-          <i className="i-mgc-download-2-cute-re mr-2 text-lg" />
+          <i className="i-mingcute-download-2-line mr-2 text-lg" />
           <span>
             {isMobile && mobilePlatform ? `Download for ${mobilePlatform}` : "Go to Download Page"}
           </span>

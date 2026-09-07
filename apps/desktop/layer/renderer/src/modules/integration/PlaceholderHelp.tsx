@@ -24,9 +24,9 @@ export const PlaceholderHelp = ({ className, onPlaceholderClick }: PlaceholderHe
         className="p-0 text-text-tertiary transition-colors hover:text-text"
       >
         <span className="flex items-center gap-1 text-xs">
-          <i className="i-mgc-question-cute-re" />
+          <i className="i-mingcute-question-line" />
           {t("integration.custom_integrations.placeholders.help", "Available Placeholders")}
-          <i className={cn("i-mgc-right-cute-re transition-transform", isOpen && "rotate-90")} />
+          <i className={cn("i-mingcute-right-line transition-transform", isOpen && "rotate-90")} />
         </span>
       </button>
 
@@ -68,7 +68,7 @@ export const PlaceholderHelp = ({ className, onPlaceholderClick }: PlaceholderHe
                           </div>
                         )}
                       </div>
-                      <i className="i-mgc-copy-cute-re text-text-tertiary opacity-0 transition-opacity group-hover:text-text group-hover:opacity-100" />
+                      <i className="i-mingcute-copy-line text-text-tertiary opacity-0 transition-opacity group-hover:text-text group-hover:opacity-100" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>

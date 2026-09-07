@@ -55,7 +55,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                 }}
               >
                 <span>{t("actions.action_card.rewrite_rules")}</span>
-                <i className="i-mgc-add-cute-re" />
+                <i className="i-mingcute-add-line" />
               </button>
             ) : (
               <div className="flex flex-col gap-3">
@@ -95,7 +95,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                       </div>
                       <div className="flex items-center justify-end gap-2">
                         <IconButton
-                          icon="i-mgc-add-cute-re"
+                          icon="i-mingcute-add-line"
                           ariaLabel={t("actions.action_card.add")}
                           disabled={disabled}
                           onClick={() => {
@@ -103,7 +103,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                           }}
                         />
                         <IconButton
-                          icon="i-mgc-delete-2-cute-re"
+                          icon="i-mingcute-delete-2-line"
                           className="hover:text-red"
                           ariaLabel={t("actions.action_card.summary.delete")}
                           disabled={disabled}
@@ -133,7 +133,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                 }}
               >
                 <span>{t("actions.action_card.webhooks")}</span>
-                <i className="i-mgc-add-cute-re" />
+                <i className="i-mingcute-add-line" />
               </button>
             ) : (
               <div className="flex flex-col gap-3">
@@ -158,7 +158,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                       />
                       <div className="flex items-center justify-end gap-2">
                         <IconButton
-                          icon="i-mgc-add-cute-re"
+                          icon="i-mingcute-add-line"
                           ariaLabel={t("actions.action_card.add")}
                           disabled={disabled}
                           onClick={() => {
@@ -166,7 +166,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                           }}
                         />
                         <IconButton
-                          icon="i-mgc-delete-2-cute-re"
+                          icon="i-mingcute-delete-2-line"
                           className="hover:text-red"
                           ariaLabel={t("actions.action_card.summary.delete")}
                           disabled={disabled}
@@ -230,7 +230,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
             <DropdownMenu>
               <DropdownMenuTrigger asChild disabled={disabled}>
                 <Button variant="outline" size="sm" buttonClassName="border-dashed">
-                  <i className="i-mgc-add-cute-re mr-2" />
+                  <i className="i-mingcute-add-line mr-2" />
                   {t("actions.action_card.add")}
                 </Button>
               </DropdownMenuTrigger>
@@ -306,7 +306,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
 
                         {/* Delete button */}
                         <IconButton
-                          icon="i-mgc-delete-2-cute-re"
+                          icon="i-mingcute-delete-2-line"
                           ariaLabel={t("actions.action_card.summary.delete")}
                           disabled={disabled}
                           className="hover:text-red"
@@ -329,7 +329,7 @@ export const ThenSection = ({ index, variant: _variant = "detail" }: ThenSection
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild disabled={disabled}>
                     <Button variant="outline" size="sm" buttonClassName="border-dashed">
-                      <i className="i-mgc-add-cute-re mr-2" />
+                      <i className="i-mingcute-add-line mr-2" />
                       {t("actions.action_card.add")}
                     </Button>
                   </DropdownMenuTrigger>

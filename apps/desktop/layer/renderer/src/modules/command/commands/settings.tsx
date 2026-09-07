@@ -22,7 +22,7 @@ const useCustomizeToolbarCommand = () => {
       id: COMMAND_ID.settings.customizeToolbar,
       label: t("customizeToolbar.title"),
       category,
-      icon: <i className="i-mgc-settings-7-cute-re" />,
+      icon: <i className="i-mingcute-settings-7-line" />,
       run() {
         showModal()
       },
@@ -40,7 +40,7 @@ const useRegisterThemeCommands = () => {
       id: COMMAND_ID.settings.changeThemeToAuto,
       label: `To ${t("appearance.theme.system")}`,
       category,
-      icon: <i className="i-mgc-settings-7-cute-re" />,
+      icon: <i className="i-mingcute-settings-7-line" />,
       when: theme !== "system",
       run() {
         setTheme("system")

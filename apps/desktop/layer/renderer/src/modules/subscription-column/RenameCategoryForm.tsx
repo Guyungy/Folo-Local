@@ -102,7 +102,7 @@ export const RenameCategoryForm = ({
           type="submit"
           className="center -mr-1 flex size-5 shrink-0 rounded-lg text-green hover:bg-material-ultra-thick"
         >
-          <i className="i-mgc-check-filled size-3" />
+          <i className="i-mingcute-check-fill size-3" />
         </MotionButtonBase>
       </form>
     </div>

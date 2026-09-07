@@ -68,7 +68,7 @@ const BlockContainer: FC<{
           onClick={onRemove}
           className="absolute inset-y-0 right-1 flex-shrink-0 cursor-button text-text/90 opacity-0 transition-all ease-in hover:text-text group-hover:opacity-100"
         >
-          <i className="i-mgc-close-cute-re size-3" />
+          <i className="i-mingcute-close-line size-3" />
         </button>
       )}
     </div>
@@ -90,7 +90,7 @@ export const CombinedContextBlock: FC<{
   const blockActions = useChatBlockActions()
 
   const viewIcon = viewBlock && getView(Number(viewBlock.value))?.icon.props.className
-  const feedIcon = feedBlock && "i-mgc-rss-cute-fi"
+  const feedIcon = feedBlock && "i-mingcute-rss-fill"
 
   const normalizedFeedIds = useMemo(() => {
     if (!feedBlock?.value) {
@@ -157,7 +157,9 @@ export const CombinedContextBlock: FC<{
           className="min-w-0 truncate"
         />
       )}
-      {unreadOnlyBlock && <i className="i-mgc-round-cute-fi size-3 shrink-0" title="Unread Only" />}
+      {unreadOnlyBlock && (
+        <i className="i-mingcute-round-fill size-3 shrink-0" title="Unread Only" />
+      )}
     </span>
   ) : (
     <span className="flex items-center gap-1">
@@ -166,7 +168,7 @@ export const CombinedContextBlock: FC<{
         const viewName = getView(Number(viewBlock.value))?.name
         return viewName ? t(viewName) : viewBlock.value
       })()}
-      {unreadOnlyBlock && <i className="i-mgc-round-cute-fi size-3" title="Unread Only" />}
+      {unreadOnlyBlock && <i className="i-mingcute-round-fill size-3" title="Unread Only" />}
     </span>
   )
 

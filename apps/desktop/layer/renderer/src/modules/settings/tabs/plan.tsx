@@ -435,7 +435,7 @@ const PlanAction = ({
       case "coming-soon": {
         return {
           text: "Coming Soon",
-          icon: "i-mgc-time-cute-re",
+          icon: "i-mingcute-time-line",
           variant: "outline" as const,
           disabled: true,
         }
@@ -452,7 +452,7 @@ const PlanAction = ({
       case "in-trial": {
         return {
           text: "In Trial",
-          icon: "i-mgc-stopwatch-cute-re",
+          icon: "i-mingcute-stopwatch-line",
           variant: "outline" as const,
           disabled: false,
         }
@@ -460,7 +460,7 @@ const PlanAction = ({
       case "new": {
         return {
           text: upgradeButtonText || "Upgrade",
-          icon: "i-mgc-arrow-up-cute-re",
+          icon: "i-mingcute-arrow-up-line",
           className:
             "bg-gradient-to-r from-accent to-accent/90 text-white hover:from-accent/95 hover:to-accent/85",
           disabled: false,
@@ -469,7 +469,7 @@ const PlanAction = ({
       case "upgrade": {
         return {
           text: "Upgrade",
-          icon: "i-mgc-arrow-up-cute-re",
+          icon: "i-mingcute-arrow-up-line",
           className:
             "bg-gradient-to-r from-accent to-accent/90 text-white hover:from-accent/95 hover:to-accent/85",
           disabled: false,
@@ -478,7 +478,7 @@ const PlanAction = ({
       case "switch": {
         return {
           text: "Switch Plan",
-          icon: "i-mgc-transfer-cute-re",
+          icon: "i-mingcute-transfer-line",
           className:
             "bg-gradient-to-r from-accent to-accent/90 text-white font-semibold hover:from-accent/95 hover:to-accent/85",
           disabled: false,

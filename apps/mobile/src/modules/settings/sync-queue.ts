@@ -557,7 +557,6 @@ class SettingSyncQueue {
 
     if (!remoteSettings) return
     if (__DEV__) {
-      // eslint-disable-next-line no-console
       console.log("remote settings:", remoteSettings)
     }
 

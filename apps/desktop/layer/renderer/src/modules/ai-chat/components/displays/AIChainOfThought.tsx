@@ -102,7 +102,7 @@ export const AIChainOfThought: React.FC<AIChainOfThoughtProps> = React.memo(
                   </span>
                 </div>
                 <div className="ml-2 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                  <i className="i-mgc-right-cute-re size-3 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-90" />
+                  <i className="i-mingcute-right-line size-3 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-90" />
                 </div>
               </div>
             }
@@ -126,7 +126,7 @@ export const AIChainOfThought: React.FC<AIChainOfThoughtProps> = React.memo(
                 return (
                   <div key={innerCollapseId} className="relative pb-3 pl-8 last:pb-0">
                     <div aria-hidden className={"absolute left-2 top-2 size-2 -translate-x-1/2"}>
-                      <i className="i-mgc-brain-cute-re absolute top-1/2 -translate-x-1/4 -translate-y-1/2" />
+                      <i className="i-mingcute-brain-line absolute top-1/2 -translate-x-1/4 -translate-y-1/2" />
                     </div>
 
                     <AIInnerReasoningPart
@@ -176,7 +176,7 @@ const AIInnerReasoningPart: React.FC<{
             )}
           </div>
           <div className="ml-2 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover/inner:opacity-100">
-            <i className="i-mgc-right-cute-re size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/inner:rotate-90" />
+            <i className="i-mingcute-right-line size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/inner:rotate-90" />
           </div>
         </div>
       }

@@ -68,7 +68,7 @@ export const EntryTranslation: Component<{
               <span className="align-middle">
                 <HighlightedText rules={spotlightRules} text={nextTarget} />
               </span>
-              <i className="i-mgc-translate-2-ai-cute-re mx-2 align-middle" />
+              <i className="i-mingcute-translate-2-ai-line mx-2 align-middle" />
             </>
           )}
           <SourceTag className={cn(inline && "align-middle")}>

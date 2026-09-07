@@ -87,7 +87,7 @@ export const MarkdownLink: Component<LinkProps> = (props) => {
           {props.children}
 
           {typeof props.children === "string" && (
-            <i className="i-mgc-arrow-right-up-cute-re size-[0.9em] translate-y-[2px] opacity-70" />
+            <i className="i-mingcute-arrow-right-up-line size-[0.9em] translate-y-[2px] opacity-70" />
           )}
         </a>
       </TooltipTrigger>
@@ -109,7 +109,7 @@ export const MarkdownLink: Component<LinkProps> = (props) => {
               variant={"ghost"}
               aria-label={t("share.copy_link")}
             >
-              <i className="i-mgc-copy-2-cute-re size-3" />
+              <i className="i-mingcute-copy-2-line size-3" />
             </Button>
           </TooltipContent>
         </TooltipPortal>

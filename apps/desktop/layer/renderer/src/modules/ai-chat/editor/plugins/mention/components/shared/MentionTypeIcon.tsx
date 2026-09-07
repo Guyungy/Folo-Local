@@ -16,16 +16,16 @@ export const MentionTypeIcon: React.FC<MentionTypeIconProps> = ({
 }) => {
   switch (type) {
     case "entry": {
-      return <i className={`i-mgc-paper-cute-fi ${className}`} />
+      return <i className={`i-mingcute-paper-fill ${className}`} />
     }
     case "feed": {
-      return <i className={`i-mgc-rss-cute-fi ${className}`} />
+      return <i className={`i-mingcute-rss-fill ${className}`} />
     }
     case "category": {
-      return <i className={`i-mgc-folder-open-cute-re ${className}`} />
+      return <i className={`i-mingcute-folder-open-line ${className}`} />
     }
     case "date": {
-      return <i className={`i-mgc-calendar-time-add-cute-re ${className}`} />
+      return <i className={`i-mingcute-calendar-time-add-line ${className}`} />
     }
     case "view": {
       if (typeof value === "number") {
@@ -34,10 +34,10 @@ export const MentionTypeIcon: React.FC<MentionTypeIconProps> = ({
           return <i className={`${viewDef.icon.props.className} ${className}`} />
         }
       }
-      return <i className={`i-mgc-grid-cute-re ${className}`} />
+      return <i className={`i-mingcute-grid-line ${className}`} />
     }
     default: {
-      return <i className={`i-mgc-ai-cute-re ${className}`} />
+      return <i className={`i-mingcute-ai-line ${className}`} />
     }
   }
 }

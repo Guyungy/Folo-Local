@@ -80,7 +80,7 @@ const ObsidianVaultPathPicker: FC = () => {
               <span className="min-w-0 truncate text-xs text-text-secondary">{vaultPath}</span>
               {pathValid === false && (
                 <span className="inline-flex shrink-0 items-center gap-1 text-xs text-red">
-                  <i className="i-mgc-warning-cute-re" />
+                  <i className="i-mingcute-warning-line" />
                   {t("integration.obsidian.vaultPath.invalid")}
                 </span>
               )}
@@ -415,7 +415,7 @@ export const SettingIntegration = () => {
       {/* Search Bar */}
       <div className="max-w-md">
         <InputV2
-          icon={<i className="i-mgc-search-cute-re" />}
+          icon={<i className="i-mingcute-search-line" />}
           canClear
           placeholder={t("integration.search.placeholder")}
           value={searchQuery}
@@ -606,7 +606,7 @@ const BottomTip = () => {
             onClick={handleExport}
             buttonClassName="flex items-center gap-2"
           >
-            <i className="i-mgc-download-2-cute-re mr-2 size-4" />
+            <i className="i-mingcute-download-2-line mr-2 size-4" />
             {t("integration.export.button")}
           </Button>
           <Button
@@ -615,7 +615,7 @@ const BottomTip = () => {
             onClick={handleImport}
             buttonClassName="flex items-center gap-2"
           >
-            <i className="i-mgc-file-upload-cute-re mr-2 size-4" />
+            <i className="i-mingcute-file-upload-line mr-2 size-4" />
             {t("integration.import.button")}
           </Button>
         </div>

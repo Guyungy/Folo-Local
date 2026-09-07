@@ -240,7 +240,7 @@ const CleanElectronCache = () => {
               }}
               className="center flex"
             >
-              <i className="i-mgc-folder-open-cute-re" />
+              <i className="i-mingcute-folder-open-line" />
             </MotionButtonBase>
           </span>
         }

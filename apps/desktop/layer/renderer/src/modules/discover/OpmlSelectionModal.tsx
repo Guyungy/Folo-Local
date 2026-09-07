@@ -223,10 +223,10 @@ export const OpmlSelectionModal = ({
                 <i
                   className={cn(
                     isQuotaExceeded
-                      ? "i-mgc-close-cute-re"
+                      ? "i-mingcute-close-line"
                       : selectedCount >= quotaWarningThreshold
-                        ? "i-mgc-warning-cute-re"
-                        : "i-mgc-check-circle-cute-re",
+                        ? "i-mingcute-warning-line"
+                        : "i-mingcute-check-circle-line",
                   )}
                 />
               </div>

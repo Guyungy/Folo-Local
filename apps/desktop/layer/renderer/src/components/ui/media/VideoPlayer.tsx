@@ -152,7 +152,7 @@ export const VideoPlayer = ({
           <i
             className={cn(
               "size-8 text-white",
-              clickToStatus === "play" ? "i-mgc-play-cute-fi" : "i-mgc-pause-cute-fi",
+              clickToStatus === "play" ? "i-mingcute-play-fill" : "i-mingcute-pause-fill",
             )}
           />
         </m.div>
@@ -205,8 +205,8 @@ const FloatMutedButton = () => {
     >
       <IconScaleTransition
         className="size-4 text-white"
-        icon1="i-mgc-volume-cute-re"
-        icon2="i-mgc-volume-mute-cute-re"
+        icon1="i-mingcute-volume-line"
+        icon2="i-mingcute-volume-mute-line"
         status={isMuted ? "done" : "init"}
       />
     </MotionButtonBase>
@@ -255,8 +255,8 @@ const ControlBar = memo(() => {
         <span className="center">
           <IconScaleTransition
             status={isPaused ? "init" : "done"}
-            icon1="i-mgc-play-cute-fi"
-            icon2="i-mgc-pause-cute-fi"
+            icon1="i-mingcute-play-fill"
+            icon2="i-mingcute-pause-fill"
           />
         </span>
       </ActionIcon>
@@ -304,9 +304,9 @@ const FullScreenControl = () => {
       }}
     >
       {isFullScreen ? (
-        <i className="i-mgc-fullscreen-exit-cute-re" />
+        <i className="i-mingcute-fullscreen-exit-line" />
       ) : (
-        <i className="i-mgc-fullscreen-cute-re" />
+        <i className="i-mingcute-fullscreen-line" />
       )}
     </ActionIcon>
   )
@@ -334,9 +334,9 @@ const DownloadVideo = () => {
   return (
     <ActionIcon shortcut="d" label={t("player.download")} onClick={download}>
       {isDownloading ? (
-        <i className="i-mgc-loading-3-cute-re animate-spin" />
+        <i className="i-mingcute-loading-3-line animate-spin" />
       ) : (
-        <i className="i-mgc-download-2-cute-re" />
+        <i className="i-mingcute-download-2-line" />
       )}
     </ActionIcon>
   )
@@ -362,9 +362,9 @@ const VolumeControl = () => {
       }}
     >
       {muted ? (
-        <i className="i-mgc-volume-mute-cute-re" title={t("player.unmute")} />
+        <i className="i-mingcute-volume-mute-line" title={t("player.unmute")} />
       ) : (
-        <i className="i-mgc-volume-cute-re" title={t("player.mute")} />
+        <i className="i-mingcute-volume-line" title={t("player.mute")} />
       )}
     </ActionIcon>
   )

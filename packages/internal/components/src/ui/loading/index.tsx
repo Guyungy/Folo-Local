@@ -19,7 +19,7 @@ export const LoadingCircle: Component<LoadingCircleProps> = ({ className, size }
       fontSize: sizeMap[size],
     }}
   >
-    <i className="i-mgc-loading-3-cute-re animate-spin" />
+    <i className="i-mingcute-loading-3-line animate-spin" />
   </div>
 )
 
@@ -69,7 +69,7 @@ export const LoadingWithIcon: Component<
             }}
           >
             <i
-              className="i-mgc-loading-3-cute-re animate-spin"
+              className="i-mingcute-loading-3-line animate-spin"
               style={{ fontSize: smallIconSizeMap[size] }}
             />
           </span>
@@ -89,7 +89,7 @@ export const LoadingWithIcon: Component<
             }}
           >
             <i
-              className="i-mgc-loading-3-cute-li animate-spin"
+              className="i-mingcute-loading-3-line animate-spin"
               style={{ fontSize: sizeMap2[size] }}
             />
           </span>
@@ -135,5 +135,5 @@ export const RotatingRefreshIcon: React.FC<{
     }
   }, [isRefreshing, controls])
 
-  return <m.i className={cn("i-mgc-refresh-2-cute-re", className)} animate={controls} />
+  return <m.i className={cn("i-mingcute-refresh-2-line", className)} animate={controls} />
 }

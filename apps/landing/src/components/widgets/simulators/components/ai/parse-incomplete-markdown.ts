@@ -1,5 +1,5 @@
 // @copy https://github.com/vercel/streamdown/blob/main/packages/streamdown/lib/parse-incomplete-markdown.ts
-/* eslint-disable unicorn/prefer-string-slice */
+
 const linkImagePattern = /(!?\[)([^\]]*)$/
 const boldPattern = /(\*\*)([^*]*)$/
 const italicPattern = /(__)([^_]*)$/

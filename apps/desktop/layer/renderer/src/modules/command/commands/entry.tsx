@@ -135,7 +135,7 @@ export const useRegisterEntryCommands = () => {
         icon: (props) => (
           <i
             className={cn(
-              props?.isActive ? "i-mgc-star-cute-fi text-orange-500" : "i-mgc-star-cute-re",
+              props?.isActive ? "i-mingcute-star-fill text-orange-500" : "i-mingcute-star-line",
             )}
           />
         ),
@@ -157,7 +157,7 @@ export const useRegisterEntryCommands = () => {
       {
         id: COMMAND_ID.entry.delete,
         label: t("entry_actions.delete"),
-        icon: <i className="i-mgc-delete-2-cute-re" />,
+        icon: <i className="i-mingcute-delete-2-line" />,
         category,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -171,7 +171,7 @@ export const useRegisterEntryCommands = () => {
       {
         id: COMMAND_ID.entry.copyLink,
         label: t("entry_actions.copy_link"),
-        icon: <i className="i-mgc-link-cute-re" />,
+        icon: <i className="i-mingcute-link-line" />,
         category,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -189,7 +189,7 @@ export const useRegisterEntryCommands = () => {
       {
         id: COMMAND_ID.entry.exportAsPDF,
         label: t("entry_actions.export_as_pdf"),
-        icon: <i className="i-mgc-pdf-cute-re" />,
+        icon: <i className="i-mingcute-pdf-line" />,
         category,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -207,7 +207,7 @@ export const useRegisterEntryCommands = () => {
       {
         id: COMMAND_ID.entry.copyTitle,
         label: t("entry_actions.copy_title"),
-        icon: <i className="i-mgc-copy-cute-re" />,
+        icon: <i className="i-mingcute-copy-line" />,
         category,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -228,7 +228,7 @@ export const useRegisterEntryCommands = () => {
           which: t(IN_ELECTRON ? "words.browser" : "words.newTab"),
         }),
         category,
-        icon: <i className="i-mgc-world-2-cute-re" />,
+        icon: <i className="i-mingcute-world-2-line" />,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
           if (!entry || !entry.url) {
@@ -244,7 +244,7 @@ export const useRegisterEntryCommands = () => {
           title: t("entry_actions.view_source_content"),
           description: t("entry_actions.view_source_content_description"),
         },
-        icon: <i className="i-mgc-web-cute-re" />,
+        icon: <i className="i-mingcute-web-line" />,
         category,
         run: ({ entryId, siteUrl }) => {
           if (!getShowSourceContent()) {
@@ -277,7 +277,7 @@ export const useRegisterEntryCommands = () => {
       {
         id: COMMAND_ID.entry.share,
         label: t("entry_actions.share"),
-        icon: <i className="i-mgc-share-forward-cute-re" />,
+        icon: <i className="i-mingcute-share-forward-line" />,
         category,
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -317,7 +317,7 @@ export const useRegisterEntryCommands = () => {
         label: t("entry_actions.mark_as_read"),
         category,
         icon: (props) => (
-          <i className={cn(props?.isActive ? "i-mgc-round-cute-re" : "i-mgc-round-cute-fi")} />
+          <i className={cn(props?.isActive ? "i-mingcute-round-line" : "i-mingcute-round-fill")} />
         ),
         run: ({ entryId }) => {
           const entry = getEntry(entryId)
@@ -354,7 +354,7 @@ export const useRegisterEntryCommands = () => {
           title: t("entry_actions.image_gallery"),
           description: t("entry_actions.image_gallery_description"),
         },
-        icon: <i className="i-mgc-pic-cute-fi" />,
+        icon: <i className="i-mingcute-pic-fill" />,
         category,
         run: ({ entryId }) => {
           openGalleryModal(entryId)
@@ -367,7 +367,7 @@ export const useRegisterEntryCommands = () => {
           description: t("entry_content.header.play_tts_description"),
         },
         category,
-        icon: <i className="i-mgc-voice-cute-re" />,
+        icon: <i className="i-mingcute-voice-line" />,
         run: async ({ entryId }) => {
           if (getAudioPlayerAtomValue().entryId === entryId) {
             AudioPlayer.togglePlayAndPause()
@@ -387,7 +387,9 @@ export const useRegisterEntryCommands = () => {
           description: t("entry_content.header.readability_description"),
         },
         icon: (props) => (
-          <i className={props?.isActive ? "i-mgc-docment-cute-fi" : "i-mgc-docment-cute-re"} />
+          <i
+            className={props?.isActive ? "i-mingcute-document-fill" : "i-mingcute-document-line"}
+          />
         ),
         run: async ({ entryId, entryUrl }) => {
           return toggleEntryReadability({

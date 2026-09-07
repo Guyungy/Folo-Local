@@ -231,9 +231,9 @@ const CornerPlayerImpl = ({ hideControls, rounded }: ControlButtonProps) => {
             >
               <i
                 className={cn("size-6", {
-                  "i-mgc-pause-cute-fi": playerValue.status === "playing",
-                  "i-mgc-loading-3-cute-re animate-spin": playerValue.status === "loading",
-                  "i-mgc-play-cute-fi": playerValue.status === "paused",
+                  "i-mingcute-pause-fill": playerValue.status === "playing",
+                  "i-mingcute-loading-3-line animate-spin": playerValue.status === "loading",
+                  "i-mingcute-play-fill": playerValue.status === "paused",
                 })}
               />
             </button>
@@ -281,12 +281,12 @@ const CornerPlayerImpl = ({ hideControls, rounded }: ControlButtonProps) => {
         >
           <div className="flex items-center">
             <ActionIcon
-              className="i-mgc-close-cute-re"
+              className="i-mingcute-close-line"
               onClick={() => AudioPlayer.close()}
               label={t("player.close")}
             />
             <ActionIcon
-              className="i-mgc-external-link-cute-re"
+              className="i-mingcute-external-link-line"
               onClick={() => {
                 if (navigateOptions) {
                   navigateToEntry(navigateOptions)
@@ -300,7 +300,7 @@ const CornerPlayerImpl = ({ hideControls, rounded }: ControlButtonProps) => {
                 window.open(AudioPlayer.get().src, "_blank")
               }}
             >
-              <i className="i-mgc-download-2-cute-re" />
+              <i className="i-mingcute-download-2-line" />
             </ActionIcon>
           </div>
           {/* audio control */}
@@ -311,20 +311,20 @@ const CornerPlayerImpl = ({ hideControls, rounded }: ControlButtonProps) => {
             <ActionIcon
               className={cn(
                 playerValue.isMute
-                  ? "i-mgc-volume-off-cute-re text-red-500"
-                  : "i-mgc-volume-cute-re",
+                  ? "i-mingcute-volume-off-line text-red-500"
+                  : "i-mingcute-volume-line",
               )}
               onClick={() => AudioPlayer.toggleMute()}
               label={<CornerPlayerVolumeSlider />}
               labelDelayDuration={0}
             />
             <ActionIcon
-              className="i-mgc-back-2-cute-re"
+              className="i-mingcute-back-2-line"
               onClick={() => AudioPlayer.back(10)}
               label={t("player.back_10s")}
             />
             <ActionIcon
-              className="i-mgc-forward-2-cute-re"
+              className="i-mingcute-forward-2-line"
               onClick={() => AudioPlayer.forward(10)}
               label={t("player.forward_10s")}
               tooltipAlign="end"

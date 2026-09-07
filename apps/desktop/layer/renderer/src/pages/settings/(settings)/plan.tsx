@@ -2,7 +2,7 @@ import { SettingPlan } from "~/modules/settings/tabs/plan"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-power-outline"
+const iconName = "i-mingcute-power-line"
 const priority = (1000 << 1) + 17
 
 export const handle = defineSettingPageData({

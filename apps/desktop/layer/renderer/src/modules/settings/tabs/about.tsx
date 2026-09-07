@@ -202,7 +202,7 @@ export const SettingAbout = () => {
             }}
             className="inline-flex items-center rounded-full px-3 py-1 text-xs text-text-tertiary transition-colors hover:bg-fill-secondary hover:text-text-secondary"
           >
-            <i className="i-mgc-copy-cute-re mr-1.5" />
+            <i className="i-mingcute-copy-line mr-1.5" />
             {t("about.copyEnvironment")}
           </button>
         </div>
@@ -224,9 +224,9 @@ export const SettingAbout = () => {
               </div>
             </div>
             {isCheckingUpdate ? (
-              <i className="i-mgc-loading-3-cute-re animate-spin text-base" />
+              <i className="i-mingcute-loading-3-line animate-spin text-base" />
             ) : (
-              <i className="i-mgc-arrow-right-up-cute-re text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+              <i className="i-mingcute-arrow-right-up-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
             )}
           </button>
         )}
@@ -239,7 +239,7 @@ export const SettingAbout = () => {
             <div className="text-sm font-medium">{t("about.changelog")}</div>
             <div className="text-xs text-text-tertiary">{t("about.changelogDescription")}</div>
           </div>
-          <i className="i-mgc-external-link-cute-re text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+          <i className="i-mingcute-external-link-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
         </button>
         <button
           type="button"
@@ -264,7 +264,7 @@ export const SettingAbout = () => {
               <div className="text-sm font-medium">{t("about.rateFolo")}</div>
               <div className="text-xs text-text-tertiary">{t("about.rateFoloDescription")}</div>
             </div>
-            <i className="i-mgc-star-cute-re text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+            <i className="i-mingcute-star-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
           </button>
         )}
         <button
@@ -278,7 +278,7 @@ export const SettingAbout = () => {
             <div className="text-sm font-medium">{t("about.sendFeedback")}</div>
             <div className="text-xs text-text-tertiary">{t("about.sendFeedbackDescription")}</div>
           </div>
-          <i className="i-mgc-mail-cute-re text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+          <i className="i-mingcute-mail-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
         </button>
       </div>
 
@@ -291,7 +291,7 @@ export const SettingAbout = () => {
           className="group flex w-full items-center justify-between rounded-lg p-3 text-left transition-all hover:bg-fill-secondary hover:shadow-sm"
         >
           <span className="text-sm">{t("about.termsOfService")}</span>
-          <i className="i-mgc-external-link-cute-re text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+          <i className="i-mingcute-external-link-line text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
         </button>
         <button
           type="button"
@@ -299,7 +299,15 @@ export const SettingAbout = () => {
           className="group flex w-full items-center justify-between rounded-lg p-3 text-left transition-all hover:bg-fill-secondary hover:shadow-sm"
         >
           <span className="text-sm">{t("about.privacyPolicy")}</span>
-          <i className="i-mgc-external-link-cute-re text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+          <i className="i-mingcute-external-link-line text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+        </button>
+        <button
+          type="button"
+          onClick={() => window.open(`${repository.url}/blob/dev/LICENSE`, "_blank")}
+          className="group flex w-full items-center justify-between rounded-lg p-3 text-left transition-all hover:bg-fill-secondary hover:shadow-sm"
+        >
+          <span className="text-sm">{t("about.sourceAndLicense")}</span>
+          <i className="i-mingcute-external-link-line text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
         </button>
       </div>
 

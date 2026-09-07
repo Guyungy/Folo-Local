@@ -204,7 +204,7 @@ export function TypeaheadDropdown<TItem, TGroupKey = string>({
     if (isLoading) {
       return (
         <div className="flex items-center gap-2 px-2.5 py-1.5 text-text-secondary">
-          <i className="i-mgc-loading-3-cute-re size-4 animate-spin" />
+          <i className="i-mingcute-loading-3-line size-4 animate-spin" />
           <span className="text-sm">{loadingMessage}</span>
         </div>
       )

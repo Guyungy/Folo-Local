@@ -40,7 +40,7 @@ export const AIShortcutsSection = () => {
       {shortcuts.length === 0 && (
         <div className="py-8 text-center">
           <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-fill-secondary">
-            <i className="i-mgc-magic-2-cute-re size-6 text-text" />
+            <i className="i-mingcute-magic-2-line size-6 text-text" />
           </div>
           <h4 className="mb-1 text-sm font-medium text-text">{t("shortcuts.empty.title")}</h4>
         </div>

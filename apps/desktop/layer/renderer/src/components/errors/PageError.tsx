@@ -14,7 +14,7 @@ const PageErrorFallback: FC<AppErrorFallbackProps> = (props) => {
     <div className="pointer-events-auto flex w-full flex-col items-center justify-center rounded-md bg-theme-background p-2">
       <div className="m-auto max-w-prose text-center">
         <div className="mb-4">
-          <i className="i-mgc-bug-cute-re text-4xl text-red-500" />
+          <i className="i-mingcute-bug-line text-4xl text-red-500" />
         </div>
         <div className="text-lg font-bold">{message}</div>
         {import.meta.env.DEV && stack ? (

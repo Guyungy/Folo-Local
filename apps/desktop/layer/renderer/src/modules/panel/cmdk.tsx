@@ -167,7 +167,7 @@ export const SearchCmdK: React.FC = () => {
                 <Command.Group
                   heading={
                     <SearchGroupHeading
-                      icon="i-mgc-paper-cute-fi size-4"
+                      icon="i-mingcute-paper-fill size-4"
                       title={t("search.group.entries")}
                     />
                   }
@@ -194,7 +194,7 @@ export const SearchCmdK: React.FC = () => {
                 <Command.Group
                   heading={
                     <SearchGroupHeading
-                      icon="i-mgc-rss-cute-fi size-4 text-accent"
+                      icon="i-mingcute-rss-fill size-4 text-accent"
                       title={t("search.group.feeds")}
                     />
                   }

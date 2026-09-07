@@ -21,11 +21,11 @@ export const Toaster = ({ ...props }: ToasterProps) => {
           classNames: toastStyles,
         }}
         icons={{
-          success: <i className="i-mgc-check-circle-cute-re" />,
-          error: <i className="i-mgc-close-cute-re" />,
-          warning: <i className="i-mgc-warning-cute-re" />,
-          info: <i className="i-mgc-information-cute-re" />,
-          loading: <i className="i-mgc-loading-3-cute-re animate-spin" />,
+          success: <i className="i-mingcute-check-circle-line" />,
+          error: <i className="i-mingcute-close-line" />,
+          warning: <i className="i-mingcute-warning-line" />,
+          info: <i className="i-mingcute-information-line" />,
+          loading: <i className="i-mingcute-loading-3-line animate-spin" />,
         }}
         {...props}
       />

@@ -321,7 +321,7 @@ const ChatPreview: React.FC<{
                             </p>
                             {/* URL hint */}
                             <div className="flex items-center gap-1 text-[10px] text-text-tertiary">
-                              <i className="i-mgc-link-cute-re size-2.5" />
+                              <i className="i-mingcute-link-line size-2.5" />
                               <span className="truncate">{feed.siteUrl}</span>
                             </div>
                           </div>

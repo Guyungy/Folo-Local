@@ -290,7 +290,7 @@ const RowRender = ({ feedId, listId }: { feedId: string; listId: string }) => {
       </TableCell>
       <TableCell align="center" size="sm">
         <Button variant="ghost" onClick={() => removeMutation.mutate({ feedId: feed.id, listId })}>
-          <i className="i-mgc-delete-2-cute-re" />
+          <i className="i-mingcute-delete-2-line" />
         </Button>
       </TableCell>
     </TableRow>

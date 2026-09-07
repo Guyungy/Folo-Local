@@ -21,7 +21,7 @@ export const InboxActions = ({ id }: { id: string }) => {
           })
         }
       >
-        <i className="i-mgc-delete-2-cute-re" />
+        <i className="i-mingcute-delete-2-line" />
       </ActionButton>
       <ActionButton
         size="sm"
@@ -32,7 +32,7 @@ export const InboxActions = ({ id }: { id: string }) => {
           })
         }}
       >
-        <i className="i-mgc-edit-cute-re" />
+        <i className="i-mingcute-edit-line" />
       </ActionButton>
     </>
   )

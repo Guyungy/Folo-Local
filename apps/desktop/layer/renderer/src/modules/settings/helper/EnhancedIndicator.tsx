@@ -15,9 +15,9 @@ export const EnhancedSettingsIndicator = () => {
       <TooltipTrigger>
         <IconTransition animatedKey={enhancedSettings ? "done" : "init"} preset="fade">
           {enhancedSettings ? (
-            <i className="i-mgc-rocket-cute-fi size-4 text-accent" />
+            <i className="i-mingcute-rocket-fill size-4 text-accent" />
           ) : (
-            <i className="i-mgc-rocket-cute-re size-4 opacity-50" />
+            <i className="i-mingcute-rocket-line size-4 opacity-50" />
           )}
         </IconTransition>
       </TooltipTrigger>

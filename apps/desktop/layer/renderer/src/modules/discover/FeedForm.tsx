@@ -79,7 +79,7 @@ export const PaidBadge = () => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <i className="i-mgc-power block text-accent" onClick={handleClick} />
+        <i className="i-mingcute-power-line block text-accent" onClick={handleClick} />
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>{t("control.paid_badge.basic_or_higher")}</TooltipContent>
@@ -175,7 +175,7 @@ export const FeedForm: Component<{
           case !!feedQuery.error: {
             return (
               <div className="center grow flex-col gap-3">
-                <i className="i-mgc-close-cute-re size-7 text-red" />
+                <i className="i-mingcute-close-line size-7 text-red" />
                 <p>{t("feed_form.error_fetching_feed")}</p>
                 <FeedRequestStatus
                   url={url}
@@ -189,7 +189,7 @@ export const FeedForm: Component<{
           default: {
             return (
               <div className="center h-full grow flex-col">
-                <i className="i-mgc-question-cute-re mb-6 size-12 text-zinc-500" />
+                <i className="i-mingcute-question-line mb-6 size-12 text-zinc-500" />
                 <p>{t("feed_form.feed_not_found")}</p>
               </div>
             )

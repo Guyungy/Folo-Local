@@ -74,7 +74,7 @@ export const SettingNotifications = () => {
 
           {!isLoading && (!data?.data || data.data.length === 0) ? (
             <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-material-medium py-12">
-              <i className="i-mgc-notification-cute-re mb-3 text-4xl text-text-quaternary" />
+              <i className="i-mingcute-notification-line mb-3 text-4xl text-text-quaternary" />
               <p className="text-sm font-medium text-text">
                 {t.settings("notifications.empty.title")}
               </p>
@@ -96,7 +96,7 @@ export const SettingNotifications = () => {
                         <span className="font-medium text-text">{row.channel}</span>
                         {row.token === token && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
-                            <i className="i-mgc-check-cute-re text-[10px]" />
+                            <i className="i-mingcute-check-line text-[10px]" />
                             {t.settings("notifications.current")}
                           </span>
                         )}
@@ -127,7 +127,7 @@ export const SettingNotifications = () => {
                               )
                             }
                           >
-                            <i className="i-mgc-finger-press-cute-re text-base" />
+                            <i className="i-mingcute-finger-press-line text-base" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipPortal>

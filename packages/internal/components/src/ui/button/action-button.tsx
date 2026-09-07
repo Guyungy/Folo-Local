@@ -145,7 +145,7 @@ export const ActionButton = ({
       {...rest}
     >
       {loading ? (
-        <i className="i-mgc-loading-3-cute-re animate-spin" />
+        <i className="i-mingcute-loading-3-line animate-spin" />
       ) : typeof icon === "function" ? (
         React.createElement(icon, {
           className: "size-4 grayscale text-current",

@@ -3,11 +3,12 @@
   "type": "module",
   "version": "1.13.0",
   "private": true,
-  "description": "Follow everything in one place",
-  "author": "Folo Team",
-  "homepage": "https://github.com/RSSNext",
+  "description": "Unofficial local-only desktop edition of Folo",
+  "author": "Guyungy and contributors; derived from RSSNext/Folo",
+  "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/Guyungy/Folo",
   "repository": {
-    "url": "https://github.com/RSSNext/Folo",
+    "url": "https://github.com/Guyungy/Folo",
     "type": "git"
   },
   "main": "./dist/main/index.js",

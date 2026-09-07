@@ -5,7 +5,7 @@ import { defineSettingPageData } from "~/modules/settings/utils"
 const priority = (1000 << 1) + 16
 
 export const handle = defineSettingPageData({
-  icon: "i-mgc-key-2-cute-re",
+  icon: "i-mingcute-key-2-line",
   name: "titles.openai",
   priority,
 })

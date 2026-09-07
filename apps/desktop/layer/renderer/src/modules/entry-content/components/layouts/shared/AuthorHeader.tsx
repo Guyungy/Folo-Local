@@ -65,7 +65,7 @@ export const AuthorHeader: React.FC<AuthorHeaderProps> = ({
           <span className="font-semibold">
             <FeedTitle feed={feed} title={entry.author || feed.title} />
           </span>
-          {parsed?.type === "x" && <i className="i-mgc-twitter-cute-fi size-3 text-[#4A99E9]" />}
+          {parsed?.type === "x" && <i className="i-mingcute-twitter-fill size-3 text-[#4A99E9]" />}
         </div>
         <div className="flex items-center gap-1 text-sm text-zinc-500">
           {parsed?.type === "x" && (

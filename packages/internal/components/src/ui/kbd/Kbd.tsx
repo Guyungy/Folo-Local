@@ -77,7 +77,7 @@ export const KbdCombined: FC<{
           )}
           {i !== keys.length - 1 && (
             <span>
-              <i className="i-mgc-line-cute-re size-[0.75em] shrink-0 origin-center translate-y-[0.15em] rotate-[-25deg] text-text-secondary" />
+              <i className="i-mingcute-line-line size-[0.75em] shrink-0 origin-center translate-y-[0.15em] rotate-[-25deg] text-text-secondary" />
             </span>
           )}
         </Fragment>

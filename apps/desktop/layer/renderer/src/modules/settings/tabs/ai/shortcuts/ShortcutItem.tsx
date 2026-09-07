@@ -19,7 +19,7 @@ export const ShortcutItem = ({ shortcut, onDelete, onToggle, onEdit }: ShortcutI
     shortcut.defaultPrompt || shortcut.id === DEFAULT_SUMMARIZE_TIMELINE_SHORTCUT_ID
   const actions: ActionButton[] = [
     {
-      icon: "i-mgc-edit-cute-re",
+      icon: "i-mingcute-edit-line",
       onClick: () => onEdit(shortcut),
       title: "Edit shortcut",
     },
@@ -27,7 +27,7 @@ export const ShortcutItem = ({ shortcut, onDelete, onToggle, onEdit }: ShortcutI
 
   if (!isProtected) {
     actions.push({
-      icon: "i-mgc-delete-2-cute-re",
+      icon: "i-mingcute-delete-2-line",
       onClick: () => onDelete(shortcut.id),
       title: "Delete shortcut",
     })
@@ -38,7 +38,7 @@ export const ShortcutItem = ({ shortcut, onDelete, onToggle, onEdit }: ShortcutI
       <div className="flex items-start justify-between">
         <div className="flex-1 space-y-2">
           <div className="flex items-center gap-2">
-            <i className={shortcut.icon || "i-mgc-hotkey-cute-re"} />
+            <i className={shortcut.icon || "i-mingcute-hotkey-line"} />
             <h4 className="text-sm font-medium text-text">{shortcut.name}</h4>
             {shortcut.hotkey && (
               <KbdCombined kbdProps={{ wrapButton: false }} joint={false}>

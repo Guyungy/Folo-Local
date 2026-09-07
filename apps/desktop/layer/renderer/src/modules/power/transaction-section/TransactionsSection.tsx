@@ -65,7 +65,7 @@ export const TransactionsSection: Component = ({ className }) => {
             <LoadingCircle size="medium" />
           ) : (
             <div className="flex min-h-56 w-full flex-col items-center justify-center rounded-xl border border-dashed border-border bg-background/60 px-6 text-center">
-              <i className="i-mgc-power mb-3 text-4xl text-text-quaternary" />
+              <i className="i-mingcute-power-line mb-3 text-4xl text-text-quaternary" />
               <p className="text-sm font-medium text-text">
                 {t("wallet.transactions.empty.title")}
               </p>

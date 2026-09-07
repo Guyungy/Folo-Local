@@ -140,7 +140,7 @@ export const CustomIntegrationSection = memo(({ searchQuery }: CustomIntegration
   if (settings.enableCustomIntegration && !customIntegrationsMatchesSearch) {
     return (
       <div className="text-center">
-        <i className="i-mgc-webhook-cute-re mb-3 text-2xl text-text-tertiary" />
+        <i className="i-mingcute-webhook-line mb-3 text-2xl text-text-tertiary" />
         <p className="mb-2 text-sm font-medium text-text-tertiary">No custom integration found</p>
       </div>
     )
@@ -205,14 +205,14 @@ const CustomIntegrationsSection = ({
           onClick={onCreateIntegration}
           buttonClassName="flex items-center"
         >
-          <i className="i-mgc-add-cute-re mr-2" />
+          <i className="i-mingcute-add-line mr-2" />
           {t("integration.custom_integrations.add.button")}
         </Button>
       </div>
 
       {integrations.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-fill-secondary py-12">
-          <i className="i-mgc-webhook-cute-re mb-3 text-2xl text-text-tertiary" />
+          <i className="i-mingcute-webhook-line mb-3 text-2xl text-text-tertiary" />
           <p className="mb-2 text-sm font-medium text-text-tertiary">
             {t("integration.custom_integrations.list.empty.title")}
           </p>
@@ -220,7 +220,7 @@ const CustomIntegrationsSection = ({
             {t("integration.custom_integrations.list.empty.description")}
           </p>
           <Button size="sm" onClick={onCreateIntegration} buttonClassName="flex items-center gap-2">
-            <i className="i-mgc-add-cute-re" />
+            <i className="i-mingcute-add-line" />
             {t("integration.custom_integrations.list.empty.button")}
           </Button>
         </div>
@@ -244,7 +244,7 @@ const CustomIntegrationsSection = ({
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 rounded-full bg-gray/10 px-2 py-0.5 text-xs text-gray">
-                      <i className="i-mgc-pause-cute-re" />
+                      <i className="i-mingcute-pause-line" />
                       <span>{t("integration.custom_integrations.status.disabled")}</span>
                     </span>
                   )}
@@ -273,7 +273,9 @@ const CustomIntegrationsSection = ({
                   }
                 >
                   <i
-                    className={integration.enabled ? "i-mgc-pause-cute-re" : "i-mgc-play-cute-re"}
+                    className={
+                      integration.enabled ? "i-mingcute-pause-line" : "i-mingcute-play-line"
+                    }
                   />
                 </Button>
                 <Button
@@ -283,7 +285,7 @@ const CustomIntegrationsSection = ({
                   buttonClassName="size-8 p-0"
                   aria-label={t("integration.custom_integrations.actions.edit")}
                 >
-                  <i className="i-mgc-edit-cute-re" />
+                  <i className="i-mingcute-edit-line" />
                 </Button>
                 <Button
                   size="sm"
@@ -292,7 +294,7 @@ const CustomIntegrationsSection = ({
                   buttonClassName="size-8 p-0"
                   aria-label={t("integration.custom_integrations.actions.delete")}
                 >
-                  <i className="i-mgc-delete-2-cute-re" />
+                  <i className="i-mingcute-delete-2-line" />
                 </Button>
               </div>
             </div>

@@ -19,7 +19,7 @@ export const CopyButton: Component<{
       className={className}
       style={style}
       variant={variant}
-      icon={<m.i className="i-mgc-copy-2-cute-re size-4" />}
+      icon={<m.i className="i-mingcute-copy-2-line size-4" />}
       onClick={handleCopy}
     />
   )

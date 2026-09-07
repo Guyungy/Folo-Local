@@ -3,7 +3,7 @@ import { SettingAI } from "~/modules/settings/tabs/ai"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-ai-cute-re"
+const iconName = "i-mingcute-ai-line"
 const priority = (1000 << 1) + 15
 
 export const handle = defineSettingPageData({

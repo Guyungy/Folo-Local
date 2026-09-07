@@ -152,7 +152,7 @@ export const LocalOpenAISection = () => {
         </Button>
       </div>
       <div className="flex items-start gap-2 rounded-lg bg-fill-secondary p-3 text-xs text-text-secondary">
-        <i className="i-mgc-shield-cute-re mt-0.5 size-4 shrink-0 text-green" />
+        <i className="i-mingcute-shield-line mt-0.5 size-4 shrink-0 text-green" />
         <span>{t("local_openai.security")}</span>
       </div>
     </div>

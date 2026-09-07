@@ -65,7 +65,7 @@ export function EmailManagement() {
           {user?.email}
 
           <AnimatedCommandButton
-            icon={<m.i className="i-mgc-edit-cute-re size-4" />}
+            icon={<m.i className="i-mingcute-edit-line size-4" />}
             className="size-5 p-1"
             variant="ghost"
             onClick={() => {

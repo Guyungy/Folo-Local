@@ -208,7 +208,7 @@ const Content: FC<{
                     target="_blank"
                   />
                 ),
-                HeartIcon: <i className="i-mgc-heart-cute-fi" />,
+                HeartIcon: <i className="i-mingcute-heart-fill" />,
               }}
             />
           </p>

@@ -47,7 +47,7 @@ export const ItemActions = ({ actions, enabled, onToggle }: ItemActionsProps) =>
                   disabled={action.disabled}
                 >
                   {action.loading ? (
-                    <i className="i-mgc-loading-3-cute-re size-4 animate-spin" />
+                    <i className="i-mingcute-loading-3-line size-4 animate-spin" />
                   ) : (
                     <i className={`${action.icon} size-4`} />
                   )}
@@ -64,7 +64,7 @@ export const ItemActions = ({ actions, enabled, onToggle }: ItemActionsProps) =>
               disabled={action.disabled}
             >
               {action.loading ? (
-                <i className="i-mgc-loading-3-cute-re size-4 animate-spin" />
+                <i className="i-mingcute-loading-3-line size-4 animate-spin" />
               ) : (
                 <i className={`${action.icon} size-4`} />
               )}

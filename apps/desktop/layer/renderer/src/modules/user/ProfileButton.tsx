@@ -117,7 +117,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
             onClick={() => {
               settingModalPresent("plan")
             }}
-            icon={<i className="i-mgc-power-outline" />}
+            icon={<i className="i-mingcute-power-line" />}
           >
             {t("activation.plan.title")}
           </DropdownMenuItem>
@@ -129,7 +129,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
             onClick={() => {
               navigate("/ai")
             }}
-            icon={<i className="i-mgc-ai-cute-re" />}
+            icon={<i className="i-mingcute-ai-line" />}
           >
             {t("user_button.ai")}
           </DropdownMenuItem>
@@ -141,7 +141,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
             onClick={() => {
               navigate("/power")
             }}
-            icon={<i className="i-mgc-power-outline" />}
+            icon={<i className="i-mingcute-power-line" />}
           >
             {t("user_button.wallet")}
           </DropdownMenuItem>
@@ -151,7 +151,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
           onClick={() => {
             presentUserProfile(user?.id)
           }}
-          icon={<i className="i-mgc-user-3-cute-re" />}
+          icon={<i className="i-mingcute-user-3-line" />}
         >
           {t("user_button.profile")}
         </DropdownMenuItem>
@@ -163,7 +163,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
           onClick={() => {
             settingModalPresent()
           }}
-          icon={<i className="i-mgc-settings-7-cute-re" />}
+          icon={<i className="i-mingcute-settings-7-line" />}
           shortcut={"$mod+,"}
         >
           {t("user_button.preferences")}
@@ -176,7 +176,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
           onClick={() => {
             navigate("/action")
           }}
-          icon={<i className="i-mgc-magic-2-cute-re" />}
+          icon={<i className="i-mingcute-magic-2-line" />}
         >
           {t("words.actions")}
         </DropdownMenuItem>
@@ -199,7 +199,7 @@ export const ProfileButton: FC<ProfileButtonProps> = memo((props) => {
               onClick={() => {
                 window.open("https://folo.is/download", "_blank", "noopener,noreferrer")
               }}
-              icon={<i className="i-mgc-download-2-cute-re" />}
+              icon={<i className="i-mingcute-download-2-line" />}
             >
               {t("user_button.download_desktop_app")}
             </DropdownMenuItem>

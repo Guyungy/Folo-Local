@@ -797,7 +797,7 @@ const useRegisterCustomIntegrationCommands = () => {
       : defineFollowCommand({
           id: COMMAND_ID.integration.custom,
           label: "Custom Integration",
-          icon: <i className="i-mgc-webhook-cute-re" />,
+          icon: <i className="i-mingcute-webhook-line" />,
           category,
           run: async () => {},
         }),

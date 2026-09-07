@@ -43,7 +43,7 @@ export const PaidBadge: Component<{
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <i className="i-mgc-power block text-accent" onClick={handleClick} />
+        <i className="i-mingcute-power-line block text-accent" onClick={handleClick} />
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>

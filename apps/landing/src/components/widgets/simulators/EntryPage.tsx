@@ -53,28 +53,28 @@ export const EntryPageDemo = () => {
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
                 <div className="flex flex-wrap items-center gap-4 text-text-secondary">
                   <div className="flex items-center gap-1.5">
-                    <i className="i-mgc-user-3-cute-re text-base" />
+                    <i className="i-mingcute-user-3-line text-base" />
                     <span className="text-xs font-medium">
                       {ENTRY_DETAIL.author.name}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
-                    <i className="i-mgc-tag-3-cute-re text-base" />
+                    <i className="i-mingcute-tag-line text-base" />
                     <span className="text-xs font-medium">
                       {ENTRY_DETAIL.author.role}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
-                    <i className="i-mgc-calendar-time-add-cute-re text-base" />
+                    <i className="i-mingcute-calendar-time-add-line text-base" />
                     <span className="text-xs tabular-nums">
                       {ENTRY_DETAIL.author.dateLabel}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
-                    <i className="i-mgc-time-cute-re text-base" />
+                    <i className="i-mingcute-time-line text-base" />
                     <span className="text-xs tabular-nums">
                       {ENTRY_DETAIL.author.readingTime}
                     </span>

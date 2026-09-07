@@ -64,7 +64,7 @@ export function useContextBlockPresentation(block: AIChatContextBlock): ContextB
                   className="absolute inset-0 flex items-center justify-center rounded-md bg-red/80"
                   title={errorMessage}
                 >
-                  <i className="i-mgc-close-cute-re size-3 text-white" />
+                  <i className="i-mingcute-close-line size-3 text-white" />
                 </div>
               )}
             </div>
@@ -107,7 +107,7 @@ export function useContextBlockPresentation(block: AIChatContextBlock): ContextB
           )}
 
           {uploadStatus === "error" && (
-            <i className="i-mgc-close-cute-re size-3 text-red" title={errorMessage} />
+            <i className="i-mingcute-close-line size-3 text-red" title={errorMessage} />
           )}
         </div>
       )

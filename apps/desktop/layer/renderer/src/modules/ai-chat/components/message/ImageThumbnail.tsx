@@ -35,7 +35,7 @@ export const ImageThumbnail: React.FC<ImageThumbnailProps> = React.memo((props) 
       alt: name,
       filename: name,
       className: className ?? "size-3 rounded object-cover",
-      fallbackIcon: fallbackIcon ?? "i-mgc-pic-cute-re",
+      fallbackIcon: fallbackIcon ?? "i-mingcute-pic-line",
     }
   }, [props])
 
@@ -81,7 +81,7 @@ export const ImageThumbnail: React.FC<ImageThumbnailProps> = React.memo((props) 
             {contentImageError ? (
               <div className="flex h-32 w-40 items-center justify-center rounded-md border border-border bg-fill-secondary">
                 <div className="flex flex-col items-center gap-2 text-text-tertiary">
-                  <i className="i-mgc-photo-album-cute-fi size-6" />
+                  <i className="i-mingcute-photo-album-fill size-6" />
                   <span className="text-xs">{computed.filename}</span>
                 </div>
               </div>
@@ -129,7 +129,7 @@ const ImageThumbnailInner: React.FC<{ src: string; alt: string; className?: stri
           className,
         )}
       >
-        <i className="i-mgc-photo-album-cute-re size-3 text-text-tertiary" />
+        <i className="i-mingcute-photo-album-line size-3 text-text-tertiary" />
       </div>
     )
   }
@@ -142,7 +142,7 @@ const ImageThumbnailInner: React.FC<{ src: string; alt: string; className?: stri
             "absolute inset-0 flex items-center justify-center border border-border bg-fill-secondary"
           }
         >
-          <i className="i-mgc-loading-3-cute-re size-3 animate-spin text-text-tertiary" />
+          <i className="i-mingcute-loading-3-line size-3 animate-spin text-text-tertiary" />
         </div>
       )}
       <m.img

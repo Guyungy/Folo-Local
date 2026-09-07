@@ -119,7 +119,7 @@ export const ByokSection = () => {
             <Label className="text-sm font-medium text-text">{t("byok.providers.title")}</Label>
             {byok.providers.length < PROVIDER_OPTIONS.length && (
               <Button variant="outline" size="sm" onClick={handleAddProvider}>
-                <i className="i-mgc-add-cute-re mr-2 size-4" />
+                <i className="i-mingcute-add-line mr-2 size-4" />
                 {t("byok.providers.add")}
               </Button>
             )}
@@ -128,7 +128,7 @@ export const ByokSection = () => {
           {byok.providers.length === 0 && (
             <div className="py-8 text-center">
               <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-fill-secondary">
-                <i className="i-mgc-key-2-cute-re size-6 text-text" />
+                <i className="i-mingcute-key-2-line size-6 text-text" />
               </div>
               <h4 className="mb-1 text-sm font-medium text-text">
                 {t("byok.providers.empty.title")}

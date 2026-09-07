@@ -36,7 +36,7 @@ export const EntryEmptyList = ({
     >
       {unreadOnly ? (
         <>
-          <i className="i-mgc-celebrate-cute-re -mt-11 text-3xl" />
+          <i className="i-mingcute-celebrate-line -mt-11 text-3xl" />
           <span className="text-base">{t("entry_list.zero_unread")}</span>
         </>
       ) : (

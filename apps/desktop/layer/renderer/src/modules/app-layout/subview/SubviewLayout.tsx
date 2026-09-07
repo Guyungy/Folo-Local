@@ -248,7 +248,9 @@ const SubViewHeaderRightView = ({ isHeaderElevated }: { isHeaderElevated: boolea
               size="md"
               theme="auto"
             >
-              <i className={cn(icon || (loading ? "i-mgc-loading-3-cute-re animate-spin" : ""))} />
+              <i
+                className={cn(icon || (loading ? "i-mingcute-loading-3-line animate-spin" : ""))}
+              />
             </GlassButton>
           )
         }

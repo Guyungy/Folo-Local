@@ -136,7 +136,7 @@ export const ChatHeader: FC<{ isFloating: boolean }> = ({ isFloating }) => {
       renderActions={({ onNewChatClick, panelStyle, onTogglePanelStyle }) => (
         <>
           <ActionButton tooltip={t("common.new_chat")} onClick={onNewChatClick}>
-            <i className="i-mgc-edit-cute-re size-5 text-text-secondary" />
+            <i className="i-mingcute-edit-line size-5 text-text-secondary" />
           </ActionButton>
           <ActionButton
             tooltip={
@@ -168,7 +168,7 @@ export const ChatHeader: FC<{ isFloating: boolean }> = ({ isFloating }) => {
             <>
               <div className="h-5 w-px bg-border" />
               <ActionButton tooltip="Close" onClick={() => setAIPanelVisibility(false)}>
-                <i className="i-mgc-close-cute-re size-5 text-text-secondary" />
+                <i className="i-mingcute-close-line size-5 text-text-secondary" />
               </ActionButton>
             </>
           )}
@@ -187,7 +187,7 @@ export const ChatPageHeader = () => {
       renderActions={({ onNewChatClick, panelStyle, onTogglePanelStyle }) => (
         <>
           <ActionButton tooltip={t("common.new_chat")} onClick={onNewChatClick}>
-            <i className="i-mgc-edit-cute-re size-5 text-text-secondary" />
+            <i className="i-mingcute-edit-line size-5 text-text-secondary" />
           </ActionButton>
           <ActionButton
             tooltip={

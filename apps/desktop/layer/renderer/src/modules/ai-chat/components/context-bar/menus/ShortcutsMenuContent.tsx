@@ -39,7 +39,7 @@ export const ShortcutsMenuContent: FC<ShortcutsMenuContentProps> = ({
             key={shortcut.id}
             onClick={() => onSendShortcut?.(getShortcutEffectivePrompt(shortcut))}
           >
-            <i className="i-mgc-magic-2-cute-re mr-1.5 size-3.5" />
+            <i className="i-mingcute-magic-2-line mr-1.5 size-3.5" />
             <span className="truncate">{shortcut.name}</span>
           </DropdownMenuItem>
         ))
@@ -50,7 +50,7 @@ export const ShortcutsMenuContent: FC<ShortcutsMenuContentProps> = ({
           showSettingModal("ai")
         }}
       >
-        <i className="i-mgc-settings-7-cute-re mr-1.5 size-3.5" />
+        <i className="i-mingcute-settings-7-line mr-1.5 size-3.5" />
         <span>{t("shortcuts.manage")}</span>
       </DropdownMenuItem>
     </DropdownMenuContent>

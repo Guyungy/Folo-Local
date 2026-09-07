@@ -2,7 +2,7 @@ import { SettingNotifications } from "~/modules/settings/tabs/notifications"
 import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 
-const iconName = "i-mgc-notification-cute-re"
+const iconName = "i-mingcute-notification-line"
 const priority = (1000 << 1) + 50
 
 export const handle = defineSettingPageData({

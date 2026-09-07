@@ -200,7 +200,7 @@ function Welcome({ onSuggestionClick }: WelcomeProps) {
             {t.app("new_user_guide.ai_chat.you_can_say")}
           </p>
           <Button variant="ghost" size="sm" onClick={rerollSuggestions}>
-            <i className="i-mgc-refresh-2-cute-re mr-2 text-sm" aria-hidden />
+            <i className="i-mingcute-refresh-2-line mr-2 text-sm" aria-hidden />
             {t.app("new_user_guide.ai_chat.reroll")}
           </Button>
         </div>

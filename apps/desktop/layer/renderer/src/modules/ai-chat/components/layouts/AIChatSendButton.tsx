@@ -31,9 +31,9 @@ export const AIChatSendButton: FC<AIChatSendButtonProps> = ({
       )}
     >
       {isProcessing ? (
-        <i className="i-mgc-stop-circle-cute-fi size-4 text-white" />
+        <i className="i-mingcute-stop-circle-fill size-4 text-white" />
       ) : (
-        <i className="i-mgc-send-plane-cute-fi size-4 text-white" />
+        <i className="i-mingcute-send-plane-fill size-4 text-white" />
       )}
     </Button>
   )

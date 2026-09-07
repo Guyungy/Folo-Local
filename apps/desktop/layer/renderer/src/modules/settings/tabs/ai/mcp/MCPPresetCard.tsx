@@ -44,7 +44,7 @@ export const MCPPresetCard = ({ preset, onSelect }: MCPPresetCardProps) => {
         {/* Auth Required Indicator */}
         {preset.authRequired && (
           <div className="flex items-center text-xs text-text-secondary">
-            <i className="i-mgc-user-setting-cute-re mr-1 size-3" />
+            <i className="i-mingcute-user-setting-line mr-1 size-3" />
             <span>Authentication required</span>
           </div>
         )}

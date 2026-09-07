@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useRef } from "react"
 import { Button, Pressable, SafeAreaView, ScrollView, View } from "react-native"
 

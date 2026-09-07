@@ -13,7 +13,7 @@ import { SettingsTitle } from "~/modules/settings/title"
 import { defineSettingPageData } from "~/modules/settings/utils"
 import { deleteUser } from "~/queries/auth"
 
-const iconName = "i-mgc-user-setting-cute-re"
+const iconName = "i-mingcute-user-setting-line"
 const priority = (1000 << 3) + 10
 export const handle = defineSettingPageData({
   icon: iconName,

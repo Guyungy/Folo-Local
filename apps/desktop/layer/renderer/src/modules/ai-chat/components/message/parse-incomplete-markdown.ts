@@ -1,5 +1,5 @@
 // @copy https://github.com/vercel/streamdown/blob/main/packages/streamdown/lib/parse-incomplete-markdown.ts
-/* eslint-disable unicorn/prefer-string-slice */
+
 const boldPattern = /(\*\*)([^*]*)$/
 const italicPattern = /(__)([^_]*)$/
 const boldItalicPattern = /(\*\*\*)([^*]*)$/
@@ -19,7 +19,7 @@ const isWordChar = (char: string): boolean => {
   if (!char) {
     return false
   }
-  // eslint-disable-next-line unicorn/prefer-code-point
+
   const code = char.charCodeAt(0)
   // ASCII optimization: a-z, A-Z, 0-9, _
   if (

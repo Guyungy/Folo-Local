@@ -68,7 +68,7 @@ export function AppTipDialog({
             className="absolute right-4 top-4 z-10"
             aria-label={t("new_user_dialog.actions.close")}
           >
-            <i className="i-mgc-close-cute-re" />
+            <i className="i-mingcute-close-line" />
           </GlassButton>
           <div className="flex flex-1 flex-col gap-6 p-8">
             <div className="flex flex-col gap-3">

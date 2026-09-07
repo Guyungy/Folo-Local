@@ -72,7 +72,7 @@ export function AsyncModalContent<T>({
                     buttonClassName="p-2 rounded-full"
                     layout
                   >
-                    <i className="i-mgc-refresh-2-cute-re" />
+                    <i className="i-mingcute-refresh-2-line" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{t("retry")}</TooltipContent>
@@ -87,7 +87,7 @@ export function AsyncModalContent<T>({
                     buttonClassName="p-2 rounded-full"
                     layout
                   >
-                    <i className="i-mgc-close-cute-re" />
+                    <i className="i-mingcute-close-line" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>{t("words.close")}</TooltipContent>

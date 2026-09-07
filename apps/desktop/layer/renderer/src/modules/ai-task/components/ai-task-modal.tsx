@@ -192,7 +192,7 @@ export const AITaskModal = ({ task, prompt, showSettingsTip = false }: AITaskMod
           {/* Task Basic Information Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <i className="i-mgc-file-upload-cute-re size-4 text-text-secondary" />
+              <i className="i-mingcute-file-upload-line size-4 text-text-secondary" />
               <h3 className="text-sm font-medium text-text">{t("tasks.section.info")}</h3>
             </div>
 
@@ -216,7 +216,7 @@ export const AITaskModal = ({ task, prompt, showSettingsTip = false }: AITaskMod
           {/* Schedule Configuration Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <i className="i-mgc-calendar-time-add-cute-re size-4 text-text-secondary" />
+              <i className="i-mingcute-calendar-time-add-line size-4 text-text-secondary" />
               <h3 className="text-sm font-medium text-text">{t("tasks.section.schedule")}</h3>
             </div>
 
@@ -230,7 +230,7 @@ export const AITaskModal = ({ task, prompt, showSettingsTip = false }: AITaskMod
           {/* AI Prompt Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <i className="i-mgc-magic-2-cute-re size-4 text-text-secondary" />
+              <i className="i-mingcute-magic-2-line size-4 text-text-secondary" />
               <h3 className="text-sm font-medium text-text">{t("tasks.section.instructions")}</h3>
             </div>
 
@@ -266,7 +266,7 @@ export const AITaskModal = ({ task, prompt, showSettingsTip = false }: AITaskMod
           {/* Notification Channels Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <i className="i-mgc-notification-cute-re size-4 text-text-secondary" />
+              <i className="i-mingcute-notification-line size-4 text-text-secondary" />
               <h3 className="text-sm font-medium text-text">{t("tasks.section.notifications")}</h3>
             </div>
             <NotifyChannelsConfig
@@ -285,7 +285,7 @@ export const AITaskModal = ({ task, prompt, showSettingsTip = false }: AITaskMod
                 className="mr-auto flex items-center gap-1 text-xs text-text-tertiary underline-offset-2 hover:text-text-secondary hover:underline disabled:opacity-50"
                 disabled={currentMutation.isPending}
               >
-                <i className="i-mgc-settings-7-cute-re size-3" />
+                <i className="i-mingcute-settings-7-line size-3" />
                 {t("tasks.view_in_settings")}
               </button>
             )}

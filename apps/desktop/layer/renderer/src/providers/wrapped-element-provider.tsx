@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { useScrollViewElement } from "@follow/components/ui/scroll-area/hooks.js"
 import { cn } from "@follow/utils/utils"
 import { createContextState } from "foxact/create-context-state"

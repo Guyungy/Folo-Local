@@ -42,7 +42,9 @@ export const ToolInvocationComponent: React.FC<ToolInvocationComponentProps> = R
           aria-hidden
           className={`absolute left-2 top-2 size-2 -translate-x-1/2 ${hasError ? "text-red" : ""}`}
         >
-          <i className={`i-mgc-tool-cute-re absolute top-1/2 -translate-x-1/4 -translate-y-1/2`} />
+          <i
+            className={`i-mingcute-tool-line absolute top-1/2 -translate-x-1/4 -translate-y-1/2`}
+          />
         </div>
 
         <CollapseCssGroup>
@@ -61,7 +63,7 @@ export const ToolInvocationComponent: React.FC<ToolInvocationComponentProps> = R
                   </span>
                 </div>
                 <div className="ml-2 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover/tool:opacity-100">
-                  <i className="i-mgc-right-cute-re size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/collapse:rotate-90" />
+                  <i className="i-mingcute-right-line size-3 shrink-0 transition-transform duration-200 group-data-[state=open]/collapse:rotate-90" />
                 </div>
               </div>
             }

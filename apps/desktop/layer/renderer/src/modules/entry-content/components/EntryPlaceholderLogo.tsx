@@ -35,22 +35,22 @@ export const EntryPlaceholderLogo = () => {
     {
       label: "Summarize the current timeline",
       onClick: handleSummarizeTimeline,
-      icon: <i className="i-mgc-paint-brush-ai-cute-re text-base" />,
+      icon: <i className="i-mingcute-paint-brush-ai-line text-base" />,
     },
     {
       label: "Suggest me some new feeds",
       onClick: handleRecommendFeeds,
-      icon: <i className="i-mgc-search-ai-cute-re text-base" />,
+      icon: <i className="i-mingcute-search-ai-line text-base" />,
     },
     {
       label: "Sort the timeline by importance",
       onClick: handleToggleAiTimeline,
-      icon: <i className="i-mgc-refresh-4-ai-cute-re text-base" />,
+      icon: <i className="i-mingcute-refresh-4-ai-line text-base" />,
     },
     {
       label: "Personalize my Folo AI",
       onClick: () => settingModalPresent("ai"),
-      icon: <i className="i-mgc-ai-cute-re text-base" />,
+      icon: <i className="i-mingcute-ai-line text-base" />,
     },
   ]
 
@@ -62,7 +62,7 @@ export const EntryPlaceholderLogo = () => {
         "flex w-full min-w-0 flex-col items-center justify-center gap-2 px-12 pb-6 text-center text-lg font-medium text-text-secondary duration-500"
       }
     >
-      <i className="i-mgc-folo-bot-original size-16 text-text-tertiary" />
+      <i className="i-mingcute-robot-line size-16 text-text-tertiary" />
       <div>Where are we off to first?</div>
       <div className="mt-4 flex flex-col gap-2">
         {buttons.map((button) => (

@@ -204,10 +204,10 @@ export const UserProfileModalContent: FC<SubscriptionModalContentProps> = ({ use
               window.open(UrlBuilder.profile(user.data.handle ?? user.data.id))
             }}
           >
-            <i className="i-mgc-share-forward-cute-re" />
+            <i className="i-mingcute-share-forward-line" />
           </ActionButton>
           <ActionButton tooltip={t("user_profile.close")} onClick={modal.dismiss}>
-            <i className="i-mgc-close-cute-re" />
+            <i className="i-mingcute-close-line" />
           </ActionButton>
         </div>
 
@@ -253,7 +253,7 @@ const UserInfo = ({ userInfo }: { userInfo: PickedUser }) => {
                 }}
                 size="sm"
               >
-                <i className="i-mgc-add-cute-re size-4" />
+                <i className="i-mingcute-add-line size-4" />
               </Button>
             )}
           </div>
@@ -283,7 +283,7 @@ const UserInfo = ({ userInfo }: { userInfo: PickedUser }) => {
               rel="noopener noreferrer"
               className="mr-auto inline-flex items-center gap-2 text-text-secondary transition-colors hover:text-accent"
             >
-              <i className="i-mgc-link-cute-re" />
+              <i className="i-mingcute-link-line" />
               <span className="text-base leading-relaxed">
                 {userInfo.website.replace(/^https?:\/\//, "")}
               </span>
@@ -343,7 +343,7 @@ const Subscriptions = ({ userId }: { userId: string }) => {
         >
           <i
             className={cn(
-              itemStyle === "loose" ? "i-mgc-list-check-3-cute-re" : "i-mgc-list-check-cute-re",
+              itemStyle === "loose" ? "i-mingcute-list-check-3-line" : "i-mingcute-list-check-line",
             )}
           />
         </ActionButton>

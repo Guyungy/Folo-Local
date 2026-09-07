@@ -14,7 +14,7 @@ const elementsMap = new WeakMap<Element, Array<ObserveResize>>()
 ;(window as any)._resizeObserverElementsMap = elementsMap
 
 /**
- * @internal get or initialize the ResizeObserver instance
+ * @internal
  */
 const getResizeObserver = () =>
   (_resizeObserver ??= new ResizeObserver((entries) => {
@@ -25,7 +25,7 @@ const getResizeObserver = () =>
   }))
 
 /**
- * @internal remove element's specific listener
+ * @internal
  */
 const removeListener = (element: Element, listener: ObserveResize) => {
   if (!element) return

@@ -49,7 +49,7 @@ export const MarkdownLink = (props: LinkProps) => {
           {props.children}
 
           {typeof props.children === "string" && (
-            <i className="i-mgc-arrow-right-up-cute-re size-[0.9em] translate-y-[2px] opacity-70" />
+            <i className="i-mingcute-arrow-right-up-line size-[0.9em] translate-y-[2px] opacity-70" />
           )}
         </a>
       </TooltipTrigger>

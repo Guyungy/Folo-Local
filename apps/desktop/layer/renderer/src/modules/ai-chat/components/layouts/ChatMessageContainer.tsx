@@ -78,7 +78,7 @@ export const ChatMessageContainer = ({
             {shouldShowLoadingOverlay ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="flex -translate-y-24 flex-col items-center space-y-2">
-                  <i className="i-mgc-loading-3-cute-re size-8 animate-spin text-text" />
+                  <i className="i-mingcute-loading-3-line size-8 animate-spin text-text" />
                   {isSyncingRemote && (
                     <p className="text-sm text-text-secondary">Syncing messages from server...</p>
                   )}

@@ -24,12 +24,12 @@ interface AIModelIndicatorProps {
 type ProviderType = "openai" | "google" | "auto" | "deepseek" | "anthropic" | "moonshotai"
 
 const providerIcons: Record<ProviderType, string> = {
-  auto: "i-mgc-folo-bot-original size-4 -ml-0.5",
-  openai: "i-mgc-openai-original",
+  auto: "i-mingcute-robot-line size-4 -ml-0.5",
+  openai: "i-simple-icons-openai",
   google: "i-simple-icons-googlegemini",
   anthropic: "i-simple-icons-claude",
-  deepseek: "i-mgc-deepseek-original",
-  moonshotai: "i-mgc-moonshotai-original",
+  deepseek: "i-simple-icons-deepseek",
+  moonshotai: "i-mingcute-moon-stars-line",
 }
 
 const MODEL_PAID_LEVELS = ["basic", "plus", "pro"] as const

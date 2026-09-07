@@ -56,7 +56,7 @@ function AuthProviderButton({ provider }: { provider: string }) {
             ? account.profile?.email || account.profile?.name
             : t("profile.link_social.link")}
         </span>
-        {account && <i className="i-mgc-delete-2-cute-re" />}
+        {account && <i className="i-mingcute-delete-2-line" />}
       </div>
     </button>
   )

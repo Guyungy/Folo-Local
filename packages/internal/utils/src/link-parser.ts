@@ -32,19 +32,19 @@ export const isYoutubeUrl = defineLinkParser({
 export const isGithubUrl = defineLinkParser({
   name: "github",
   validator: (url) => url.hostname === GITHUB_HOST || url.hostname === "github.blog",
-  icon: "i-mgc-github-2-cute-fi text-black dark:text-white",
+  icon: "i-mingcute-github-2-fill text-black dark:text-white",
 })
 
 export const isTwitterUrl = defineLinkParser({
   name: "twitter",
   validator: (url) => url.hostname === "twitter.com",
-  icon: "i-mgc-twitter-cute-fi text-[#55acee]",
+  icon: "i-mingcute-twitter-fill text-[#55acee]",
 })
 
 export const isXUrl = defineLinkParser({
   name: "x",
   validator: (url) => url.hostname === "x.com",
-  icon: "i-mgc-social-x-cute-li",
+  icon: "i-mingcute-social-x-line",
 })
 
 export const isV2exUrl = defineLinkParser({

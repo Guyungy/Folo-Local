@@ -13,7 +13,7 @@ const RSSHubErrorFallback: FC<AppErrorFallbackProps> = (props) => {
     <div className="flex flex-col items-center justify-center">
       <div className="m-auto max-w-prose text-center">
         <p className="center my-3 gap-2 font-bold">
-          <i className="i-mgc-bug-cute-re text-red-500" />
+          <i className="i-mingcute-bug-line text-red-500" />
           RSSHub has a temporary problem, please contact the our team.
         </p>
         <div className="text-lg">{message}</div>

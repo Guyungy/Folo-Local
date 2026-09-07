@@ -102,7 +102,7 @@ export const SettingLists = () => {
           })
         }}
       >
-        <i className="i-mgc-add-cute-re mr-1 text-base" />
+        <i className="i-mingcute-add-line mr-1 text-base" />
         {t.settings("lists.create")}
       </Button>
       <Divider className="mb-6 mt-8" />
@@ -182,7 +182,7 @@ export const SettingLists = () => {
                                   })
                                 }}
                               >
-                                <i className="i-mgc-inbox-cute-re" />
+                                <i className="i-mingcute-inbox-line" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipPortal>
@@ -200,7 +200,7 @@ export const SettingLists = () => {
                                   })
                                 }}
                               >
-                                <i className="i-mgc-edit-cute-re" />
+                                <i className="i-mingcute-edit-line" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipPortal>
@@ -218,7 +218,7 @@ export const SettingLists = () => {
                                   })
                                 }
                               >
-                                <i className="i-mgc-delete-2-cute-re" />
+                                <i className="i-mingcute-delete-2-line" />
                               </ActionButton>
                             </TooltipTrigger>
                             <TooltipPortal>

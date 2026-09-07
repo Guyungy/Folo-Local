@@ -376,13 +376,13 @@ export const MCPServicesSection = () => {
                 title="Refresh connections"
               >
                 {isLoading ? (
-                  <i className="i-mgc-loading-3-cute-re size-4 animate-spin" />
+                  <i className="i-mingcute-loading-3-line size-4 animate-spin" />
                 ) : (
-                  <i className="i-mgc-refresh-2-cute-re size-4" />
+                  <i className="i-mingcute-refresh-2-line size-4" />
                 )}
               </Button>
               <Button variant="outline" size="sm" onClick={handleAddService}>
-                <i className="i-mgc-add-cute-re mr-2 size-4" />
+                <i className="i-mingcute-add-line mr-2 size-4" />
                 {t("integration.mcp.services.add")}
               </Button>
             </div>
@@ -391,7 +391,7 @@ export const MCPServicesSection = () => {
           {mcpServices.length === 0 && !isLoading && (
             <div className="py-8 text-center">
               <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-fill-secondary">
-                <i className="i-mgc-plugin-2-cute-re size-6 text-text" />
+                <i className="i-mingcute-plugin-2-line size-6 text-text" />
               </div>
               <h4 className="mb-1 text-sm font-medium text-text">
                 {t("integration.mcp.services.empty.title")}

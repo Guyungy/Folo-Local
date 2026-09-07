@@ -20,7 +20,7 @@ export const TrendingFeedCard: FC<{
       <div className="mt-2 flex items-center justify-between text-body text-text-secondary">
         {analytics?.subscriptionCount ? (
           <div className="flex items-center gap-1.5">
-            <i className="i-mgc-user-3-cute-re" />
+            <i className="i-mingcute-user-3-line" />
 
             <span>
               {formatNumber(analytics.subscriptionCount)}{" "}

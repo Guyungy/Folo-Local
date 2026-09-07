@@ -834,7 +834,7 @@ const AccentColorSelector = () => {
 
                 {/* Checkmark for selected color */}
                 {isSelected && (
-                  <i className="i-mgc-check-cute-re text-sm text-white drop-shadow-sm" />
+                  <i className="i-mingcute-check-line text-sm text-white drop-shadow-sm" />
                 )}
 
                 {/* Hover effect */}
@@ -871,9 +871,9 @@ const AccentColorSelector = () => {
 
                 {/* Icon */}
                 {isCustomColor ? (
-                  <i className="i-mgc-check-cute-re text-sm text-white drop-shadow-sm" />
+                  <i className="i-mingcute-check-line text-sm text-white drop-shadow-sm" />
                 ) : (
-                  <i className="i-mgc-add-cute-re text-sm text-white drop-shadow-sm" />
+                  <i className="i-mingcute-add-line text-sm text-white drop-shadow-sm" />
                 )}
 
                 {/* Hover effect */}

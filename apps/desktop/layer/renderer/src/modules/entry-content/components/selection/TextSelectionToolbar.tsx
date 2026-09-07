@@ -149,7 +149,7 @@ export function TextSelectionToolbar({
         <div className="pointer-events-none absolute inset-0 rounded-xl" style={styles.innerGlow} />
         <div className="relative flex items-center gap-1 text-[0.85rem] font-medium text-text">
           <ToolbarButton
-            iconClassName={copied ? "i-mgc-check-cute-re" : "i-mgc-copy-cute-re"}
+            iconClassName={copied ? "i-mingcute-check-line" : "i-mingcute-copy-line"}
             label={
               copied
                 ? t("entry_content.selection_toolbar.copied")
@@ -160,7 +160,7 @@ export function TextSelectionToolbar({
           />
           {entryId ? (
             <ToolbarButton
-              iconClassName="i-mgc-share-forward-cute-re"
+              iconClassName="i-mingcute-share-forward-line"
               label={t("entry_content.selection_toolbar.share")}
               onClick={handleShare}
             />

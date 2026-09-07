@@ -99,7 +99,7 @@ export const ChatShortcutsRow: React.FC<ChatShortcutsRowProps> = ({ onSelect }) 
           size="sm"
           title={t("new_shortcuts")}
         >
-          <i className="i-mgc-add-cute-re" />
+          <i className="i-mingcute-add-line" />
           <span className={shortcutsToDisplay.length > 0 ? "sr-only" : "text-text"}>
             {t("new_shortcuts")}
           </span>
@@ -183,7 +183,7 @@ const ShortcutMenuButton: React.FC<ShortcutMenuButtonProps> = ({
             {shortcut.icon ? (
               <i className={shortcut.icon} />
             ) : (
-              <i className="i-mgc-hotkey-cute-re" />
+              <i className="i-mingcute-hotkey-line" />
             )}
             <span>{shortcut.name}</span>
           </span>

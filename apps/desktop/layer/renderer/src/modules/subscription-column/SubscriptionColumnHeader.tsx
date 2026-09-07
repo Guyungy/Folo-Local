@@ -64,7 +64,7 @@ export const SubscriptionColumnHeader = memo(() => {
             }
           }}
         >
-          <i className="i-mgc-add-cute-re size-5 text-text-secondary" />
+          <i className="i-mingcute-add-line size-5 text-text-secondary" />
         </ActionButton>
 
         <ProfileButton method="modal" animatedAvatar />
@@ -94,8 +94,8 @@ const LayoutActionButton = () => {
           <i
             className={cn(
               !feedColumnShow
-                ? "i-mgc-layout-leftbar-open-cute-re"
-                : "i-mgc-layout-leftbar-close-cute-re",
+                ? "i-mingcute-layout-leftbar-open-line"
+                : "i-mingcute-layout-leftbar-close-line",
               "text-text-secondary",
             )}
           />

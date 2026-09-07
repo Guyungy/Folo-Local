@@ -179,7 +179,7 @@ export const TIMELINE_SUMMARY_STEPS: AI_CHAT_STEP[] = [
               /
             </span>
             <span className="flex items-center justify-center mr-1 size-3">
-              <i className="i-mgc-send-plane-cute-re" />
+              <i className="i-mingcute-send-plane-line" />
             </span>
             <span className="truncate text-xs">Summarize</span>
           </span>

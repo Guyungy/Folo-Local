@@ -96,7 +96,7 @@ export const AIDisplayFlowPart = toolMemo(({ part }: { part: ToolWithState<any> 
         )}
         title="Open in full screen"
       >
-        <i className="i-mgc-external-link-cute-re size-4" />
+        <i className="i-mingcute-external-link-line size-4" />
         <span>Preview</span>
       </button>
     </div>

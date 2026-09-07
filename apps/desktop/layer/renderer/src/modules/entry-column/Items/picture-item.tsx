@@ -45,7 +45,7 @@ export function PictureItem({ entryId, translation }: UniversalItemProps) {
           />
         ) : (
           <div className="center aspect-square w-full flex-col gap-1 rounded-md bg-material-medium text-xs text-text-secondary">
-            <i className="i-mgc-sad-cute-re size-6" />
+            <i className="i-mingcute-sad-line size-6" />
             {t("entry_content.no_content")}
           </div>
         )}
@@ -121,7 +121,7 @@ export const PictureWaterFallItem = memo(function PictureWaterFallItem({
           </MasonryItemFixedDimensionWrapper>
         ) : (
           <div className="center aspect-video flex-col gap-1 rounded-md bg-material-medium text-xs text-text-secondary">
-            <i className="i-mgc-sad-cute-re size-6" />
+            <i className="i-mingcute-sad-line size-6" />
             No media available
           </div>
         )}

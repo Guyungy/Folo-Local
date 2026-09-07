@@ -110,7 +110,7 @@ export const SocialMediaItem: EntryListItemFC = ({ entryId, translation }) => {
             <span className="inline-flex min-w-0 items-center gap-1 text-base font-semibold">
               <FeedTitle feed={feed} title={entry.author || feed.title} />
               {parsed?.type === "x" && (
-                <i className="i-mgc-twitter-cute-fi size-3 text-[#4A99E9]" />
+                <i className="i-mingcute-twitter-fill size-3 text-[#4A99E9]" />
               )}
             </span>
 

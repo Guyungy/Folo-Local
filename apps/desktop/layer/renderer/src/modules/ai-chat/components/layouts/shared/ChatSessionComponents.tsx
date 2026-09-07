@@ -60,9 +60,9 @@ export const SessionItem = ({
               className="absolute inset-y-0 right-0 flex items-center rounded-md bg-accent px-2 py-1 text-white opacity-0 group-data-[highlighted]:text-white group-data-[highlighted]:opacity-100"
             >
               {isLoading ? (
-                <i className="i-mgc-loading-3-cute-re size-4 animate-spin" />
+                <i className="i-mingcute-loading-3-line size-4 animate-spin" />
               ) : (
-                <i className="i-mgc-delete-2-cute-re size-4" />
+                <i className="i-mingcute-delete-2-line size-4" />
               )}
             </button>
           )}
@@ -75,7 +75,7 @@ export const SessionItem = ({
 export const EmptyState = ({ message, icon }: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center py-8 text-center">
-      {icon || <i className="i-mgc-time-cute-re mb-2 block size-8 text-text-secondary" />}
+      {icon || <i className="i-mingcute-time-line mb-2 block size-8 text-text-secondary" />}
       <p className="text-sm text-text-secondary">{message}</p>
     </div>
   )

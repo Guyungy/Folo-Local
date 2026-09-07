@@ -34,7 +34,7 @@ export const ShortcutComponent: React.FC<ShortcutComponentProps> = ({
         className={className}
         variant="command"
         icon={
-          matched?.icon ? <i className={matched.icon} /> : <i className="i-mgc-hotkey-cute-re" />
+          matched?.icon ? <i className={matched.icon} /> : <i className="i-mingcute-hotkey-line" />
         }
         prefix="/"
         data-shortcut-id={shortcutData.id}

@@ -30,7 +30,6 @@ const runWhenIdle = (callback: () => void) => {
   setTimeout(callback, 0)
 }
 
-/* eslint-disable no-console */
 export const initializeApp = async () => {
   console.log(`Initialize...`)
 

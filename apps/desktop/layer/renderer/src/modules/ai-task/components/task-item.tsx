@@ -164,7 +164,7 @@ export const TaskItem = memo(({ task }: { task: AITask }) => {
     ...(taskSession
       ? [
           {
-            icon: "i-mgc-history-cute-re",
+            icon: "i-mingcute-history-line",
             onClick: handleOpenReport,
             title: t("tasks.actions.view_reports"),
             loading: openingReport,
@@ -173,7 +173,7 @@ export const TaskItem = memo(({ task }: { task: AITask }) => {
         ]
       : []),
     {
-      icon: "i-mgc-test-tube-cute-re",
+      icon: "i-mingcute-test-tube-line",
       onClick: async () => {
         const loadingId = toast.loading(t("tasks.toast.test_start"))
         try {
@@ -219,12 +219,12 @@ export const TaskItem = memo(({ task }: { task: AITask }) => {
       loading: testRunMutation.isPending,
     },
     {
-      icon: "i-mgc-edit-cute-re",
+      icon: "i-mingcute-edit-line",
       onClick: () => handleEditTask(task),
       title: t("tasks.actions.edit_task"),
     },
     {
-      icon: "i-mgc-delete-2-cute-re",
+      icon: "i-mingcute-delete-2-line",
       onClick: async () => {
         const confirmed = await ask({
           title: t("tasks.modal.delete_title"),
@@ -261,11 +261,11 @@ export const TaskItem = memo(({ task }: { task: AITask }) => {
                 statusColorClass,
               )}
             >
-              {status === "completed" && <i className="i-mgc-check-cute-re mr-1 size-3" />}
+              {status === "completed" && <i className="i-mingcute-check-line mr-1 size-3" />}
               {status === "scheduled" && (
-                <i className="i-mgc-calendar-time-add-cute-re mr-1 size-3" />
+                <i className="i-mingcute-calendar-time-add-line mr-1 size-3" />
               )}
-              {status === "paused" && <i className="i-mgc-pause-cute-re mr-1 size-3" />}
+              {status === "paused" && <i className="i-mingcute-pause-line mr-1 size-3" />}
               <span>{t(`tasks.status.${status}`)}</span>
             </span>
           </div>

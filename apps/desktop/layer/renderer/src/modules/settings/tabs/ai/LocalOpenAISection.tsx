@@ -15,6 +15,8 @@ interface OpenAIConfig {
   transcriptionModel?: string
 }
 
+type OpenAIConfigRequest = OpenAIConfig | Pick<OpenAIConfig, "apiKey" | "baseURL">
+
 interface APIResponse<T> {
   code: number
   data?: T
@@ -29,7 +31,7 @@ const emptyConfig: OpenAIConfig = {
   transcriptionModel: "whisper-1",
 }
 
-const request = async <T,>(path: string, method = "GET", body?: OpenAIConfig) => {
+const request = async <T,>(path: string, method = "GET", body?: OpenAIConfigRequest) => {
   if (!ipcServices?.localApi) throw new Error("Local settings require the desktop app")
   const response = await ipcServices.localApi.fetch({
     body: body ? JSON.stringify(body) : undefined,
@@ -49,6 +51,8 @@ export const LocalOpenAISection = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [isTesting, setIsTesting] = useState(false)
+  const [isLoadingModels, setIsLoadingModels] = useState(false)
+  const [models, setModels] = useState<string[]>([])
 
   useEffect(() => {
     request<Partial<OpenAIConfig>>("/settings/openai")
@@ -57,7 +61,25 @@ export const LocalOpenAISection = () => {
       .finally(() => setIsLoading(false))
   }, [])
 
-  const isComplete = Boolean(config.baseURL.trim() && config.apiKey.trim() && config.model.trim())
+  const isComplete = Boolean(config.baseURL.trim() && config.model.trim())
+
+  const handleLoadModels = async () => {
+    setIsLoadingModels(true)
+    try {
+      const result = await request<{ models: string[] }>("/settings/openai/models", "POST", {
+        apiKey: config.apiKey,
+        baseURL: config.baseURL,
+      })
+      const nextModels = result?.models ?? []
+      setModels(nextModels)
+      if (!config.model && nextModels[0]) setConfig({ ...config, model: nextModels[0] })
+      toast.success(t("local_openai.models_loaded", { count: nextModels.length }))
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : t("local_openai.models_failed"))
+    } finally {
+      setIsLoadingModels(false)
+    }
+  }
 
   const handleSave = async () => {
     setIsSaving(true)
@@ -111,13 +133,28 @@ export const LocalOpenAISection = () => {
       </div>
       <div className="space-y-2">
         <Label htmlFor="local-openai-model">{t("local_openai.model")}</Label>
-        <Input
-          id="local-openai-model"
-          disabled={isLoading}
-          value={config.model}
-          placeholder={t("local_openai.model_placeholder")}
-          onChange={(event) => setConfig({ ...config, model: event.target.value })}
-        />
+        <div className="flex gap-2">
+          <Input
+            id="local-openai-model"
+            list="local-openai-models"
+            disabled={isLoading}
+            value={config.model}
+            placeholder={t("local_openai.model_placeholder")}
+            onChange={(event) => setConfig({ ...config, model: event.target.value })}
+          />
+          <datalist id="local-openai-models">
+            {models.map((model) => (
+              <option key={model} value={model} />
+            ))}
+          </datalist>
+          <Button
+            variant="outline"
+            disabled={isLoading || isLoadingModels || !config.baseURL.trim()}
+            onClick={handleLoadModels}
+          >
+            {isLoadingModels ? t("local_openai.loading_models") : t("local_openai.load_models")}
+          </Button>
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">

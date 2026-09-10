@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname } from "pathe"
 
 export interface OpenAIConfig {
-  apiKey: string
+  apiKey?: string
   baseURL: string
   model: string
   speechModel?: string
@@ -12,6 +12,18 @@ export interface OpenAIConfig {
 
 interface ChatCompletionResponse {
   choices?: { message?: { content?: string | null } }[]
+}
+
+interface ModelsResponse {
+  data?: { id?: string }[]
+}
+
+const authorizationHeaders = (apiKey?: string): Record<string, string> =>
+  apiKey?.trim() ? { authorization: `Bearer ${apiKey.trim()}` } : {}
+
+const providerError = async (response: Response, endpoint: string) => {
+  const detail = (await response.text()).replace(/\s+/g, " ").trim().slice(0, 500)
+  return new Error(`${endpoint} returned ${response.status}${detail ? `: ${detail}` : ""}`)
 }
 
 export const readOpenAIConfig = async (): Promise<Partial<OpenAIConfig>> => {
@@ -40,7 +52,7 @@ const readConfig = async (): Promise<OpenAIConfig | null> => {
   const apiKey = process.env.OPENAI_API_KEY ?? fileConfig.apiKey
   const baseURL = process.env.OPENAI_BASE_URL ?? fileConfig.baseURL
   const model = process.env.OPENAI_MODEL ?? fileConfig.model
-  return apiKey && baseURL && model
+  return baseURL && model
     ? {
         apiKey,
         baseURL,
@@ -64,13 +76,13 @@ export const requestCompletion = async (
   const response = await fetch(`${config.baseURL.replace(/\/$/, "")}/chat/completions`, {
     method: "POST",
     headers: {
-      authorization: `Bearer ${config.apiKey}`,
+      ...authorizationHeaders(config.apiKey),
       "content-type": "application/json",
     },
     body: JSON.stringify({ model: config.model, messages, temperature: 0.2 }),
     signal: AbortSignal.timeout(45_000),
   })
-  if (!response.ok) throw new Error(`OpenAI-compatible API returned ${response.status}`)
+  if (!response.ok) throw await providerError(response, "Chat API")
   const result = (await response.json()) as ChatCompletionResponse
   return result.choices?.[0]?.message?.content?.trim() || null
 }
@@ -85,13 +97,13 @@ export async function streamCompletion(messages: { role: string; content: string
   const abort = new AbortController()
   const response = await fetch(`${config.baseURL.replace(/\/$/, "")}/chat/completions`, {
     method: "POST",
-    headers: { authorization: `Bearer ${config.apiKey}`, "content-type": "application/json" },
+    headers: { ...authorizationHeaders(config.apiKey), "content-type": "application/json" },
     body: JSON.stringify({ model: config.model, messages, stream: true }),
     signal: AbortSignal.any([abort.signal, AbortSignal.timeout(120_000)]),
   })
   if (!response.ok || !response.body) {
     abort.abort()
-    throw new Error(`Chat API returned ${response.status}`)
+    throw await providerError(response, "Chat API")
   }
   const reader = response.body.getReader()
   const decoder = new TextDecoder()
@@ -156,7 +168,7 @@ export const synthesizeSpeech = async (text: string, voice?: string) => {
   const response = await fetch(`${config.baseURL.replace(/\/$/, "")}/audio/speech`, {
     method: "POST",
     headers: {
-      authorization: `Bearer ${config.apiKey}`,
+      ...authorizationHeaders(config.apiKey),
       "content-type": "application/json",
     },
     body: JSON.stringify({
@@ -167,7 +179,7 @@ export const synthesizeSpeech = async (text: string, voice?: string) => {
     }),
     signal: AbortSignal.timeout(120_000),
   })
-  if (!response.ok) throw new Error(`Speech API returned ${response.status}`)
+  if (!response.ok) throw await providerError(response, "Speech API")
   return response
 }
 
@@ -181,11 +193,11 @@ export const transcribeAudio = async (url: string) => {
   form.append("response_format", "srt")
   const response = await fetch(`${config.baseURL.replace(/\/$/, "")}/audio/transcriptions`, {
     method: "POST",
-    headers: { authorization: `Bearer ${config.apiKey}` },
+    headers: authorizationHeaders(config.apiKey),
     body: form,
     signal: AbortSignal.timeout(300_000),
   })
-  if (!response.ok) throw new Error(`Transcription API returned ${response.status}`)
+  if (!response.ok) throw await providerError(response, "Transcription API")
   return response.text()
 }
 
@@ -195,6 +207,18 @@ export const testOpenAIConfig = async (config: OpenAIConfig) => {
   ])
   if (!result) throw new Error("The API returned an empty response")
   return result
+}
+
+export const listOpenAIModels = async (config: Pick<OpenAIConfig, "apiKey" | "baseURL">) => {
+  const response = await fetch(`${config.baseURL.replace(/\/$/, "")}/models`, {
+    headers: authorizationHeaders(config.apiKey),
+    signal: AbortSignal.timeout(30_000),
+  })
+  if (!response.ok) throw await providerError(response, "Models API")
+  const result = (await response.json()) as ModelsResponse
+  return [...new Set((result.data ?? []).flatMap((model) => (model.id ? [model.id] : [])))].sort(
+    (a, b) => a.localeCompare(b),
+  )
 }
 
 export const generateSummary = async (

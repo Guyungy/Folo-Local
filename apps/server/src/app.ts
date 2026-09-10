@@ -16,6 +16,16 @@ import {
 import { articleContext } from "./chat-context.js"
 import { db, jsonValue } from "./db.js"
 import { getRSSHubBaseURL, refreshFeed, setRSSHubBaseURL } from "./rss.js"
+import {
+  getRefreshIntervalMinutes,
+  getRefreshStatus,
+  isRefreshRunning,
+  refreshFeedsByIds,
+  runFullRefreshSweep,
+  setRefreshIntervalMinutes,
+  startRefreshScheduler,
+  stopRefreshScheduler,
+} from "./scheduler.js"
 import type { Entry, Feed } from "./types.js"
 
 type Variables = { userId: string }
@@ -67,6 +77,7 @@ const feedFromRow = (row: Record<string, unknown>): Feed & { type: "feed" } => (
   subscriptionCount: Number(row.subscription_count),
   updatesPerWeek: row.updates_per_week as number | null,
   latestEntryPublishedAt: row.latest_entry_published_at as string | null,
+  lastRefreshedAt: (row.last_refreshed_at as string | null) ?? null,
 })
 
 const feedFromJoinedRow = (row: Record<string, unknown>) =>
@@ -83,6 +94,7 @@ const feedFromJoinedRow = (row: Record<string, unknown>) =>
     subscription_count: row.f_subscription_count,
     updates_per_week: row.f_updates_per_week,
     latest_entry_published_at: row.f_latest_entry_published_at,
+    last_refreshed_at: row.f_last_refreshed_at,
   })
 
 const entryFromRow = (row: Record<string, unknown>): Entry => ({
@@ -417,7 +429,7 @@ app.get("/feeds", async (c) => {
     .get(id ?? url ?? "") as Record<string, unknown> | undefined
   if (!row && url && !id) {
     try {
-      const feed = await refreshFeed(url)
+      const { feed } = await refreshFeed(url)
       row = db.prepare("SELECT * FROM feeds WHERE id=?").get(feed.id) as Record<string, unknown>
     } catch (error) {
       return c.json(
@@ -449,8 +461,8 @@ app.get("/feeds/refresh", async (c) => {
     { url: string } | undefined
   if (!row) return c.json({ code: 404, message: "Feed not found" }, 404)
   try {
-    await refreshFeed(row.url)
-    return c.json(ok(null))
+    const result = await refreshFeed(row.url, { conditional: c.req.query("conditional") !== "0" })
+    return c.json(ok({ notModified: result.notModified }))
   } catch (error) {
     db.prepare("UPDATE feeds SET error_at=?, error_message=? WHERE url=?").run(
       new Date().toISOString(),
@@ -459,6 +471,46 @@ app.get("/feeds/refresh", async (c) => {
     )
     return c.json({ code: 502, message: "Unable to refresh feed" }, 502)
   }
+})
+
+/**
+ * Batch refresh. `ids` in the body limits the sweep; otherwise every subscribed feed is visited.
+ * The renderer used to fan out one request per feed, which hammered the feeds and the IPC channel.
+ */
+app.post("/feeds/refresh", async (c) => {
+  const body = await c.req
+    .json<{ ids?: string[] }>()
+    .catch(() => ({ ids: undefined }) as { ids?: string[] })
+  if (isRefreshRunning()) return c.json({ code: 409, message: "A refresh is already running" }, 409)
+  const ids = body.ids?.filter((id) => typeof id === "string" && id.length > 0) ?? []
+  const result = ids.length ? await refreshFeedsByIds(ids) : await runFullRefreshSweep()
+  return c.json(ok(result))
+})
+
+app.get("/local/refresh-status", (c) =>
+  c.json(
+    ok({
+      intervalMinutes: getRefreshIntervalMinutes(),
+      lastRun: getRefreshStatus(),
+      running: isRefreshRunning(),
+    }),
+  ),
+)
+
+app.get("/settings/refresh", (c) =>
+  c.json(ok({ intervalMinutes: getRefreshIntervalMinutes(), lastRun: getRefreshStatus() })),
+)
+app.put("/settings/refresh", async (c) => {
+  const body = await c.req.json<{ intervalMinutes?: number }>()
+  try {
+    setRefreshIntervalMinutes(body.intervalMinutes ?? 0)
+  } catch (error) {
+    return c.json(
+      { code: 400, message: error instanceof Error ? error.message : "Invalid interval" },
+      400,
+    )
+  }
+  return c.json(ok({ intervalMinutes: getRefreshIntervalMinutes() }))
 })
 
 const subscriptionFromRow = (row: Record<string, unknown>) => ({
@@ -483,7 +535,8 @@ app.get("/subscriptions", (c) => {
       `SELECT s.*, f.id f_id, f.url f_url, f.title f_title, f.description f_description,
     f.image f_image, f.site_url f_site_url, f.owner_user_id f_owner_user_id, f.error_at f_error_at,
     f.error_message f_error_message, f.subscription_count f_subscription_count,
-    f.updates_per_week f_updates_per_week, f.latest_entry_published_at f_latest_entry_published_at
+    f.updates_per_week f_updates_per_week, f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at
     FROM subscriptions s JOIN feeds f ON f.id=s.feed_id WHERE s.user_id=? ${view === undefined ? "" : "AND s.view=?"} ORDER BY s.created_at DESC`,
     )
     .all(...(view === undefined ? [c.get("userId")] : [c.get("userId"), Number(view)])) as Record<
@@ -506,7 +559,7 @@ app.post("/subscriptions", async (c) => {
   if (!body.url) return c.json({ code: 400, message: "Feed URL is required" }, 400)
   let feed: Feed
   try {
-    feed = await refreshFeed(body.url)
+    feed = (await refreshFeed(body.url)).feed
   } catch (error) {
     return c.json(
       { code: 422, message: error instanceof Error ? error.message : "Invalid feed" },
@@ -669,6 +722,7 @@ app.post("/entries", async (c) => {
     f.site_url f_site_url,f.owner_user_id f_owner_user_id,f.error_at f_error_at,
     f.error_message f_error_message,f.subscription_count f_subscription_count,
     f.updates_per_week f_updates_per_week,f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at,
     e.id entry_id,e.url entry_url,e.title entry_title,e.description entry_description,e.feed_id entry_feed_id
     FROM entries e JOIN feeds f ON f.id=e.feed_id JOIN subscriptions s ON s.feed_id=e.feed_id
     LEFT JOIN reads r ON r.entry_id=e.id AND r.user_id=s.user_id LEFT JOIN collections c ON c.entry_id=e.id AND c.user_id=s.user_id
@@ -708,6 +762,7 @@ app.get("/entries", (c) => {
     f.image f_image,f.site_url f_site_url,f.owner_user_id f_owner_user_id,f.error_at f_error_at,
     f.error_message f_error_message,f.subscription_count f_subscription_count,
     f.updates_per_week f_updates_per_week,f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at,
     e.id entry_id,e.url entry_url,e.title entry_title,e.description entry_description,e.feed_id entry_feed_id
     FROM entries e JOIN feeds f ON f.id=e.feed_id WHERE e.id=?`,
     )
@@ -843,3 +898,4 @@ app.onError((error, c) => {
 })
 
 export { app }
+export { getRefreshIntervalMinutes, getRefreshStatus, startRefreshScheduler, stopRefreshScheduler }

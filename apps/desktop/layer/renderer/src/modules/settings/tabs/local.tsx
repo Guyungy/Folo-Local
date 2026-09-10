@@ -2,13 +2,12 @@ import { Button } from "@follow/components/ui/button/index.js"
 import { Input } from "@follow/components/ui/input/index.js"
 import { Label } from "@follow/components/ui/label/index.jsx"
 import { Switch } from "@follow/components/ui/switch/index.jsx"
-import { env } from "@follow/shared/env.desktop"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
-import { fetchFromLocalApp } from "~/lib/api-client"
+import { localRequest } from "~/lib/local-request"
 import {
   updateRefreshInterval,
   useRefreshAllFeedsMutation,
@@ -16,6 +15,7 @@ import {
 } from "~/queries/feed"
 
 import { SettingSectionTitle } from "../section"
+import { SettingRsshubPool } from "./local-rsshub-pool"
 
 const INTERVAL_PRESETS = [15, 30, 60, 120, 240]
 
@@ -23,20 +23,6 @@ interface LocalDatabaseInfo {
   databasePath: string
   bytes: number
   counts: { feeds: number; subscriptions: number; entries: number; reads: number }
-}
-
-const localRequest = async <T,>(path: string, init?: { body?: unknown; method?: string }) => {
-  const response = await fetchFromLocalApp(
-    new Request(`${env.VITE_API_URL}${path}`, {
-      body: init?.body === undefined ? undefined : JSON.stringify(init.body),
-      headers: init?.body === undefined ? undefined : { "content-type": "application/json" },
-      method: init?.method ?? "GET",
-    }),
-  )
-  const result = (await response.json()) as { code: number; data?: T; message?: string }
-  if (result.code !== 0 || result.data === undefined)
-    throw new Error(result.message ?? `Request failed: ${path}`)
-  return result.data
 }
 
 const formatBytes = (bytes: number) => {
@@ -200,6 +186,9 @@ export const SettingLocalService = () => {
           </p>
         )}
       </div>
+
+      <SettingSectionTitle title={t("local.rsshub_pool")} />
+      <SettingRsshubPool />
 
       <SettingSectionTitle title={t("local.search")} />
       <p className="text-sm text-text-tertiary">{t("local.search_description")}</p>

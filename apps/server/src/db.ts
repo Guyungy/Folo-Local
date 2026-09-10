@@ -66,6 +66,24 @@ db.exec(`
 
 db.exec("CREATE TABLE IF NOT EXISTS local_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS rsshub_instances (
+    url TEXT PRIMARY KEY,
+    enabled INTEGER NOT NULL DEFAULT 1,
+    position INTEGER NOT NULL DEFAULT 0,
+    failure_count INTEGER NOT NULL DEFAULT 0,
+    latency_ms INTEGER,
+    last_checked_at TEXT,
+    last_success_at TEXT,
+    last_error TEXT
+  );
+  CREATE TABLE IF NOT EXISTS rsshub_route_affinity (
+    route TEXT PRIMARY KEY,
+    instance_url TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );
+`)
+
 /**
  * Columns added after the first release. `ALTER TABLE` has no IF NOT EXISTS, so each one is
  * attempted and ignored when the database already has it.
@@ -74,6 +92,7 @@ const optionalFeedColumns: [name: string, type: string][] = [
   ["last_refreshed_at", "TEXT"],
   ["etag", "TEXT"],
   ["last_modified", "TEXT"],
+  ["source_instance_url", "TEXT"],
 ]
 const existingFeedColumns = new Set(
   (db.prepare("PRAGMA table_info(feeds)").all() as { name: string }[]).map((column) => column.name),

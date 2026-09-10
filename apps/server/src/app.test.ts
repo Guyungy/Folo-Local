@@ -483,3 +483,155 @@ describe("local data service", () => {
     rmSync(backupPayload.data.path, { force: true })
   })
 })
+
+describe("RSSHub instance pool", () => {
+  const rssDocument = (title: string) =>
+    `<rss version="2.0"><channel><title>${title}</title><item><guid>${title}-1</guid><title>${title}</title></item></channel></rss>`
+
+  /** Consecutive failures are the pool's ordering key, so tests must not leak them into each other. */
+  const resetInstanceHealth = () =>
+    db
+      .prepare(
+        "UPDATE rsshub_instances SET failure_count=0, latency_ms=NULL, last_error=NULL, last_checked_at=NULL",
+      )
+      .run()
+
+  const dropFeed = (url: string) => db.prepare("DELETE FROM feeds WHERE url=?").run(url)
+
+  afterAll(() => {
+    resetInstanceHealth()
+    db.exec("DELETE FROM rsshub_route_affinity")
+  })
+
+  it("fails over to the next instance and remembers who actually served the route", async () => {
+    resetInstanceHealth()
+    const route = "rsshub://ithome/ranking/24h"
+    const requested: string[] = []
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockImplementation(async (input) => {
+        const url = String(input)
+        requested.push(url)
+        if (url.includes("ktachibana")) return new Response("bad gateway", { status: 503 })
+        return new Response(rssDocument("ITHome"))
+      }),
+    )
+    try {
+      const response = await app.request(`/feeds?url=${encodeURIComponent(route)}`)
+      const payload = await response.json()
+      expect(response.status).toBe(200)
+      expect(requested[0]).toContain("ktachibana")
+      expect(requested[1]).toContain("liumingye")
+      // The feed keeps the URL the user asked for, whichever instance answered.
+      expect(payload.data.feed.url).toBe(route)
+      expect(db.prepare("SELECT source_instance_url FROM feeds WHERE url=?").get(route)).toEqual({
+        source_instance_url: "https://rsshub.liumingye.cn",
+      })
+      expect(
+        db
+          .prepare("SELECT failure_count FROM rsshub_instances WHERE url=?")
+          .get("https://rsshub.ktachibana.party"),
+      ).toEqual({ failure_count: 1 })
+    } finally {
+      vi.unstubAllGlobals()
+      dropFeed(route)
+    }
+  })
+
+  it("returns to the instance that served a route last, even after health is reset", async () => {
+    resetInstanceHealth()
+    const route = "rsshub://sspai/index"
+    const requested: string[] = []
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockImplementation(async (input) => {
+        const url = String(input)
+        requested.push(url)
+        if (url.includes("ktachibana")) return new Response("bad gateway", { status: 503 })
+        return new Response(rssDocument("SSPai"))
+      }),
+    )
+    try {
+      const created = await app.request(`/feeds?url=${encodeURIComponent(route)}`)
+      const feedId = (await created.json()).data.feed.id as string
+      expect(requested[0]).toContain("ktachibana")
+      expect(requested[1]).toContain("liumingye")
+
+      resetInstanceHealth()
+      requested.length = 0
+      await app.request(`/feeds/refresh?id=${feedId}&conditional=0`)
+      expect(requested[0]).toContain("liumingye")
+    } finally {
+      vi.unstubAllGlobals()
+      db.prepare("DELETE FROM rsshub_route_affinity WHERE route=?").run(route)
+      dropFeed(route)
+    }
+  })
+
+  it("re-homes a subscription pinned to a dead instance without rewriting its URL", async () => {
+    resetInstanceHealth()
+    const url = "https://hub.slarker.me/juejin/category/frontend"
+    const requested: string[] = []
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockImplementation(async (input) => {
+        requested.push(String(input))
+        return new Response(rssDocument("Juejin"))
+      }),
+    )
+    try {
+      const response = await app.request(`/feeds?url=${encodeURIComponent(url)}`)
+      const payload = await response.json()
+      expect(response.status).toBe(200)
+      expect(payload.data.feed.url).toBe(url)
+      expect(requested[0]).not.toContain("hub.slarker.me")
+      expect(
+        db.prepare("SELECT source_instance_url FROM feeds WHERE url=?").get(url),
+      ).toMatchObject({ source_instance_url: expect.stringContaining("rsshub.") })
+    } finally {
+      vi.unstubAllGlobals()
+      dropFeed(url)
+    }
+  })
+
+  it("skips disabled instances and probes the pool against subscribed routes", async () => {
+    resetInstanceHealth()
+    const route = "rsshub://bilibili/popular/all"
+    const patch = await app.request("/settings/rsshub/instances", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://rsshub.ktachibana.party", enabled: false }),
+    })
+    const requested: string[] = []
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof fetch>().mockImplementation(async (input) => {
+        requested.push(String(input))
+        return new Response(rssDocument("Bilibili"))
+      }),
+    )
+    try {
+      const listed = (await await patch.json()) as never
+      expect(listed).toBeTruthy()
+      await app.request(`/feeds?url=${encodeURIComponent(route)}`)
+      expect(requested[0]).toContain("liumingye")
+
+      const probe = await app.request("/settings/rsshub/test", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ url: "https://rsshub.liumingye.cn" }),
+      })
+      const probePayload = await probe.json()
+      expect(probePayload.data.tests[0].results.length).toBeGreaterThan(0)
+      expect(probePayload.data.tests[0].results.every((result) => result.ok)).toBe(true)
+    } finally {
+      vi.unstubAllGlobals()
+      dropFeed(route)
+      await app.request("/settings/rsshub/instances", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ url: "https://rsshub.ktachibana.party", enabled: true }),
+      })
+    }
+  })
+})

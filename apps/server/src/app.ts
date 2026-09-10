@@ -18,7 +18,17 @@ import {
 import { articleContext } from "./chat-context.js"
 import { databasePath, db, jsonValue } from "./db.js"
 import { buildOpml, parseOpml } from "./opml.js"
-import { getRSSHubBaseURL, refreshFeed, setRSSHubBaseURL } from "./rss.js"
+import { refreshFeed } from "./rss.js"
+import {
+  addInstance,
+  getRSSHubBaseURL,
+  listInstances,
+  probeInstance,
+  resetInstances,
+  setInstanceEnabled,
+  setRSSHubBaseURL,
+  subscribedPoolRoutes,
+} from "./rsshub.js"
 import {
   getRefreshIntervalMinutes,
   getRefreshStatus,
@@ -413,14 +423,76 @@ app.get("/better-auth/get-session", (c) => {
   })
 })
 
-app.get("/settings/rsshub", (c) => c.json(ok({ baseURL: getRSSHubBaseURL() })))
+app.get("/settings/rsshub", (c) =>
+  c.json(
+    ok({
+      baseURL: getRSSHubBaseURL(),
+      instances: listInstances(),
+      /** Routes the pool is actually used for, so "test" probes something meaningful. */
+      probeRoutes: subscribedPoolRoutes(),
+    }),
+  ),
+)
 app.put("/settings/rsshub", async (c) => {
   try {
     const body = await c.req.json<{ baseURL: string }>()
     setRSSHubBaseURL(body.baseURL)
-    return c.json(ok({ baseURL: getRSSHubBaseURL() }))
+    return c.json(ok({ baseURL: getRSSHubBaseURL(), instances: listInstances() }))
   } catch {
     return c.json({ code: 400, message: "Invalid RSSHub base URL" }, 400)
+  }
+})
+
+app.post("/settings/rsshub/instances", async (c) => {
+  try {
+    const body = await c.req.json<{ url: string }>()
+    return c.json(ok({ instances: addInstance(body.url) }))
+  } catch {
+    return c.json({ code: 400, message: "Invalid RSSHub instance URL" }, 400)
+  }
+})
+
+app.patch("/settings/rsshub/instances", async (c) => {
+  try {
+    const body = await c.req.json<{ url: string; enabled: boolean }>()
+    return c.json(ok({ instances: setInstanceEnabled(body.url, body.enabled !== false) }))
+  } catch {
+    return c.json({ code: 400, message: "Invalid RSSHub instance URL" }, 400)
+  }
+})
+
+app.post("/settings/rsshub/reset", (c) => c.json(ok({ instances: resetInstances() })))
+
+app.post("/settings/rsshub/test", async (c) => {
+  try {
+    const body = await c.req
+      .json<{ url?: string; routes?: string[] }>()
+      .catch(() => ({}) as { url?: string; routes?: string[] })
+    const instances = body.url ? [body.url] : listInstances().map((instance) => instance.url)
+    const routes = body.routes?.length ? body.routes : subscribedPoolRoutes()
+    const results = await Promise.all(
+      instances.map(async (url) => {
+        try {
+          return { url, results: await probeInstance(url, routes) }
+        } catch (error) {
+          return {
+            url,
+            results: [
+              {
+                route: routes[0] ?? "",
+                ok: false,
+                status: null,
+                latencyMs: 0,
+                error: error instanceof Error ? error.message : "invalid instance URL",
+              },
+            ],
+          }
+        }
+      }),
+    )
+    return c.json(ok({ tests: results, instances: listInstances() }))
+  } catch {
+    return c.json({ code: 400, message: "Unable to test RSSHub instances" }, 400)
   }
 })
 

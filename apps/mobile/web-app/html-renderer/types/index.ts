@@ -12,6 +12,7 @@ export interface MediaModel {
 export interface EntryModel {
   content?: string
   title?: string
+  url?: string | null
   media?: MediaModel[]
   spotlightRules?: SpotlightRule[]
 }

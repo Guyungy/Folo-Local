@@ -25,6 +25,8 @@ export const parseHtml = (
     renderInlineStyle: boolean
     noMedia?: boolean
     spotlightRules?: SpotlightRule[]
+    coverImageUrl?: string
+    baseUrl?: string
   }>,
 ) => {
   const spotlightRules = options?.spotlightRules ?? []

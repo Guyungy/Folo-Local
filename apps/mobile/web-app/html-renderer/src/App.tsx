@@ -15,6 +15,7 @@ export const App = () => {
   const readerRenderInlineStyle = useAtomValue(readerRenderInlineStyleAtom, { store })
   const noMedia = useAtomValue(noMediaAtom, { store })
   const spotlightRules = useAtomValue(spotlightAtom, { store })
+  const coverMedia = entry?.media?.[0]
 
   return (
     <Provider store={store}>
@@ -22,6 +23,8 @@ export const App = () => {
         renderInlineStyle={readerRenderInlineStyle}
         noMedia={noMedia}
         spotlightRules={spotlightRules}
+        coverImageUrl={coverMedia?.type === "photo" ? coverMedia.url : undefined}
+        baseUrl={entry?.url ?? undefined}
       >
         {entry?.content}
       </HTML>

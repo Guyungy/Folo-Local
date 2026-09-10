@@ -22,6 +22,8 @@ type ParseHtmlOptions = {
   components?: Components
   scrollEnabled?: boolean
   hastTransform?: (tree: Root) => void
+  coverImageUrl?: string
+  baseUrl?: string
 }
 
 type CompatibleVisitTree = Parameters<typeof visit>[0]
@@ -144,7 +146,14 @@ function rehypeTrimEndBrElement() {
 }
 
 export const parseHtml = (content: string, options?: ParseHtmlOptions) => {
-  const { renderInlineStyle = false, noMedia = false, components, hastTransform } = options || {}
+  const {
+    renderInlineStyle = false,
+    noMedia = false,
+    components,
+    hastTransform,
+    coverImageUrl,
+    baseUrl,
+  } = options || {}
 
   const rehypeSchema: Schema = { ...defaultSchema }
   rehypeSchema.tagNames = [...rehypeSchema.tagNames!, "math"]
@@ -241,6 +250,10 @@ export const parseHtml = (content: string, options?: ParseHtmlOptions) => {
 
   const tree = pipeline.parse(content)
 
+  if (coverImageUrl && !noMedia) {
+    prependMissingCoverImage(tree as Root, coverImageUrl, baseUrl)
+  }
+
   rehypeUrlToAnchor(tree as CompatibleVisitParentsTree)
 
   // console.log("tree", tree)
@@ -271,6 +284,42 @@ export const parseHtml = (content: string, options?: ParseHtmlOptions) => {
         components,
       }),
     toText: () => toText(hastTree),
+  }
+}
+
+function prependMissingCoverImage(tree: Root, coverImageUrl: string, baseUrl?: string) {
+  const normalizeUrl = (src: string) => {
+    try {
+      const url = new URL(src, baseUrl)
+      url.hash = ""
+      return url.href
+    } catch {
+      return src
+    }
+  }
+  const coverUrl = normalizeUrl(coverImageUrl)
+  let hasCoverImage = false
+
+  visit(tree as CompatibleVisitTree, "element", (node) => {
+    const element = node as Element
+    if (
+      element.tagName === "img" &&
+      typeof element.properties.src === "string" &&
+      normalizeUrl(element.properties.src) === coverUrl
+    ) {
+      element.properties.src = coverUrl
+      hasCoverImage = true
+      return false
+    }
+  })
+
+  if (!hasCoverImage) {
+    tree.children.unshift({
+      type: "element",
+      tagName: "img",
+      properties: { src: coverImageUrl, alt: "" },
+      children: [],
+    })
   }
 }
 

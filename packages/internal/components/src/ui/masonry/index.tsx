@@ -18,6 +18,7 @@ import { useMasonryForceRerender } from "./contexts.jsx"
  * @param props
  */
 export const Masonry = <Item,>(props: MasonryProps<Item>) => {
+  const { items, itemKey } = props
   const [scrollTop, setScrollTop] = React.useState(0)
   const [isScrolling, setIsScrolling] = React.useState(false)
   const scrollElement = useScrollViewElement()
@@ -79,18 +80,25 @@ export const Masonry = <Item,>(props: MasonryProps<Item>) => {
     props,
   ) as any
 
-  // Workaround for https://github.com/jaredLunde/masonic/issues/12
-  const itemCounter = React.useRef<number>(props.items.length)
+  const itemKeys = React.useMemo(
+    () => items.map((item, index) => (itemKey ? itemKey(item, index) : item)),
+    [items, itemKey],
+  )
+  const [layout, setLayout] = React.useState({ itemKeys, version: 0 })
+  let layoutVersion = layout.version
 
-  let shrunk = false
-
-  if (props.items.length !== itemCounter.current) {
-    if (props.items.length < itemCounter.current) shrunk = true
-
-    itemCounter.current = props.items.length
+  if (layout.itemKeys !== itemKeys) {
+    // Masonic caches heights by index. Only an unchanged prefix can reuse those measurements.
+    if (
+      itemKeys.length < layout.itemKeys.length ||
+      layout.itemKeys.some((key, index) => !Object.is(key, itemKeys[index]))
+    ) {
+      layoutVersion += 1
+    }
+    setLayout({ itemKeys, version: layoutVersion })
   }
 
-  nextProps.positioner = usePositioner(nextProps, [shrunk && Math.random(), forceRerender])
+  nextProps.positioner = usePositioner(nextProps, [layoutVersion, forceRerender])
 
   nextProps.resizeObserver = useResizeObserver(nextProps.positioner)
   nextProps.scrollTop = scrollTop

@@ -33,6 +33,8 @@ export const parseHtml = (
     noMedia?: boolean
     spotlightRules?: SpotlightRule[]
     hastTransform?: (tree: Root) => void
+    coverImageUrl?: string
+    baseUrl?: string
   }>,
 ) => {
   const spotlightRules = options?.spotlightRules

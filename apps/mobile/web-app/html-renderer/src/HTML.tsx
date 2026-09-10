@@ -16,6 +16,8 @@ export type HTMLProps<A extends keyof React.JSX.IntrinsicElements = "div"> = {
   accessory?: React.ReactNode
   noMedia?: boolean
   spotlightRules?: SpotlightRule[]
+  coverImageUrl?: string
+  baseUrl?: string
 } & React.JSX.IntrinsicElements[A] &
   Partial<{
     renderInlineStyle: boolean
@@ -28,6 +30,8 @@ export const HTML = <A extends keyof React.JSX.IntrinsicElements = "div">(props:
     accessory,
     noMedia,
     spotlightRules,
+    coverImageUrl,
+    baseUrl,
 
     ...rest
   } = props
@@ -53,14 +57,15 @@ export const HTML = <A extends keyof React.JSX.IntrinsicElements = "div">(props:
 
   const [refElement, setRefElement] = useState<HTMLDivElement | null>(null)
 
-  const markdownElement = useMemo(
-    () =>
-      children &&
-      parseHtml(children, {
-        ...remarkOptions,
-      }).toContent(),
-    [children, remarkOptions],
-  )
+  const markdownElement = useMemo(() => {
+    if (!children && (!coverImageUrl || remarkOptions.noMedia)) return null
+
+    return parseHtml(children ?? "", {
+      ...remarkOptions,
+      coverImageUrl,
+      baseUrl,
+    }).toContent()
+  }, [children, remarkOptions, coverImageUrl, baseUrl])
 
   if (!markdownElement) return <div className="h-px" />
   return (

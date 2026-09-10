@@ -28,6 +28,8 @@ export type HTMLProps<A extends keyof JSX.IntrinsicElements = "div"> = {
   accessory?: React.ReactNode
   noMedia?: boolean
   mediaInfo?: Nullable<MediaInfoRecord>
+  coverImageUrl?: string
+  baseUrl?: string
 } & JSX.IntrinsicElements[A] &
   Partial<{
     renderInlineStyle: boolean
@@ -42,6 +44,8 @@ const HTMLImpl = <A extends keyof JSX.IntrinsicElements = "div">(props: HTMLProp
     accessory,
     noMedia,
     mediaInfo,
+    coverImageUrl,
+    baseUrl,
     ref,
     ...rest
   } = props
@@ -70,11 +74,13 @@ const HTMLImpl = <A extends keyof JSX.IntrinsicElements = "div">(props: HTMLProp
 
   const markdownElement = useMemo(
     () =>
-      children &&
-      parseHtml(children, {
+      (children || coverImageUrl) &&
+      parseHtml(children || "", {
         ...remarkOptions,
+        coverImageUrl,
+        baseUrl,
       }).toContent(),
-    [children, remarkOptions],
+    [children, remarkOptions, coverImageUrl, baseUrl],
   )
 
   const { w: containerWidth } = useWrappedElementSize()

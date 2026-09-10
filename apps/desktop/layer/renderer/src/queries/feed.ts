@@ -1,7 +1,9 @@
 import { feedSyncServices } from "@follow/store/feed/store"
+import { useAllFeedSubscriptionIds } from "@follow/store/subscription/hooks"
 import { tracker } from "@follow/tracker"
 import { formatXml } from "@follow/utils/utils"
-import { useMutation } from "@tanstack/react-query"
+import type { QueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
@@ -71,14 +73,67 @@ export const useClaimFeedMutation = (feedId: string) =>
     },
   })
 
-export const useRefreshFeedMutation = (feedId?: string) =>
-  useMutation({
+/**
+ * The list only reads from the local server, so a finished refresh stays invisible until the
+ * cached entry/feed queries are invalidated.
+ */
+const invalidateAfterRefresh = async (queryClient: QueryClient) => {
+  await Promise.all([
+    queryClient.invalidateQueries({ queryKey: ["entries"] }),
+    queryClient.invalidateQueries({ queryKey: ["feed"] }),
+  ])
+}
+
+export const useRefreshFeedMutation = (feedId?: string) => {
+  const queryClient = useQueryClient()
+  return useMutation({
     mutationKey: ["refreshFeed", feedId],
     mutationFn: () => followClient.api.feeds.refresh({ id: feedId! }),
     async onError(err) {
       toastFetchError(err)
     },
+    async onSuccess() {
+      await invalidateAfterRefresh(queryClient)
+    },
   })
+}
+
+const REFRESH_CONCURRENCY = 4
+
+const refreshFeeds = async (feedIds: string[]) => {
+  let failed = 0
+  for (let index = 0; index < feedIds.length; index += REFRESH_CONCURRENCY) {
+    const chunk = feedIds.slice(index, index + REFRESH_CONCURRENCY)
+    const results = await Promise.allSettled(
+      chunk.map((id) => followClient.api.feeds.refresh({ id })),
+    )
+    failed += results.filter((result) => result.status === "rejected").length
+  }
+  return { failed, total: feedIds.length }
+}
+
+/**
+ * Refresh every subscribed feed. The timeline view has no single feed id, so it relies on this.
+ */
+export const useRefreshAllFeedsMutation = () => {
+  const queryClient = useQueryClient()
+  const { t } = useTranslation()
+  const feedIds = useAllFeedSubscriptionIds()
+
+  return useMutation({
+    mutationKey: ["refreshAllFeeds"],
+    mutationFn: () => refreshFeeds(feedIds),
+    async onError(err) {
+      toastFetchError(err)
+    },
+    async onSuccess({ failed, total }) {
+      await invalidateAfterRefresh(queryClient)
+      if (failed > 0) {
+        toast.error(t("entry_list_header.refresh_all_partial", { failed, total }))
+      }
+    },
+  })
+}
 
 export const useResetFeed = () => {
   const { t } = useTranslation()

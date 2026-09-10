@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process"
 import crypto from "node:crypto"
 import fs, { readdirSync } from "node:fs"
 import { cp, readdir } from "node:fs/promises"
@@ -304,15 +305,44 @@ const config: ForgeConfig = {
     {
       name: "@electron-forge/publisher-github",
       config: {
+        // This fork publishes its own builds; the upstream repository is not a release target.
         repository: {
-          owner: "RSSNext",
-          name: "follow",
+          owner: "Guyungy",
+          name: "Folo-Local",
         },
         draft: true,
       },
     },
   ],
   hooks: {
+    /**
+     * Apple Silicon refuses to launch a bundle whose signature does not cover its resources, but
+     * the Electron binaries only carry a linker signature out of the packager. Without this pass
+     * `codesign --verify --deep --strict` fails with "code has no resources but signature
+     * indicates they must be present" and macOS reports the app as damaged.
+     *
+     * Ad-hoc (`-`) is deliberate: this fork ships unsigned/notarization-free builds, so the
+     * signature only has to be internally consistent. A real identity (set through
+     * `OSX_SIGN_IDENTITY`) takes precedence and skips this fallback.
+     */
+    postPackage: async (_config, packageResult) => {
+      if (process.platform !== "darwin") return
+      const identity = process.env.OSX_SIGN_IDENTITY
+      if (identity && identity !== "-") return
+      // `outputPaths` points at the directory holding the bundle, not at the `.app` itself.
+      for (const outputPath of packageResult.outputPaths) {
+        for (const entry of readdirSync(outputPath)) {
+          if (!entry.endsWith(".app")) continue
+          execFileSync(
+            "codesign",
+            ["--force", "--deep", "--sign", "-", resolve(outputPath, entry)],
+            {
+              stdio: "inherit",
+            },
+          )
+        }
+      }
+    },
     postMake: async (_config, makeResults) => {
       const yml: {
         version?: string

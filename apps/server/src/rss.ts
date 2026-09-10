@@ -2,7 +2,7 @@ import { createHash, randomUUID } from "node:crypto"
 
 import { XMLParser } from "fast-xml-parser"
 
-import { db } from "./db.js"
+import { db, getLocalSetting, setLocalSetting } from "./db.js"
 import type { Feed } from "./types.js"
 
 const parser = new XMLParser({
@@ -25,12 +25,26 @@ const text = (value: unknown): string | null => {
 const stableId = (prefix: string, value: string) =>
   `${prefix}_${createHash("sha256").update(value).digest("hex").slice(0, 24)}`
 
-db.exec("CREATE TABLE IF NOT EXISTS local_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
-export const getRSSHubBaseURL = () => {
-  const saved = db.prepare("SELECT value FROM local_settings WHERE key='rsshub_base_url'").get() as
-    { value: string } | undefined
-  return process.env.RSSHUB_BASE_URL || saved?.value || "https://rsshub.app"
-}
+const emptyFeed = (id: string, url: string): Feed => ({
+  id,
+  url,
+  title: null,
+  description: null,
+  image: null,
+  siteUrl: null,
+  ownerUserId: null,
+  errorAt: null,
+  errorMessage: null,
+  subscriptionCount: 0,
+  updatesPerWeek: null,
+  latestEntryPublishedAt: null,
+  lastRefreshedAt: null,
+})
+
+export { emptyFeed }
+
+export const getRSSHubBaseURL = () =>
+  process.env.RSSHUB_BASE_URL || getLocalSetting("rsshub_base_url") || "https://rsshub.app"
 export const setRSSHubBaseURL = (value: string) => {
   const url = new URL(value.trim())
   if (
@@ -41,9 +55,7 @@ export const setRSSHubBaseURL = (value: string) => {
     url.hash
   )
     throw new Error("RSSHub base URL must be HTTP(S) without credentials, query or fragment")
-  db.prepare(
-    "INSERT INTO local_settings VALUES ('rsshub_base_url', ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
-  ).run(url.href.replace(/\/$/, ""))
+  setLocalSetting("rsshub_base_url", url.href.replace(/\/$/, ""))
 }
 
 const knownFeedFallbacks = new Map<string, string[]>([
@@ -65,7 +77,24 @@ const knownFeedFallbacks = new Map<string, string[]>([
   ],
 ])
 
-const fetchFeedDocument = async (requestedUrl: string) => {
+export interface FeedValidators {
+  etag?: string | null
+  lastModified?: string | null
+}
+
+const EMPTY_VALIDATORS: FeedValidators = {}
+
+const fetchWithValidators = async (url: string, validators: FeedValidators) => {
+  const headers: Record<string, string> = {
+    accept: "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
+    "user-agent": "FoLocal/1.13.0 (+https://github.com/Guyungy/Folo-Local)",
+  }
+  if (validators.etag) headers["if-none-match"] = validators.etag
+  else if (validators.lastModified) headers["if-modified-since"] = validators.lastModified
+  return fetch(url, { headers, signal: AbortSignal.timeout(20_000) })
+}
+
+const fetchFeedDocument = async (requestedUrl: string, validators: FeedValidators) => {
   const input = requestedUrl.trim()
   const parsed = new URL(input)
   const isRSSHub = parsed.protocol === "rsshub:"
@@ -83,16 +112,22 @@ const fetchFeedDocument = async (requestedUrl: string) => {
     : [input, ...(knownFeedFallbacks.get(normalizedUrl) ?? [])]
   const failures: string[] = []
 
-  for (const candidate of candidates) {
+  for (const [index, candidate] of candidates.entries()) {
     try {
-      const response = await fetch(candidate, {
-        headers: {
-          accept:
-            "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
-          "user-agent": "Folo/1.13.0 (+https://github.com/RSSNext/Folo)",
-        },
-        signal: AbortSignal.timeout(20_000),
-      })
+      // Validators describe the canonical URL only, so fallback mirrors are always fetched fresh.
+      const response = await fetchWithValidators(
+        candidate,
+        index === 0 ? validators : EMPTY_VALIDATORS,
+      )
+      if (response.status === 304)
+        return {
+          atomFeed: undefined,
+          contentUrl: isRSSHub ? identity : candidate,
+          rssChannel: undefined,
+          notModified: true as const,
+          etag: response.headers.get("etag"),
+          lastModified: response.headers.get("last-modified"),
+        }
       if (!response.ok) {
         const reason =
           response.status === 403
@@ -109,7 +144,14 @@ const fetchFeedDocument = async (requestedUrl: string) => {
         ?.channel
       const atomFeed = document.feed as Record<string, unknown> | undefined
       if (rssChannel || atomFeed)
-        return { atomFeed, contentUrl: isRSSHub ? identity : candidate, rssChannel }
+        return {
+          atomFeed,
+          contentUrl: isRSSHub ? identity : candidate,
+          rssChannel,
+          notModified: false as const,
+          etag: response.headers.get("etag"),
+          lastModified: response.headers.get("last-modified"),
+        }
       failures.push(`${new URL(candidate).hostname}: not RSS or Atom`)
     } catch (error) {
       failures.push(
@@ -121,37 +163,84 @@ const fetchFeedDocument = async (requestedUrl: string) => {
   throw new Error(`Unable to load feed (${failures.join("; ")})`)
 }
 
-export const refreshFeed = async (url: string): Promise<Feed> => {
-  const { atomFeed, contentUrl, rssChannel } = await fetchFeedDocument(url)
+export interface RefreshFeedOptions {
+  /** Send If-None-Match / If-Modified-Since and accept a 304 as "already up to date". */
+  conditional?: boolean
+}
+
+export interface RefreshFeedResult {
+  feed: Feed
+  notModified: boolean
+}
+
+const readValidators = (url: string): FeedValidators => {
+  const row = db.prepare("SELECT etag, last_modified FROM feeds WHERE url = ?").get(url) as
+    { etag: string | null; last_modified: string | null } | undefined
+  return { etag: row?.etag, lastModified: row?.last_modified }
+}
+
+const feedFromStoredRow = (row: Record<string, unknown>): Feed => ({
+  id: String(row.id),
+  url: String(row.url),
+  title: (row.title as string | null) ?? null,
+  description: (row.description as string | null) ?? null,
+  image: (row.image as string | null) ?? null,
+  siteUrl: (row.site_url as string | null) ?? null,
+  ownerUserId: (row.owner_user_id as string | null) ?? null,
+  errorAt: (row.error_at as string | null) ?? null,
+  errorMessage: (row.error_message as string | null) ?? null,
+  subscriptionCount: Number(row.subscription_count ?? 0),
+  updatesPerWeek: (row.updates_per_week as number | null) ?? null,
+  latestEntryPublishedAt: (row.latest_entry_published_at as string | null) ?? null,
+  lastRefreshedAt: (row.last_refreshed_at as string | null) ?? null,
+})
+
+export const refreshFeed = async (
+  url: string,
+  options: RefreshFeedOptions = {},
+): Promise<RefreshFeedResult> => {
+  const validators = options.conditional ? readValidators(url) : EMPTY_VALIDATORS
+  const result = await fetchFeedDocument(url, validators)
+  const existingFeed = db.prepare("SELECT id FROM feeds WHERE url = ?").get(result.contentUrl) as
+    { id: string } | undefined
+  const feedId = existingFeed?.id ?? stableId("feed", result.contentUrl)
+  const refreshedAt = new Date().toISOString()
+
+  if (result.notModified) {
+    db.prepare(
+      "UPDATE feeds SET last_refreshed_at=?, error_at=NULL, error_message=NULL WHERE id=?",
+    ).run(refreshedAt, feedId)
+    const row = db.prepare("SELECT * FROM feeds WHERE id=?").get(feedId) as
+      Record<string, unknown> | undefined
+    return {
+      feed: row
+        ? feedFromStoredRow(row)
+        : { ...emptyFeed(feedId, result.contentUrl), lastRefreshedAt: refreshedAt },
+      notModified: true,
+    }
+  }
+
+  const { atomFeed, contentUrl, rssChannel } = result
   const source = rssChannel ?? atomFeed
   if (!source) throw new Error("Unsupported RSS or Atom document")
-  const existingFeed = db.prepare("SELECT id FROM feeds WHERE url = ?").get(contentUrl) as
-    { id: string } | undefined
-  const feedId = existingFeed?.id ?? stableId("feed", contentUrl)
   const atomLinks = array(
     source.link as Record<string, unknown> | Record<string, unknown>[] | undefined,
   )
   const siteUrl =
     text(source.link) ?? text(atomLinks.find((link) => link["@_rel"] !== "self")?.["@_href"])
   const feed: Feed = {
-    id: feedId,
-    url: contentUrl,
+    ...emptyFeed(feedId, contentUrl),
     title: text(source.title),
     description: text(source.description ?? source.subtitle),
     image: text((source.image as { url?: unknown } | undefined)?.url) ?? text(source.logo),
     siteUrl,
-    ownerUserId: null,
-    errorAt: null,
-    errorMessage: null,
-    subscriptionCount: 0,
-    updatesPerWeek: null,
-    latestEntryPublishedAt: null,
+    lastRefreshedAt: refreshedAt,
   }
-  const now = new Date().toISOString()
+  const now = refreshedAt
   db.prepare(
-    `INSERT INTO feeds (id,url,title,description,image,site_url,owner_user_id,error_at,error_message,subscription_count,updates_per_week,latest_entry_published_at,updated_at)
-    VALUES (@id,@url,@title,@description,@image,@siteUrl,NULL,NULL,NULL,COALESCE((SELECT subscription_count FROM feeds WHERE id=@id),0),NULL,@latestEntryPublishedAt,@updatedAt)
-    ON CONFLICT(url) DO UPDATE SET title=excluded.title,description=excluded.description,image=excluded.image,site_url=excluded.site_url,error_at=NULL,error_message=NULL,updated_at=excluded.updated_at`,
+    `INSERT INTO feeds (id,url,title,description,image,site_url,owner_user_id,error_at,error_message,subscription_count,updates_per_week,latest_entry_published_at,updated_at,last_refreshed_at,etag,last_modified)
+    VALUES (@id,@url,@title,@description,@image,@siteUrl,NULL,NULL,NULL,COALESCE((SELECT subscription_count FROM feeds WHERE id=@id),0),NULL,@latestEntryPublishedAt,@updatedAt,@lastRefreshedAt,@etag,@lastModified)
+    ON CONFLICT(url) DO UPDATE SET title=excluded.title,description=excluded.description,image=excluded.image,site_url=excluded.site_url,error_at=NULL,error_message=NULL,updated_at=excluded.updated_at,last_refreshed_at=excluded.last_refreshed_at,etag=COALESCE(excluded.etag,feeds.etag),last_modified=COALESCE(excluded.last_modified,feeds.last_modified)`,
   ).run({
     id: feed.id,
     url: feed.url,
@@ -161,6 +250,9 @@ export const refreshFeed = async (url: string): Promise<Feed> => {
     siteUrl: feed.siteUrl,
     latestEntryPublishedAt: feed.latestEntryPublishedAt,
     updatedAt: now,
+    lastRefreshedAt: refreshedAt,
+    etag: result.etag ?? null,
+    lastModified: result.lastModified ?? null,
   })
   const items = array(
     (rssChannel?.item ?? atomFeed?.entry) as
@@ -203,5 +295,5 @@ export const refreshFeed = async (url: string): Promise<Feed> => {
     }
   })()
   db.prepare("UPDATE feeds SET latest_entry_published_at = ? WHERE id = ?").run(latest, feedId)
-  return { ...feed, latestEntryPublishedAt: latest }
+  return { feed: { ...feed, latestEntryPublishedAt: latest }, notModified: false }
 }

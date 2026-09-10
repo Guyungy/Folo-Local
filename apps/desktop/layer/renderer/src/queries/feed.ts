@@ -1,16 +1,16 @@
+import { env } from "@follow/shared/env.desktop"
 import { feedSyncServices } from "@follow/store/feed/store"
-import { useAllFeedSubscriptionIds } from "@follow/store/subscription/hooks"
 import { tracker } from "@follow/tracker"
 import { formatXml } from "@follow/utils/utils"
 import type { QueryClient } from "@tanstack/react-query"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
 import { ROUTE_FEED_IN_FOLDER, ROUTE_FEED_PENDING } from "~/constants"
 import { useAuthQuery } from "~/hooks/common"
-import { followClient } from "~/lib/api-client"
+import { fetchFromLocalApp, followClient } from "~/lib/api-client"
 import { defineQuery } from "~/lib/defineQuery"
 import { toastFetchError } from "~/lib/error-parser"
 
@@ -77,7 +77,7 @@ export const useClaimFeedMutation = (feedId: string) =>
  * The list only reads from the local server, so a finished refresh stays invisible until the
  * cached entry/feed queries are invalidated.
  */
-const invalidateAfterRefresh = async (queryClient: QueryClient) => {
+export const invalidateAfterRefresh = async (queryClient: QueryClient) => {
   await Promise.all([
     queryClient.invalidateQueries({ queryKey: ["entries"] }),
     queryClient.invalidateQueries({ queryKey: ["feed"] }),
@@ -98,18 +98,72 @@ export const useRefreshFeedMutation = (feedId?: string) => {
   })
 }
 
-const REFRESH_CONCURRENCY = 4
+const REFRESH_STATUS_KEY = ["refreshStatus"] as const
 
-const refreshFeeds = async (feedIds: string[]) => {
-  let failed = 0
-  for (let index = 0; index < feedIds.length; index += REFRESH_CONCURRENCY) {
-    const chunk = feedIds.slice(index, index + REFRESH_CONCURRENCY)
-    const results = await Promise.allSettled(
-      chunk.map((id) => followClient.api.feeds.refresh({ id })),
-    )
-    failed += results.filter((result) => result.status === "rejected").length
+export interface LocalRefreshRun {
+  total: number
+  failed: number
+  notModified: number
+  startedAt: string
+  finishedAt: string
+  running: boolean
+}
+
+export interface LocalRefreshStatus {
+  intervalMinutes: number
+  lastRun: LocalRefreshRun | null
+  running: boolean
+}
+
+/** Batch refresh on the local server: one request instead of one per feed. */
+const batchRefresh = async (ids?: string[]) => {
+  const response = await fetchFromLocalApp(
+    new Request(`${env.VITE_API_URL}/feeds/refresh`, {
+      body: JSON.stringify(ids?.length ? { ids } : {}),
+      headers: { "content-type": "application/json" },
+      method: "POST",
+    }),
+  )
+  const result = (await response.json()) as {
+    code: number
+    data?: { total: number; failed: number; notModified: number }
+    message?: string
   }
-  return { failed, total: feedIds.length }
+  if (result.code !== 0 || !result.data) throw new Error(result.message ?? "Refresh failed")
+  return result.data
+}
+
+export const useRefreshStatusQuery = () =>
+  useQuery({
+    queryFn: async (): Promise<LocalRefreshStatus> => {
+      const response = await fetchFromLocalApp(
+        new Request(`${env.VITE_API_URL}/local/refresh-status`),
+      )
+      const result = (await response.json()) as { code: number; data: LocalRefreshStatus }
+      return result.data
+    },
+    queryKey: REFRESH_STATUS_KEY,
+    // Cheap local read; a short interval is what makes background updates show up in the list.
+    refetchInterval: 30_000,
+    refetchIntervalInBackground: false,
+  })
+
+export const updateRefreshInterval = async (intervalMinutes: number) => {
+  const response = await fetchFromLocalApp(
+    new Request(`${env.VITE_API_URL}/settings/refresh`, {
+      body: JSON.stringify({ intervalMinutes }),
+      headers: { "content-type": "application/json" },
+      method: "PUT",
+    }),
+  )
+  const result = (await response.json()) as {
+    code: number
+    data?: { intervalMinutes: number }
+    message?: string
+  }
+  if (result.code !== 0 || !result.data)
+    throw new Error(result.message ?? "Unable to save refresh interval")
+  return result.data
 }
 
 /**
@@ -118,16 +172,16 @@ const refreshFeeds = async (feedIds: string[]) => {
 export const useRefreshAllFeedsMutation = () => {
   const queryClient = useQueryClient()
   const { t } = useTranslation()
-  const feedIds = useAllFeedSubscriptionIds()
 
   return useMutation({
     mutationKey: ["refreshAllFeeds"],
-    mutationFn: () => refreshFeeds(feedIds),
+    mutationFn: () => batchRefresh(),
     async onError(err) {
       toastFetchError(err)
     },
     async onSuccess({ failed, total }) {
       await invalidateAfterRefresh(queryClient)
+      await queryClient.invalidateQueries({ queryKey: REFRESH_STATUS_KEY })
       if (failed > 0) {
         toast.error(t("entry_list_header.refresh_all_partial", { failed, total }))
       }

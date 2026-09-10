@@ -3,6 +3,7 @@ import { IN_ELECTRON } from "@follow/shared/constants"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
 
+import { LocalRefreshSync } from "~/hooks/use-local-refresh-sync"
 import { appLog } from "~/lib/log"
 
 const staleTime = 600_000 // 10min
@@ -67,7 +68,7 @@ const InvalidateQueryProviderElectron = () => {
       document.removeEventListener(ElectronShowEvent.type, handler)
     }
   }, [queryClient])
-  return null
+  return <LocalRefreshSync />
 }
 
 /**

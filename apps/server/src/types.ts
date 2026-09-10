@@ -22,6 +22,8 @@ export interface Feed {
   subscriptionCount: number
   updatesPerWeek: number | null
   latestEntryPublishedAt: string | null
+  /** Last successful fetch attempt, including 304 responses. Drives the background scheduler. */
+  lastRefreshedAt: string | null
 }
 
 export interface Entry {

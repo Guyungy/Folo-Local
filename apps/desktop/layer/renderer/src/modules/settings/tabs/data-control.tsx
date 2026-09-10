@@ -25,6 +25,7 @@ import { z } from "zod"
 
 import { setGeneralSetting, useGeneralSettingValue } from "~/atoms/settings/general"
 import { useDialog, useModalStack } from "~/components/ui/modal/stacked/hooks"
+import { fetchFromLocalApp } from "~/lib/api-client"
 import { ipcServices } from "~/lib/client"
 import { queryClient } from "~/lib/query-client"
 import { clearLocalPersistStoreData } from "~/store/utils/clear"
@@ -129,15 +130,35 @@ const ExportFeedsForm = () => {
   })
 
   function onSubmit(values: z.infer<typeof exportFeedFormSchema>) {
-    const link = document.createElement("a")
-    const exportUrl = new URL(`${env.VITE_API_URL}/subscriptions/export`)
-    exportUrl.searchParams.append("folderMode", values.folderMode)
-    if (values.rsshubUrl) {
-      exportUrl.searchParams.append("RSSHubURL", values.rsshubUrl)
+    void exportSubscriptions(values)
+  }
+
+  async function exportSubscriptions(values: z.infer<typeof exportFeedFormSchema>) {
+    // The local backend has no HTTP endpoint, so the export has to be fetched through IPC and
+    // turned into a blob instead of pointing an <a href> at the API origin.
+    const params = new URLSearchParams({ folderMode: values.folderMode })
+    if (values.rsshubUrl) params.set("RSSHubURL", values.rsshubUrl)
+    try {
+      const response = await fetchFromLocalApp(
+        new Request(`${env.VITE_API_URL}/subscriptions/export?${params.toString()}`),
+      )
+      const result = (await response.json()) as {
+        code: number
+        data?: { content: string; contentType: string; filename: string }
+        message?: string
+      }
+      if (result.code !== 0 || !result.data) throw new Error(result.message ?? "Export failed")
+      const url = URL.createObjectURL(
+        new Blob([result.data.content], { type: result.data.contentType || "text/x-opml" }),
+      )
+      const link = document.createElement("a")
+      link.href = url
+      link.download = result.data.filename || "folocal-subscriptions.opml"
+      link.click()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : t("general.export.failed"))
     }
-    link.href = exportUrl.toString()
-    link.download = "follow.opml"
-    link.click()
   }
 
   return (

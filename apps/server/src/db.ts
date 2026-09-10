@@ -3,7 +3,7 @@ import { DatabaseSync } from "node:sqlite"
 
 import { dirname, resolve } from "pathe"
 
-const databasePath = resolve(process.cwd(), process.env.DATABASE_PATH ?? "./data/folo.db")
+export const databasePath = resolve(process.cwd(), process.env.DATABASE_PATH ?? "./data/folo.db")
 mkdirSync(dirname(databasePath), { recursive: true })
 
 class Database extends DatabaseSync {
@@ -63,6 +63,41 @@ db.exec(`
     FOREIGN KEY(entry_id) REFERENCES entries(id) ON DELETE CASCADE
   );
 `)
+
+db.exec("CREATE TABLE IF NOT EXISTS local_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+
+/**
+ * Columns added after the first release. `ALTER TABLE` has no IF NOT EXISTS, so each one is
+ * attempted and ignored when the database already has it.
+ */
+const optionalFeedColumns: [name: string, type: string][] = [
+  ["last_refreshed_at", "TEXT"],
+  ["etag", "TEXT"],
+  ["last_modified", "TEXT"],
+]
+const existingFeedColumns = new Set(
+  (db.prepare("PRAGMA table_info(feeds)").all() as { name: string }[]).map((column) => column.name),
+)
+for (const [name, type] of optionalFeedColumns) {
+  if (!existingFeedColumns.has(name)) db.exec(`ALTER TABLE feeds ADD COLUMN ${name} ${type}`)
+}
+
+db.exec(
+  "CREATE INDEX IF NOT EXISTS entries_inserted ON entries(inserted_at DESC);" +
+    "CREATE INDEX IF NOT EXISTS subscriptions_feed ON subscriptions(feed_id);",
+)
+
+export const getLocalSetting = (key: string): string | null => {
+  const row = db.prepare("SELECT value FROM local_settings WHERE key=?").get(key) as
+    { value: string } | undefined
+  return row?.value ?? null
+}
+
+export const setLocalSetting = (key: string, value: string) => {
+  db.prepare(
+    "INSERT INTO local_settings VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+  ).run(key, value)
+}
 
 export const jsonValue = <T>(value: string | null): T | null =>
   value === null ? null : (JSON.parse(value) as T)

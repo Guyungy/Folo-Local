@@ -22,8 +22,10 @@ describe("settings route metadata", () => {
     const pages = getSettingPages() as Record<string, { loader: SettingPageConfig }>
     const routeModule = generalRouteModule as SettingRouteModule
 
-    expect(Object.keys(pages)).toHaveLength(15)
+    expect(Object.keys(pages)).toHaveLength(16)
     expect(pages.openai?.loader).toBeDefined()
+    // The local edition adds a page for the embedded service (background refresh, backup).
+    expect(pages.local?.loader).toMatchObject({ name: "titles.local" })
     expect(routeModule.loader).toBeUndefined()
     expect(routeModule.handle).toBeDefined()
     expect(pages.general?.loader).toBe(routeModule.handle)

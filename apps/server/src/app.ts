@@ -1,3 +1,5 @@
+import { existsSync, statSync } from "node:fs"
+
 import { Hono } from "hono"
 
 import type { OpenAIConfig } from "./ai.js"
@@ -14,8 +16,19 @@ import {
   writeOpenAIConfig,
 } from "./ai.js"
 import { articleContext } from "./chat-context.js"
-import { db, jsonValue } from "./db.js"
+import { databasePath, db, jsonValue } from "./db.js"
+import { buildOpml, parseOpml } from "./opml.js"
 import { getRSSHubBaseURL, refreshFeed, setRSSHubBaseURL } from "./rss.js"
+import {
+  getRefreshIntervalMinutes,
+  getRefreshStatus,
+  isRefreshRunning,
+  refreshFeedsByIds,
+  runFullRefreshSweep,
+  setRefreshIntervalMinutes,
+  startRefreshScheduler,
+  stopRefreshScheduler,
+} from "./scheduler.js"
 import type { Entry, Feed } from "./types.js"
 
 type Variables = { userId: string }
@@ -67,6 +80,7 @@ const feedFromRow = (row: Record<string, unknown>): Feed & { type: "feed" } => (
   subscriptionCount: Number(row.subscription_count),
   updatesPerWeek: row.updates_per_week as number | null,
   latestEntryPublishedAt: row.latest_entry_published_at as string | null,
+  lastRefreshedAt: (row.last_refreshed_at as string | null) ?? null,
 })
 
 const feedFromJoinedRow = (row: Record<string, unknown>) =>
@@ -83,6 +97,7 @@ const feedFromJoinedRow = (row: Record<string, unknown>) =>
     subscription_count: row.f_subscription_count,
     updates_per_week: row.f_updates_per_week,
     latest_entry_published_at: row.f_latest_entry_published_at,
+    last_refreshed_at: row.f_last_refreshed_at,
   })
 
 const entryFromRow = (row: Record<string, unknown>): Entry => ({
@@ -417,7 +432,7 @@ app.get("/feeds", async (c) => {
     .get(id ?? url ?? "") as Record<string, unknown> | undefined
   if (!row && url && !id) {
     try {
-      const feed = await refreshFeed(url)
+      const { feed } = await refreshFeed(url)
       row = db.prepare("SELECT * FROM feeds WHERE id=?").get(feed.id) as Record<string, unknown>
     } catch (error) {
       return c.json(
@@ -449,8 +464,8 @@ app.get("/feeds/refresh", async (c) => {
     { url: string } | undefined
   if (!row) return c.json({ code: 404, message: "Feed not found" }, 404)
   try {
-    await refreshFeed(row.url)
-    return c.json(ok(null))
+    const result = await refreshFeed(row.url, { conditional: c.req.query("conditional") !== "0" })
+    return c.json(ok({ notModified: result.notModified }))
   } catch (error) {
     db.prepare("UPDATE feeds SET error_at=?, error_message=? WHERE url=?").run(
       new Date().toISOString(),
@@ -459,6 +474,46 @@ app.get("/feeds/refresh", async (c) => {
     )
     return c.json({ code: 502, message: "Unable to refresh feed" }, 502)
   }
+})
+
+/**
+ * Batch refresh. `ids` in the body limits the sweep; otherwise every subscribed feed is visited.
+ * The renderer used to fan out one request per feed, which hammered the feeds and the IPC channel.
+ */
+app.post("/feeds/refresh", async (c) => {
+  const body = await c.req
+    .json<{ ids?: string[] }>()
+    .catch(() => ({ ids: undefined }) as { ids?: string[] })
+  if (isRefreshRunning()) return c.json({ code: 409, message: "A refresh is already running" }, 409)
+  const ids = body.ids?.filter((id) => typeof id === "string" && id.length > 0) ?? []
+  const result = ids.length ? await refreshFeedsByIds(ids) : await runFullRefreshSweep()
+  return c.json(ok(result))
+})
+
+app.get("/local/refresh-status", (c) =>
+  c.json(
+    ok({
+      intervalMinutes: getRefreshIntervalMinutes(),
+      lastRun: getRefreshStatus(),
+      running: isRefreshRunning(),
+    }),
+  ),
+)
+
+app.get("/settings/refresh", (c) =>
+  c.json(ok({ intervalMinutes: getRefreshIntervalMinutes(), lastRun: getRefreshStatus() })),
+)
+app.put("/settings/refresh", async (c) => {
+  const body = await c.req.json<{ intervalMinutes?: number }>()
+  try {
+    setRefreshIntervalMinutes(body.intervalMinutes ?? 0)
+  } catch (error) {
+    return c.json(
+      { code: 400, message: error instanceof Error ? error.message : "Invalid interval" },
+      400,
+    )
+  }
+  return c.json(ok({ intervalMinutes: getRefreshIntervalMinutes() }))
 })
 
 const subscriptionFromRow = (row: Record<string, unknown>) => ({
@@ -483,7 +538,8 @@ app.get("/subscriptions", (c) => {
       `SELECT s.*, f.id f_id, f.url f_url, f.title f_title, f.description f_description,
     f.image f_image, f.site_url f_site_url, f.owner_user_id f_owner_user_id, f.error_at f_error_at,
     f.error_message f_error_message, f.subscription_count f_subscription_count,
-    f.updates_per_week f_updates_per_week, f.latest_entry_published_at f_latest_entry_published_at
+    f.updates_per_week f_updates_per_week, f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at
     FROM subscriptions s JOIN feeds f ON f.id=s.feed_id WHERE s.user_id=? ${view === undefined ? "" : "AND s.view=?"} ORDER BY s.created_at DESC`,
     )
     .all(...(view === undefined ? [c.get("userId")] : [c.get("userId"), Number(view)])) as Record<
@@ -506,7 +562,7 @@ app.post("/subscriptions", async (c) => {
   if (!body.url) return c.json({ code: 400, message: "Feed URL is required" }, 400)
   let feed: Feed
   try {
-    feed = await refreshFeed(body.url)
+    feed = (await refreshFeed(body.url)).feed
   } catch (error) {
     return c.json(
       { code: 422, message: error instanceof Error ? error.message : "Invalid feed" },
@@ -669,6 +725,7 @@ app.post("/entries", async (c) => {
     f.site_url f_site_url,f.owner_user_id f_owner_user_id,f.error_at f_error_at,
     f.error_message f_error_message,f.subscription_count f_subscription_count,
     f.updates_per_week f_updates_per_week,f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at,
     e.id entry_id,e.url entry_url,e.title entry_title,e.description entry_description,e.feed_id entry_feed_id
     FROM entries e JOIN feeds f ON f.id=e.feed_id JOIN subscriptions s ON s.feed_id=e.feed_id
     LEFT JOIN reads r ON r.entry_id=e.id AND r.user_id=s.user_id LEFT JOIN collections c ON c.entry_id=e.id AND c.user_id=s.user_id
@@ -708,6 +765,7 @@ app.get("/entries", (c) => {
     f.image f_image,f.site_url f_site_url,f.owner_user_id f_owner_user_id,f.error_at f_error_at,
     f.error_message f_error_message,f.subscription_count f_subscription_count,
     f.updates_per_week f_updates_per_week,f.latest_entry_published_at f_latest_entry_published_at,
+    f.last_refreshed_at f_last_refreshed_at,
     e.id entry_id,e.url entry_url,e.title entry_title,e.description entry_description,e.feed_id entry_feed_id
     FROM entries e JOIN feeds f ON f.id=e.feed_id WHERE e.id=?`,
     )
@@ -828,6 +886,143 @@ app.delete("/collections", async (c) => {
   return c.json(ok(null))
 })
 
+app.post("/subscriptions/parse-opml", async (c) => {
+  const content = await c.req.text()
+  if (!content.trim()) return c.json({ code: 400, message: "Empty OPML payload" }, 400)
+  try {
+    return c.json(ok(parseOpml(content, c.get("userId"))))
+  } catch (error) {
+    return c.json(
+      { code: 422, message: error instanceof Error ? error.message : "Invalid OPML" },
+      422,
+    )
+  }
+})
+
+/**
+ * The desktop client posts multipart form data with the selected feed URLs in `items`. Only that
+ * field is needed: the OPML file itself was already parsed client-side for the preview step.
+ */
+const readImportedUrls = async (request: Request): Promise<string[]> => {
+  const contentType = request.headers.get("content-type") ?? ""
+  try {
+    const form = await request.clone().formData()
+    const items = form.get("items")
+    if (typeof items === "string") return JSON.parse(items) as string[]
+  } catch {
+    // Fall through to the raw-body parse below.
+  }
+  if (!contentType.includes("form-data")) return []
+  const raw = await request.text()
+  const match = /name="items"\r?\n\r?\n([\s\S]*?)\r?\n--/.exec(raw)
+  if (!match?.[1]) return []
+  try {
+    return JSON.parse(match[1]) as string[]
+  } catch {
+    return []
+  }
+}
+
+app.post("/subscriptions/import", async (c) => {
+  const urls = (await readImportedUrls(c.req.raw)).filter(
+    (url) => typeof url === "string" && url.trim(),
+  )
+  if (urls.length === 0) return c.json({ code: 400, message: "No feed URLs provided" }, 400)
+
+  const successfulItems: { id: string; url: string; title: string | null }[] = []
+  const conflictItems: { id: string; url: string; title: string | null }[] = []
+  const parsedErrorItems: { url: string; title: null }[] = []
+  const userId = c.get("userId")
+
+  for (const url of urls) {
+    const existing = db
+      .prepare(
+        "SELECT f.id FROM feeds f JOIN subscriptions s ON s.feed_id=f.id WHERE s.user_id=? AND f.url=?",
+      )
+      .get(userId, url.trim()) as { id: string } | undefined
+    if (existing) {
+      conflictItems.push({ id: existing.id, url, title: null })
+      continue
+    }
+    try {
+      const { feed } = await refreshFeed(url)
+      db.prepare(
+        `INSERT INTO subscriptions VALUES (?, ?, ?, 0, NULL, NULL, 0, NULL, ?) ON CONFLICT(user_id,feed_id) DO NOTHING`,
+      ).run(crypto.randomUUID(), userId, feed.id, new Date().toISOString())
+      db.prepare(
+        "UPDATE feeds SET subscription_count=(SELECT COUNT(*) FROM subscriptions WHERE feed_id=?) WHERE id=?",
+      ).run(feed.id, feed.id)
+      successfulItems.push({ id: feed.id, url: feed.url, title: feed.title })
+    } catch {
+      parsedErrorItems.push({ url, title: null })
+    }
+  }
+
+  return c.json(ok({ successfulItems, conflictItems, parsedErrorItems }))
+})
+
+app.get("/subscriptions/export", (c) => {
+  const folderMode = c.req.query("folderMode") === "category" ? "category" : "view"
+  const entries = db
+    .prepare(
+      `SELECT f.title f_title, f.url f_url, f.site_url f_site_url, s.category s_category, s.view s_view
+      FROM subscriptions s JOIN feeds f ON f.id=s.feed_id WHERE s.user_id=? ORDER BY s.created_at DESC`,
+    )
+    .all(c.get("userId")) as Record<string, unknown>[]
+  const content = buildOpml(
+    entries.map((row) => ({
+      title: (row.f_title as string | null) ?? null,
+      url: String(row.f_url),
+      siteUrl: (row.f_site_url as string | null) ?? null,
+      category: (row.s_category as string | null) ?? null,
+      view: Number(row.s_view),
+    })),
+    {
+      folderMode,
+      // The client may carry an explicit instance from the export dialog; otherwise use the
+      // instance configured for this installation.
+      rsshubUrl:
+        folderMode === "category" ? null : (c.req.query("RSSHubURL") ?? getRSSHubBaseURL()),
+    },
+  )
+  return c.json(
+    ok({
+      content,
+      contentType: "text/x-opml",
+      filename: `folocal-subscriptions-${new Date().toISOString().slice(0, 10)}.opml`,
+    }),
+  )
+})
+
+/**
+ * Consistent on-disk copy of the local database. `VACUUM INTO` is used instead of copying the
+ * files because the database runs in WAL mode and a plain file copy can miss recent writes.
+ */
+app.post("/data/backup", (c) => {
+  const target = `${databasePath}.backup-${new Date().toISOString().replace(/[:.]/g, "-")}`
+  try {
+    db.exec(`VACUUM INTO '${target.replace(/'/g, "''")}'`)
+  } catch (error) {
+    return c.json(
+      { code: 500, message: error instanceof Error ? error.message : "Backup failed" },
+      500,
+    )
+  }
+  const bytes = statSync(target).size
+  return c.json(ok({ path: target, bytes, createdAt: new Date().toISOString() }))
+})
+
+app.get("/data/info", (c) => {
+  const bytes = existsSync(databasePath) ? statSync(databasePath).size : 0
+  const counts = db
+    .prepare(
+      `SELECT (SELECT COUNT(*) FROM feeds) feeds, (SELECT COUNT(*) FROM subscriptions) subscriptions,
+      (SELECT COUNT(*) FROM entries) entries, (SELECT COUNT(*) FROM reads) reads`,
+    )
+    .get() as Record<string, number>
+  return c.json(ok({ databasePath, bytes, counts }))
+})
+
 app.notFound((c) =>
   c.json({ code: 404, message: `Not implemented: ${c.req.method} ${c.req.path}` }, 404),
 )
@@ -843,3 +1038,5 @@ app.onError((error, c) => {
 })
 
 export { app }
+export { databasePath }
+export { getRefreshIntervalMinutes, getRefreshStatus, startRefreshScheduler, stopRefreshScheduler }

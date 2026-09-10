@@ -137,11 +137,11 @@ const ignorePattern = new RegExp(`^/node_modules/(?!(?:${keepModulePattern})(?:/
 
 const config: ForgeConfig = {
   packagerConfig: {
-    name: isStaging ? "Folo Staging" : "Folo",
+    name: isStaging ? "FoLocal Staging" : "FoLocal",
     appCategoryType: "public.app-category.news",
     buildVersion: process.env.BUILD_VERSION || undefined,
     appBundleId: "is.follow",
-    icon: isStaging ? "resources/icon-staging" : "resources/icon",
+    icon: isStaging ? "resources/icon-staging" : "resources/icon-local",
     extraResource: ["./resources/app-update.yml", "../../LICENSE", "../../NOTICE.md"],
     protocols: [
       {
@@ -232,7 +232,7 @@ const config: ForgeConfig = {
       config: {
         icons: [
           {
-            file: isStaging ? "resources/icon-staging.png" : "resources/icon.png",
+            file: isStaging ? "resources/icon-staging.png" : "resources/icon-local.png",
             size: 256,
           },
         ],
@@ -251,7 +251,7 @@ const config: ForgeConfig = {
           homepage: "https://github.com/RSSNext/Folo",
           categories: ["Network", "News"],
           section: "web",
-          icon: isStaging ? "resources/icon-staging.png" : "resources/icon.png",
+          icon: isStaging ? "resources/icon-staging.png" : "resources/icon-local.png",
           mimeType: ["x-scheme-handler/folo", "x-scheme-handler/follow"],
         },
       },

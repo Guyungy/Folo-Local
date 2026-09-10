@@ -1,6 +1,7 @@
 # Notices
 
-This repository contains an unofficial, community-maintained local desktop edition derived from
+This repository — <https://github.com/Guyungy/Folo-Local> — contains an unofficial,
+community-maintained local desktop edition derived from
 [RSSNext/Folo](https://github.com/RSSNext/Folo).
 
 Modifications in this edition are Copyright (C) 2026 Guyungy and contributors. The project and

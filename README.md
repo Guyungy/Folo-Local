@@ -1,10 +1,13 @@
-# Folo Local — 本地桌面版
+# FoLocal — 本地桌面版
 
 > [!IMPORTANT]
 > 这是基于 [RSSNext/Folo](https://github.com/RSSNext/Folo) 修改的非官方本地桌面版，
 > 不是 RSSNext 或 Folo 官方发行版，也未获得其背书。
+>
+> - 本地版仓库（本仓库）：<https://github.com/Guyungy/Folo-Local>
+> - 上游仓库：<https://github.com/RSSNext/Folo>
 
-Folo Local 将订阅、文章、阅读状态和 AI 配置保存在用户自己的电脑上，主要面向希望
+FoLocal 将订阅、文章、阅读状态和 AI 配置保存在用户自己的电脑上，主要面向希望
 使用单机 RSS 阅读器、无需账号和云端后端的用户。
 
 ## 与官方版本的主要区别
@@ -31,7 +34,7 @@ Folo Local 将订阅、文章、阅读状态和 AI 配置保存在用户自己�
 ## macOS 下载
 
 Apple Silicon 用户可从本仓库的
-[Releases](https://github.com/Guyungy/Folo/releases) 下载最新版 ZIP。
+[Releases](https://github.com/Guyungy/Folo-Local/releases) 下载最新版 ZIP。
 
 当前构建使用 ad-hoc 签名，未经过 Apple 公证。首次启动如果被 Gatekeeper 拦截，请在
 “系统设置 → 隐私与安全性”中确认打开。请仅从本仓库 Release 下载，并核对发布页提供的
@@ -72,8 +75,8 @@ DATABASE_PATH="/path/to/local-api.db" \
 - `apps/desktop/layer/main`：在 Electron 主进程内嵌本地 API。
 - `apps/desktop/layer/renderer`：本地设置、错误提示及本地版交互。
 
-完整变更可查看 [提交记录](https://github.com/Guyungy/Folo/commits/dev) 和各版本
-[Release Notes](https://github.com/Guyungy/Folo/releases)。
+完整变更可查看 [提交记录](https://github.com/Guyungy/Folo-Local/commits/dev) 和各版本
+[Release Notes](https://github.com/Guyungy/Folo-Local/releases)。
 
 ## 上游项目与署名
 

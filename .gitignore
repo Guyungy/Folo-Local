@@ -52,3 +52,6 @@ apps/desktop/resources/cli
 
 # Mobile local E2E build artifacts
 apps/mobile/build-*.tar.gz
+
+# Local agent workspace data
+.workbuddy/

@@ -1,4 +1,4 @@
-import { rmSync } from "node:fs"
+import { existsSync, rmSync } from "node:fs"
 
 import { resolve } from "pathe"
 import { afterAll, describe, expect, it, vi } from "vitest"
@@ -290,5 +290,196 @@ describe("local data service", () => {
       vi.unstubAllEnvs()
       vi.unstubAllGlobals()
     }
+  })
+
+  it("batches refreshes and skips feeds whose HTTP validators still match", async () => {
+    const now = new Date().toISOString()
+    db.prepare(
+      "INSERT OR REPLACE INTO feeds (id,url,title,subscription_count,updated_at,etag) VALUES (?,?,?,?,?,?)",
+    ).run("feed-etag", "https://etag.test/rss", "ETag feed", 1, now, '"v1"')
+    db.prepare(
+      "INSERT OR REPLACE INTO feeds (id,url,title,subscription_count,updated_at) VALUES (?,?,?,?,?)",
+    ).run("feed-plain", "https://plain.test/rss", "Plain feed", 1, now)
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(null, { status: 304 }))
+      .mockResolvedValueOnce(
+        new Response(
+          '<rss version="2.0"><channel><title>Plain</title><item><guid>plain-1</guid><title>Plain article</title></item></channel></rss>',
+        ),
+      )
+    vi.stubGlobal("fetch", fetchMock)
+    try {
+      const response = await app.request("/feeds/refresh", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ids: ["feed-etag", "feed-plain"] }),
+      })
+      expect(await response.json()).toMatchObject({
+        code: 0,
+        data: { total: 2, failed: 0, notModified: 1 },
+      })
+      expect(new Headers(fetchMock.mock.calls[0]?.[1]?.headers).get("if-none-match")).toBe('"v1"')
+      expect(
+        db.prepare("SELECT last_refreshed_at FROM feeds WHERE id=?").get("feed-etag"),
+      ).toMatchObject({ last_refreshed_at: expect.any(String) })
+      expect(fetchMock).toHaveBeenCalledTimes(2)
+    } finally {
+      vi.unstubAllGlobals()
+      db.prepare("DELETE FROM entries WHERE feed_id IN ('feed-etag','feed-plain')").run()
+      db.prepare("DELETE FROM feeds WHERE id IN ('feed-etag','feed-plain')").run()
+    }
+  })
+
+  it("runs a full sweep over every subscribed feed and exposes it to the UI", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      // A fresh Response per call: a body can only be consumed once.
+      .mockImplementation(
+        async () =>
+          new Response(
+            '<rss version="2.0"><channel><title>Example</title><item><guid>sweep-1</guid><title>Sweep</title></item></channel></rss>',
+          ),
+      )
+    vi.stubGlobal("fetch", fetchMock)
+    try {
+      const response = await app.request("/feeds/refresh", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: "{}",
+      })
+      const payload = await response.json()
+      expect(payload.code).toBe(0)
+      expect(payload.data.total).toBeGreaterThan(0)
+      expect(payload.data.failed).toBe(0)
+
+      const status = await app.request("/local/refresh-status")
+      expect(await status.json()).toMatchObject({
+        code: 0,
+        data: { running: false, lastRun: { finishedAt: expect.any(String) } },
+      })
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it("persists the background refresh interval and rejects impossible values", async () => {
+    const put = (intervalMinutes: number) =>
+      app.request("/settings/refresh", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ intervalMinutes }),
+      })
+    try {
+      expect(await (await put(30)).json()).toMatchObject({
+        code: 0,
+        data: { intervalMinutes: 30 },
+      })
+      expect(await (await app.request("/local/refresh-status")).json()).toMatchObject({
+        code: 0,
+        data: { intervalMinutes: 30 },
+      })
+      expect((await put(5000)).status).toBe(400)
+    } finally {
+      await put(60)
+    }
+  })
+
+  it("parses nested OPML outlines and rebuilds them without losing feeds", async () => {
+    const { buildOpml, parseOpml } = await import("./opml.js")
+    const xml = `<?xml version="1.0"?><opml version="2.0"><body><outline text="Tech"><outline text="HN" type="rss" xmlUrl="https://hn.test/rss" htmlUrl="https://hn.test"/></outline><outline text="Solo" type="rss" xmlUrl="https://solo.test/rss"/></body></opml>`
+    const parsed = parseOpml(xml, "local-user")
+    expect(parsed.subscriptions).toEqual([
+      { userId: "local-user", url: "https://hn.test/rss", view: 0, category: "Tech", title: "HN" },
+      {
+        userId: "local-user",
+        url: "https://solo.test/rss",
+        view: 0,
+        category: null,
+        title: "Solo",
+      },
+    ])
+
+    const rebuilt = buildOpml(
+      parsed.subscriptions.map((subscription) => ({
+        category: subscription.category,
+        siteUrl: null,
+        title: subscription.title,
+        url: subscription.url,
+        view: subscription.view,
+      })),
+      { folderMode: "category" },
+    )
+    expect(rebuilt).toContain('xmlUrl="https://hn.test/rss"')
+    expect(
+      parseOpml(rebuilt, "local-user")
+        .subscriptions.map((subscription) => subscription.url)
+        .sort(),
+    ).toEqual(["https://hn.test/rss", "https://solo.test/rss"])
+  })
+
+  it("previews an OPML file and imports only the feeds that are not subscribed yet", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockImplementation(
+        async () =>
+          new Response(
+            '<rss version="2.0"><channel><title>Imported</title><item><guid>imported-1</guid><title>Imported article</title></item></channel></rss>',
+          ),
+      )
+    vi.stubGlobal("fetch", fetchMock)
+    try {
+      const preview = await app.request("/subscriptions/parse-opml", {
+        method: "POST",
+        headers: { "content-type": "text/xml" },
+        body: '<opml version="2.0"><body><outline text="A" type="rss" xmlUrl="https://import-a.test/rss"/></body></opml>',
+      })
+      expect(await preview.json()).toMatchObject({
+        code: 0,
+        data: { subscriptions: [{ url: "https://import-a.test/rss" }] },
+      })
+
+      const form = new FormData()
+      form.set("items", JSON.stringify(["https://import-a.test/rss", "https://example.com/rss"]))
+      const imported = await app.request("/subscriptions/import", { method: "POST", body: form })
+      const payload = await imported.json()
+      expect(payload.code).toBe(0)
+      expect(payload.data.successfulItems).toHaveLength(1)
+      expect(payload.data.conflictItems).toHaveLength(1)
+    } finally {
+      vi.unstubAllGlobals()
+      db.prepare(
+        "DELETE FROM entries WHERE feed_id IN (SELECT id FROM feeds WHERE url='https://import-a.test/rss')",
+      ).run()
+      db.prepare(
+        "DELETE FROM subscriptions WHERE feed_id IN (SELECT id FROM feeds WHERE url='https://import-a.test/rss')",
+      ).run()
+      db.prepare("DELETE FROM feeds WHERE url='https://import-a.test/rss'").run()
+    }
+  })
+
+  it("exports the subscriptions as an OPML document the client can download", async () => {
+    const response = await app.request("/subscriptions/export?folderMode=category")
+    const payload = await response.json()
+    expect(payload.code).toBe(0)
+    expect(payload.data.filename).toMatch(/\.opml$/)
+    expect(payload.data.contentType).toBe("text/x-opml")
+    expect(payload.data.content).toContain("<opml")
+    expect(payload.data.content).toContain("https://example.com/rss")
+  })
+
+  it("reports the local database and writes a consistent backup of it", async () => {
+    const info = await app.request("/data/info")
+    const infoPayload = await info.json()
+    expect(infoPayload.code).toBe(0)
+    expect(infoPayload.data.databasePath).toContain("test-")
+    expect(infoPayload.data.counts.entries).toBeGreaterThan(0)
+
+    const backup = await app.request("/data/backup", { method: "POST" })
+    const backupPayload = await backup.json()
+    expect(backupPayload.code).toBe(0)
+    expect(existsSync(backupPayload.data.path)).toBe(true)
+    expect(backupPayload.data.bytes).toBeGreaterThan(0)
+    rmSync(backupPayload.data.path, { force: true })
   })
 })

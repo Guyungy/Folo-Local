@@ -205,6 +205,8 @@
   "entry_list_header.preview_mode": "プレビューモード",
   "entry_list_header.refetch": "再取得",
   "entry_list_header.refresh": "更新",
+  "entry_list_header.refresh_all": "すべての購読を更新",
+  "entry_list_header.refresh_all_partial": "{{total}} 件の購読を更新しました（{{failed}} 件失敗）",
   "entry_list_header.show_all": "すべて表示",
   "entry_list_header.show_unread_only": "未読のみ表示",
   "entry_list_header.sort_newest_first": "新しい順に並べ替え",

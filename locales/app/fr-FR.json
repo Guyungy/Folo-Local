@@ -205,6 +205,8 @@
   "entry_list_header.preview_mode": "Mode Aperçu",
   "entry_list_header.refetch": "Rafraîchir",
   "entry_list_header.refresh": "Actualiser",
+  "entry_list_header.refresh_all": "Actualiser tous les abonnements",
+  "entry_list_header.refresh_all_partial": "{{total}} abonnements actualisés, {{failed}} en échec",
   "entry_list_header.show_all": "Tout afficher",
   "entry_list_header.show_unread_only": "Afficher non lus uniquement",
   "entry_list_header.sort_newest_first": "Trier du plus récent au plus ancien",

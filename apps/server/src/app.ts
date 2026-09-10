@@ -4,6 +4,7 @@ import type { OpenAIConfig } from "./ai.js"
 import {
   generateSummary,
   generateTitle,
+  listOpenAIModels,
   readOpenAIConfig,
   streamCompletion,
   synthesizeSpeech,
@@ -46,6 +47,11 @@ const summarize = (value: string | null) => {
   }
   return result || plainText.slice(0, 500)
 }
+
+const unavailableSummary = (value: string) =>
+  /^(?:摘要不可用|暂无摘要|無摘要|要約を利用できません|summary (?:is )?unavailable|no summary)[。.!！]?$/i.test(
+    value.trim(),
+  )
 
 const feedFromRow = (row: Record<string, unknown>): Feed & { type: "feed" } => ({
   type: "feed",
@@ -110,21 +116,33 @@ app.get("/health", (c) => c.json(ok({ status: "ok" })))
 app.get("/settings/openai", async (c) => c.json(ok(await readOpenAIConfig())))
 app.put("/settings/openai", async (c) => {
   const config = await c.req.json<OpenAIConfig>()
-  if (!config.baseURL || !config.apiKey || !config.model)
-    return c.json({ code: 400, message: "Base URL, API key, and model are required" }, 400)
+  if (!config.baseURL || !config.model)
+    return c.json({ code: 400, message: "Base URL and model are required" }, 400)
   await writeOpenAIConfig(config)
   return c.json(ok({ saved: true }))
 })
 app.post("/settings/openai/test", async (c) => {
   const config = await c.req.json<OpenAIConfig>()
-  if (!config.baseURL || !config.apiKey || !config.model)
-    return c.json({ code: 400, message: "Base URL, API key, and model are required" }, 400)
+  if (!config.baseURL || !config.model)
+    return c.json({ code: 400, message: "Base URL and model are required" }, 400)
   try {
     await testOpenAIConfig(config)
     return c.json(ok({ connected: true }))
   } catch (error) {
     return c.json(
       { code: 502, message: error instanceof Error ? error.message : "Connection failed" },
+      502,
+    )
+  }
+})
+app.post("/settings/openai/models", async (c) => {
+  const config = await c.req.json<Pick<OpenAIConfig, "apiKey" | "baseURL">>()
+  if (!config.baseURL) return c.json({ code: 400, message: "Base URL is required" }, 400)
+  try {
+    return c.json(ok({ models: await listOpenAIModels(config) }))
+  } catch (error) {
+    return c.json(
+      { code: 502, message: error instanceof Error ? error.message : "Unable to load models" },
       502,
     )
   }
@@ -137,7 +155,8 @@ app.get("/ai/summary", async (c) => {
       "SELECT summary,readability_summary FROM summaries WHERE entry_id=? AND (language=? OR language IS NULL) ORDER BY language IS NULL LIMIT 1",
     )
     .get(entryId, language) as { summary: string; readability_summary: string | null } | undefined
-  if (imported) return c.json(ok(imported.readability_summary || imported.summary))
+  const importedSummary = imported?.readability_summary || imported?.summary
+  if (importedSummary && !unavailableSummary(importedSummary)) return c.json(ok(importedSummary))
   const row = db.prepare("SELECT content,description FROM entries WHERE id=?").get(entryId) as
     { content: string | null; description: string | null } | undefined
   const content = row?.content ?? row?.description

@@ -1,5 +1,3 @@
-import { Folo } from "@follow/components/icons/folo.js"
-import { Logo } from "@follow/components/icons/logo.jsx"
 import { Divider } from "@follow/components/ui/divider/Divider.js"
 import { SocialMediaLinks } from "@follow/constants"
 import { IN_ELECTRON, MODE, ModeEnum } from "@follow/shared/constants"
@@ -24,6 +22,9 @@ import {
   persistDesktopReviewOutcome,
   readDesktopReviewPromptState,
 } from "~/modules/review-prompt/utils"
+
+/** The repository this edition is derived from. `repository.url` points at the local edition. */
+const UPSTREAM_REPOSITORY_URL = "https://github.com/RSSNext/Folo"
 
 export const SettingAbout = () => {
   const { t } = useTranslation("settings")
@@ -159,11 +160,10 @@ export const SettingAbout = () => {
       {/* Header Section */}
       <div className="px-2 text-center">
         <div className="mb-6 flex justify-center">
-          <Logo className="size-20" />
+          <img src="./icon-local.png" alt="FoLocal" className="size-20 rounded-[22%]" />
         </div>
-        <h1 className="-mt-6 flex justify-center">
-          <Folo className="size-16" />
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight">FoLocal</h1>
+        <p className="mt-1 text-xs font-medium text-orange">{t("about.localEdition")}</p>
         {MODE !== ModeEnum.production && (
           <span className="block -translate-y-2 text-sm font-normal text-text-tertiary">
             {MODE}
@@ -238,6 +238,30 @@ export const SettingAbout = () => {
           <div>
             <div className="text-sm font-medium">{t("about.changelog")}</div>
             <div className="text-xs text-text-tertiary">{t("about.changelogDescription")}</div>
+          </div>
+          <i className="i-mingcute-external-link-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+        </button>
+        <button
+          type="button"
+          onClick={() => window.open(repository.url, "_blank")}
+          className="group flex w-full items-center justify-between rounded-lg p-3 text-left transition-all hover:bg-fill-secondary hover:shadow-sm"
+        >
+          <div>
+            <div className="text-sm font-medium">{t("about.repository")}</div>
+            <div className="text-xs text-text-tertiary">{t("about.repositoryDescription")}</div>
+          </div>
+          <i className="i-mingcute-external-link-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+        </button>
+        <button
+          type="button"
+          onClick={() => window.open(UPSTREAM_REPOSITORY_URL, "_blank")}
+          className="group flex w-full items-center justify-between rounded-lg p-3 text-left transition-all hover:bg-fill-secondary hover:shadow-sm"
+        >
+          <div>
+            <div className="text-sm font-medium">{t("about.upstreamRepository")}</div>
+            <div className="text-xs text-text-tertiary">
+              {t("about.upstreamRepositoryDescription")}
+            </div>
           </div>
           <i className="i-mingcute-external-link-line text-base text-text-tertiary transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
         </button>

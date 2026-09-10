@@ -6,9 +6,9 @@
   "description": "Unofficial local-only desktop edition of Folo",
   "author": "Guyungy and contributors; derived from RSSNext/Folo",
   "license": "AGPL-3.0-only",
-  "homepage": "https://github.com/Guyungy/Folo",
+  "homepage": "https://github.com/Guyungy/Folo-Local",
   "repository": {
-    "url": "https://github.com/Guyungy/Folo",
+    "url": "https://github.com/Guyungy/Folo-Local",
     "type": "git"
   },
   "main": "./dist/main/index.js",
@@ -102,6 +102,6 @@
     "workbox-window": "7.4.1"
   },
   "runtimeVersion": "1.13.0",
-  "productName": "Folo",
+  "productName": "FoLocal",
   "mainHash": "f929218f58222dd94b64aa2e2fb0a7bcb210b1b261ffeadbc356e659162664f6"
 }

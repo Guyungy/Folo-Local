@@ -6,9 +6,9 @@
   "description": "Unofficial local-only desktop edition of Folo",
   "author": "Guyungy and contributors; derived from RSSNext/Folo",
   "license": "AGPL-3.0-only",
-  "homepage": "https://github.com/Guyungy/Folo",
+  "homepage": "https://github.com/Guyungy/Folo-Local",
   "repository": {
-    "url": "https://github.com/Guyungy/Folo",
+    "url": "https://github.com/Guyungy/Folo-Local",
     "type": "git"
   },
   "scripts": {

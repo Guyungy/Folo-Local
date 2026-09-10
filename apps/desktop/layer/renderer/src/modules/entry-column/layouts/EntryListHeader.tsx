@@ -7,9 +7,9 @@ import { useIsOnline } from "@follow/hooks"
 import { DEFAULT_SUMMARIZE_TIMELINE_SHORTCUT_ID } from "@follow/shared/settings/defaults"
 import { getFeedById } from "@follow/store/feed/getter"
 import { useFeedById } from "@follow/store/feed/hooks"
-import { useIsLoggedIn, useWhoami } from "@follow/store/user/hooks"
+import { useIsLoggedIn } from "@follow/store/user/hooks"
 import { stopPropagation } from "@follow/utils/dom"
-import { clsx, cn, isBizId } from "@follow/utils/utils"
+import { clsx, cn } from "@follow/utils/utils"
 import { useAtom, useAtomValue } from "jotai"
 import type { FC } from "react"
 import { useCallback } from "react"
@@ -30,7 +30,7 @@ import { useRunCommandFn } from "~/modules/command/hooks/use-command"
 import { useCommandShortcut } from "~/modules/command/hooks/use-command-binding"
 import { EntryHeader } from "~/modules/entry-content/components/entry-header"
 import { FeedIcon } from "~/modules/feed/feed-icon"
-import { useRefreshFeedMutation } from "~/queries/feed"
+import { useRefreshAllFeedsMutation, useRefreshFeedMutation } from "~/queries/feed"
 import { useFeedHeaderIcon, useFeedHeaderTitle } from "~/store/feed/hooks"
 
 import { aiTimelineEnabledAtom } from "../atoms/ai-timeline"
@@ -94,11 +94,13 @@ export const EntryListHeader: FC<{
     </div>
   )
   const { mutateAsync: refreshFeed, isPending } = useRefreshFeedMutation(feedId)
+  const { mutateAsync: refreshAllFeeds, isPending: isRefreshingAll } = useRefreshAllFeedsMutation()
 
-  const user = useWhoami()
   const isOnline = useIsOnline()
 
   const feed = useFeedById(feedId)
+  // Local feeds are not owned by the signed-in user, so ownership must not gate the refresh button.
+  const isFeedView = !!feed
 
   const titleStyleBasedView = {
     [FeedViewType.All]: "pl-7",
@@ -221,17 +223,25 @@ export const EntryListHeader: FC<{
             </AppendTaildingDivider>
 
             {isOnline &&
-              (feed?.ownerUserId === user?.id &&
-              isBizId(routerParams.feedId!) &&
-              feed?.type === "feed" ? (
+              (isFeedView ? (
                 <ActionButton
-                  tooltip="Refresh"
+                  tooltip={t("entry_list_header.refresh")}
                   onClick={() => {
                     onBeforeRefresh?.()
                     void refreshFeed()
                   }}
                 >
                   <RotatingRefreshIcon isRefreshing={isPending} />
+                </ActionButton>
+              ) : isTimelineSource ? (
+                <ActionButton
+                  tooltip={t("entry_list_header.refresh_all")}
+                  onClick={() => {
+                    onBeforeRefresh?.()
+                    void refreshAllFeeds()
+                  }}
+                >
+                  <RotatingRefreshIcon isRefreshing={isRefreshingAll} />
                 </ActionButton>
               ) : (
                 <ActionButton

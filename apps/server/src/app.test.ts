@@ -4,7 +4,9 @@ import { resolve } from "pathe"
 import { afterAll, describe, expect, it, vi } from "vitest"
 
 const testDatabasePath = `./data/test-${process.pid}.db`
+const testOpenAIConfigPath = `./data/openai-${process.pid}.json`
 process.env.DATABASE_PATH = testDatabasePath
+process.env.OPENAI_CONFIG_PATH = testOpenAIConfigPath
 
 const { app } = await import("./app.js")
 const { db } = await import("./db.js")
@@ -14,6 +16,7 @@ afterAll(() => {
   db.close()
   for (const suffix of ["", "-shm", "-wal"])
     rmSync(`${resolve(testDatabasePath)}${suffix}`, { force: true })
+  rmSync(resolve(testOpenAIConfigPath), { force: true })
 })
 
 describe("local data service", () => {
@@ -164,6 +167,74 @@ describe("local data service", () => {
       })
       expect(fetchMock).toHaveBeenCalledTimes(2)
     } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it("fetches models and uses the saved model without requiring a local API key", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(
+        Response.json({ data: [{ id: "local-model-b" }, { id: "local-model-a" }] }),
+      )
+      .mockResolvedValueOnce(Response.json({ choices: [{ message: { content: "OK" } }] }))
+    vi.stubGlobal("fetch", fetchMock)
+    try {
+      const modelsResponse = await app.request("/settings/openai/models", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ baseURL: "http://127.0.0.1:11434/v1", apiKey: "" }),
+      })
+      expect(await modelsResponse.json()).toEqual({
+        code: 0,
+        data: { models: ["local-model-a", "local-model-b"] },
+      })
+      expect(fetchMock.mock.calls[0]?.[0]).toBe("http://127.0.0.1:11434/v1/models")
+      expect(new Headers(fetchMock.mock.calls[0]?.[1]?.headers).has("authorization")).toBe(false)
+
+      const config = {
+        baseURL: "http://127.0.0.1:11434/v1",
+        apiKey: "",
+        model: "local-model-b",
+      }
+      expect(
+        await app.request("/settings/openai", {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(config),
+        }),
+      ).toMatchObject({ status: 200 })
+      const testResponse = await app.request("/settings/openai/test", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(config),
+      })
+      expect(testResponse.status).toBe(200)
+      const completionBody = JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))
+      expect(completionBody.model).toBe("local-model-b")
+      expect(new Headers(fetchMock.mock.calls[1]?.[1]?.headers).has("authorization")).toBe(false)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it("regenerates imported unavailable-summary placeholders through the configured model", async () => {
+    db.prepare(
+      "INSERT OR REPLACE INTO summaries (entry_id,summary,readability_summary,language) VALUES (?,?,?,?)",
+    ).run("entry-1", "摘要不可用", null, null)
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        Response.json({ choices: [{ message: { content: "AI generated summary" } }] }),
+      )
+    vi.stubGlobal("fetch", fetchMock)
+    try {
+      const response = await app.request("/ai/summary?id=entry-1")
+      expect(await response.json()).toEqual({ code: 0, data: "AI generated summary" })
+      const completionBody = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))
+      expect(completionBody.model).toBe("local-model-b")
+    } finally {
+      db.prepare("DELETE FROM summaries WHERE entry_id=?").run("entry-1")
       vi.unstubAllGlobals()
     }
   })

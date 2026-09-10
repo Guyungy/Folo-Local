@@ -7,7 +7,7 @@ import { isMacOS, isWindows } from "./env"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 const iconMap = {
-  [ModeEnum.production]: path.join(__dirname, "../../resources/icon.png"),
+  [ModeEnum.production]: path.join(__dirname, "../../resources/icon-local.png"),
   [ModeEnum.development]: path.join(__dirname, "../../resources/icon-dev.png"),
   [ModeEnum.staging]: path.join(__dirname, "../../resources/icon-staging.png"),
 }

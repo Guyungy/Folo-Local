@@ -205,6 +205,8 @@
   "entry_list_header.preview_mode": "Preview Mode",
   "entry_list_header.refetch": "Refetch",
   "entry_list_header.refresh": "Refresh",
+  "entry_list_header.refresh_all": "Refresh all subscriptions",
+  "entry_list_header.refresh_all_partial": "Refreshed {{total}} subscriptions, {{failed}} failed",
   "entry_list_header.show_all": "Show all",
   "entry_list_header.show_unread_only": "Show unread Only",
   "entry_list_header.sort_newest_first": "Sort newest first",

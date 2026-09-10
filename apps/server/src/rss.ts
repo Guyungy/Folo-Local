@@ -2,7 +2,17 @@ import { createHash, randomUUID } from "node:crypto"
 
 import { XMLParser } from "fast-xml-parser"
 
-import { db, getLocalSetting, setLocalSetting } from "./db.js"
+import { db } from "./db.js"
+import {
+  candidateInstances,
+  getRouteAffinity,
+  getRSSHubBaseURL,
+  preferredInstanceURL,
+  recordInstanceFailure,
+  recordInstanceSuccess,
+  routeFromURL,
+  setRouteAffinity,
+} from "./rsshub.js"
 import type { Feed } from "./types.js"
 
 const parser = new XMLParser({
@@ -43,21 +53,6 @@ const emptyFeed = (id: string, url: string): Feed => ({
 
 export { emptyFeed }
 
-export const getRSSHubBaseURL = () =>
-  process.env.RSSHUB_BASE_URL || getLocalSetting("rsshub_base_url") || "https://rsshub.app"
-export const setRSSHubBaseURL = (value: string) => {
-  const url = new URL(value.trim())
-  if (
-    !["http:", "https:"].includes(url.protocol) ||
-    url.username ||
-    url.password ||
-    url.search ||
-    url.hash
-  )
-    throw new Error("RSSHub base URL must be HTTP(S) without credentials, query or fragment")
-  setLocalSetting("rsshub_base_url", url.href.replace(/\/$/, ""))
-}
-
 const knownFeedFallbacks = new Map<string, string[]>([
   [
     "https://cn.wsj.com/rss-news-and-feeds/zh-hans",
@@ -84,50 +79,93 @@ export interface FeedValidators {
 
 const EMPTY_VALIDATORS: FeedValidators = {}
 
-const fetchWithValidators = async (url: string, validators: FeedValidators) => {
+const fetchWithValidators = async (url: string, validators: FeedValidators, timeoutMs: number) => {
   const headers: Record<string, string> = {
     accept: "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
     "user-agent": "FoLocal/1.13.0 (+https://github.com/Guyungy/Folo-Local)",
   }
   if (validators.etag) headers["if-none-match"] = validators.etag
   else if (validators.lastModified) headers["if-modified-since"] = validators.lastModified
-  return fetch(url, { headers, signal: AbortSignal.timeout(20_000) })
+  return fetch(url, { headers, signal: AbortSignal.timeout(timeoutMs) })
+}
+
+interface FeedCandidate {
+  url: string
+  /** RSSHub base URL behind this candidate, when it is an instance route. */
+  instanceUrl: string | null
+}
+
+/** A pool member is given less time than a direct feed: there is another one right behind it. */
+const INSTANCE_TIMEOUT_MS = 10_000
+const DIRECT_TIMEOUT_MS = 20_000
+/** Every mirror of a dead pool would turn one slow route into a minute-long stall. */
+const MAX_INSTANCE_ATTEMPTS = 3
+
+/**
+ * A route is fetched from the pool rather than from one hard-coded instance. The feed keeps the
+ * URL the user asked for whatever answers, so failing over never re-keys the subscription.
+ */
+const feedCandidates = (route: string): FeedCandidate[] => {
+  const candidates: FeedCandidate[] = candidateInstances(route)
+    .slice(0, MAX_INSTANCE_ATTEMPTS)
+    .map((instance) => ({ url: `${instance}${route}`, instanceUrl: instance }))
+  // Every instance disabled: still try the configured one rather than give up on the route.
+  if (candidates.length === 0)
+    candidates.push({ url: `${getRSSHubBaseURL()}${route}`, instanceUrl: preferredInstanceURL() })
+  return candidates
 }
 
 const fetchFeedDocument = async (requestedUrl: string, validators: FeedValidators) => {
   const input = requestedUrl.trim()
   const parsed = new URL(input)
-  const isRSSHub = parsed.protocol === "rsshub:"
   if (!["rsshub:", "http:", "https:"].includes(parsed.protocol))
     throw new Error("Use an HTTP, HTTPS or rsshub:// feed URL")
   if (parsed.username || parsed.password || !parsed.hostname) throw new Error("Invalid feed URL")
-  const identity = isRSSHub ? `rsshub://${parsed.host}${parsed.pathname}${parsed.search}` : input
-  const instance = new URL(getRSSHubBaseURL())
-  if (!["http:", "https:"].includes(instance.protocol))
-    throw new Error("RSSHub instance must use HTTP or HTTPS")
-  const rsshubTarget = `${instance.href.replace(/\/$/, "")}/${parsed.host}${parsed.pathname}${parsed.search}`
-  const normalizedUrl = requestedUrl.trim().replace(/\/$/, "")
-  const candidates = isRSSHub
-    ? [rsshubTarget]
-    : [input, ...(knownFeedFallbacks.get(normalizedUrl) ?? [])]
+  const route = routeFromURL(parsed)
+  // Routes are interchangeable between instances, so the feed keeps the URL the user asked for
+  // even when another pool member served it. Otherwise the feed row would be re-keyed on failover.
+  const identity = route === null ? null : input
+  const affinity = route === null ? null : getRouteAffinity(route)
+  const candidates =
+    route === null
+      ? [
+          { url: input, instanceUrl: null },
+          ...(knownFeedFallbacks.get(input.replace(/\/$/, "")) ?? []).map((url) => ({
+            url,
+            instanceUrl: null,
+          })),
+        ]
+      : feedCandidates(route)
   const failures: string[] = []
 
   for (const [index, candidate] of candidates.entries()) {
+    const { instanceUrl } = candidate
+    const timeoutMs = instanceUrl ? INSTANCE_TIMEOUT_MS : DIRECT_TIMEOUT_MS
+    // Stored validators describe what one instance last returned, so they are only safe to send
+    // back to that same instance; another member would answer 200 and we would misread a 304.
+    const conditional = instanceUrl === null ? index === 0 : instanceUrl === affinity
+    const startedAt = Date.now()
+
     try {
-      // Validators describe the canonical URL only, so fallback mirrors are always fetched fresh.
       const response = await fetchWithValidators(
-        candidate,
-        index === 0 ? validators : EMPTY_VALIDATORS,
+        candidate.url,
+        conditional ? validators : EMPTY_VALIDATORS,
+        timeoutMs,
       )
-      if (response.status === 304)
+      const latencyMs = Date.now() - startedAt
+      if (response.status === 304) {
+        if (instanceUrl) recordInstanceSuccess(instanceUrl, latencyMs)
+        if (route && instanceUrl) setRouteAffinity(route, instanceUrl)
         return {
           atomFeed: undefined,
-          contentUrl: isRSSHub ? identity : candidate,
+          contentUrl: identity ?? candidate.url,
           rssChannel: undefined,
           notModified: true as const,
           etag: response.headers.get("etag"),
           lastModified: response.headers.get("last-modified"),
+          instanceUrl,
         }
+      }
       if (!response.ok) {
         const reason =
           response.status === 403
@@ -135,7 +173,9 @@ const fetchFeedDocument = async (requestedUrl: string, validators: FeedValidator
             : response.status === 404
               ? "route not found on instance"
               : "upstream request failed"
-        failures.push(`${new URL(candidate).hostname}: HTTP ${response.status} (${reason})`)
+        const failure = `${new URL(candidate.url).hostname}: HTTP ${response.status} (${reason})`
+        failures.push(failure)
+        if (instanceUrl) recordInstanceFailure(instanceUrl, failure)
         continue
       }
       const content = await response.text()
@@ -143,20 +183,34 @@ const fetchFeedDocument = async (requestedUrl: string, validators: FeedValidator
       const rssChannel = (document.rss as { channel?: Record<string, unknown> } | undefined)
         ?.channel
       const atomFeed = document.feed as Record<string, unknown> | undefined
-      if (rssChannel || atomFeed)
+      if (rssChannel || atomFeed) {
+        if (instanceUrl) {
+          recordInstanceSuccess(instanceUrl, latencyMs)
+          if (route) setRouteAffinity(route, instanceUrl)
+        }
         return {
           atomFeed,
-          contentUrl: isRSSHub ? identity : candidate,
+          contentUrl: identity ?? candidate.url,
           rssChannel,
           notModified: false as const,
           etag: response.headers.get("etag"),
           lastModified: response.headers.get("last-modified"),
+          instanceUrl,
         }
-      failures.push(`${new URL(candidate).hostname}: not RSS or Atom`)
+      }
+      const failure = `${new URL(candidate.url).hostname}: not RSS or Atom`
+      failures.push(failure)
+      if (instanceUrl) recordInstanceFailure(instanceUrl, failure)
     } catch (error) {
-      failures.push(
-        `${new URL(candidate).hostname}: ${error instanceof Error && error.name === "TimeoutError" ? "request timed out after 20 seconds; retry or change the RSSHub instance" : error instanceof Error ? error.message : "request failed"}`,
-      )
+      const reason =
+        error instanceof Error && error.name === "TimeoutError"
+          ? `timed out after ${Math.round(timeoutMs / 1000)} seconds`
+          : error instanceof Error
+            ? error.message
+            : "request failed"
+      const failure = `${new URL(candidate.url).hostname}: ${reason}`
+      failures.push(failure)
+      if (instanceUrl) recordInstanceFailure(instanceUrl, failure)
     }
   }
 
@@ -208,8 +262,8 @@ export const refreshFeed = async (
 
   if (result.notModified) {
     db.prepare(
-      "UPDATE feeds SET last_refreshed_at=?, error_at=NULL, error_message=NULL WHERE id=?",
-    ).run(refreshedAt, feedId)
+      "UPDATE feeds SET last_refreshed_at=?, error_at=NULL, error_message=NULL, source_instance_url=COALESCE(?, source_instance_url) WHERE id=?",
+    ).run(refreshedAt, result.instanceUrl, feedId)
     const row = db.prepare("SELECT * FROM feeds WHERE id=?").get(feedId) as
       Record<string, unknown> | undefined
     return {
@@ -238,9 +292,9 @@ export const refreshFeed = async (
   }
   const now = refreshedAt
   db.prepare(
-    `INSERT INTO feeds (id,url,title,description,image,site_url,owner_user_id,error_at,error_message,subscription_count,updates_per_week,latest_entry_published_at,updated_at,last_refreshed_at,etag,last_modified)
-    VALUES (@id,@url,@title,@description,@image,@siteUrl,NULL,NULL,NULL,COALESCE((SELECT subscription_count FROM feeds WHERE id=@id),0),NULL,@latestEntryPublishedAt,@updatedAt,@lastRefreshedAt,@etag,@lastModified)
-    ON CONFLICT(url) DO UPDATE SET title=excluded.title,description=excluded.description,image=excluded.image,site_url=excluded.site_url,error_at=NULL,error_message=NULL,updated_at=excluded.updated_at,last_refreshed_at=excluded.last_refreshed_at,etag=COALESCE(excluded.etag,feeds.etag),last_modified=COALESCE(excluded.last_modified,feeds.last_modified)`,
+    `INSERT INTO feeds (id,url,title,description,image,site_url,owner_user_id,error_at,error_message,subscription_count,updates_per_week,latest_entry_published_at,updated_at,last_refreshed_at,etag,last_modified,source_instance_url)
+    VALUES (@id,@url,@title,@description,@image,@siteUrl,NULL,NULL,NULL,COALESCE((SELECT subscription_count FROM feeds WHERE id=@id),0),NULL,@latestEntryPublishedAt,@updatedAt,@lastRefreshedAt,@etag,@lastModified,@sourceInstanceUrl)
+    ON CONFLICT(url) DO UPDATE SET title=excluded.title,description=excluded.description,image=excluded.image,site_url=excluded.site_url,error_at=NULL,error_message=NULL,updated_at=excluded.updated_at,last_refreshed_at=excluded.last_refreshed_at,etag=COALESCE(excluded.etag,feeds.etag),last_modified=COALESCE(excluded.last_modified,feeds.last_modified),source_instance_url=COALESCE(excluded.source_instance_url,feeds.source_instance_url)`,
   ).run({
     id: feed.id,
     url: feed.url,
@@ -253,6 +307,7 @@ export const refreshFeed = async (
     lastRefreshedAt: refreshedAt,
     etag: result.etag ?? null,
     lastModified: result.lastModified ?? null,
+    sourceInstanceUrl: result.instanceUrl,
   })
   const items = array(
     (rssChannel?.item ?? atomFeed?.entry) as
